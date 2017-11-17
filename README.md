@@ -15,9 +15,8 @@ actually useful in an application. These samples also contain Dockerfiles that
 create derived images on top of the base image, copying in the necessary
 files.
 
-These sample applications assume that you have already created the base Apama
-image using the Dockerfile provided, with the name 'apama' as described in the
-earlier README.
+These sample applications pulls the base Apama
+image (https://store.docker.com/images/apama-correlator) from the docker store.
 
 
 Docker Compose

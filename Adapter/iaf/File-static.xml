@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  
+  $Copyright (c) 2007-2008, 2012 Progress Software Corporation. All rights reserved. $
+  $Copyright (c) 2013-2015 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.$
+  Use, reproduction, transfer, publication or disclosure is prohibited except as specifically provided for in your License Agreement with Software AG
+  
+-->
+
+<!--  
+  This file contains the "static" elements of the adapter configuration,
+  i.e. the codec and event mapping parts of the configuration that should
+  not need to be modified by the user.These elements should be included
+  in the main configuration file using XInclude directives as shown below:
+  
+  <xi:include href="File-static.xml" xpointer="xpointer(/static/codecs)" /> 
+  <xi:include href="File-static.xml" xpointer="xpointer(/static/mapping)" />
+  
+  Note that in order to comply with the configuration file DTD, the
+  <adapter-config> element should also contain a "xmlns:xi" attribute as
+  shown below:
+  
+  <adapter-config xmlns:xi="http://www.w3.org/2001/XInclude">
+-->
+
+<static>
+  <codecs>
+    <codec name="JNullCodec" className="com.apama.iaf.codec.nullcodec.JNullCodec" />
+  </codecs>
+
+  <mapping>
+    <!--Open a file to read from. The adapter will stay connected to the file until the adapter is closed -->
+    <event name="OpenFileForReading" package="com.apama.file" direction="upstream" encoder="JNullCodec" copyUnmappedToDictionaryPayload="true">
+      <id-rules>
+        <upstream />
+      </id-rules>
+      <mapping-rules>
+        <map transport="__type" type="string" default="OpenFileForReading" />
+        <map transport="transportName" apama="transportName" type="string" default="FileTransport" />
+        <map transport="requestId" apama="requestId" type="integer" default="0" />
+        <map transport="codec" apama="codec" type="string" default="JNullCodec" />
+        <map transport="filename" apama="filename" type="string" default="" />
+        <map transport="linesInHeader" apama="linesInHeader" type="integer" default="0" />        
+        <!-- Java Regular Expression to filter lines. Lines which comply with this 
+             parameter, will be read and processed. If grouping is used, the first 
+             one will be taken as input and the rest ignored. Leave blank for no
+             pattern matching -->
+        <map transport="acceptedLinePattern" apama="acceptedLinePattern" type="string" default="" />
+      </mapping-rules>
+    </event>
+
+    <!-- Signal the adapter to open a file to write to. -->
+    <event name="OpenFileForWriting" package="com.apama.file" direction="upstream" encoder="JNullCodec"
+      copyUnmappedToDictionaryPayload="true">
+      <id-rules>
+        <upstream />
+      </id-rules>
+      <mapping-rules>
+        <map transport="__type" type="string" default="OpenFileForWriting" />
+        <map transport="transportName" apama="transportName" type="string" default="FileTransport" />
+        <map transport="requestId" apama="requestId" type="integer" default="0" />
+        <map transport="codec" apama="codec" type="string" default="JNullCodec" />
+        <map transport="filename" apama="filename" type="string" default="" />
+        <!-- whether or not to add data to the existing file, or replace all contents with new data -->
+        <map transport="appendData" apama="appendData" type="boolean" default="true" />
+      </mapping-rules>
+    </event>
+    
+    <!-- FileHandle event sent in response to OpenFile events of either type. 
+      Contains sessionId to use in further requests or to match FileLine events 
+      received on -->
+    <event name="FileHandle" package="com.apama.file" direction="downstream" encoder="JNullCodec" copyUnmappedToDictionaryPayload="false">
+      <id-rules>
+        <downstream>
+          <id fields="__type" test="==" value="FileHandle" />
+        </downstream>
+      </id-rules>
+      <mapping-rules>
+        <map transport="__type" type="string" default="FileHandle" />
+        <map transport="transportName" apama="transportName" type="string" default="FileTransport" />
+        <map transport="requestId" apama="requestId" type="integer" default="0" />
+        <map transport="sessionId" apama="sessionId" type="integer" default="0" />
+      </mapping-rules>
+    </event>
+
+    <!-- FileLine event sent either to (when writing) or from (when reading) the adapter. 
+         Associated with sessionId and contains data as a sequence of strings. 
+         RequestId either set by application when send line to be written, 
+         or set in response to ReadLines request -->
+    <event name="FileLine" package="com.apama.file" direction="both" encoder="JNullCodec" copyUnmappedToDictionaryPayload="false">
+      <id-rules>        
+        <downstream>
+          <id fields="__type" test="==" value="FileLine" />
+        </downstream>
+        <upstream/>
+      </id-rules>
+      <mapping-rules>
+        <map transport="__type" type="string" default="FileLine" />
+        <map transport="transportName" apama="transportName" type="string" default="FileTransport" />       
+        <map transport="requestId" apama="requestId" type="integer" default="0" />
+        <map transport="sessionId" apama="sessionId" type="integer" default="0" />
+        <map transport="data" apama="data" type="reference" referencetype="sequence &lt; string &gt;" default="[]" />
+      </mapping-rules>
+    </event>
+    
+    <!-- ReadLines events sent from the application request the adapter to read the specified
+         number of lines (as they become available) from the file or files associated with the 
+         sessionId, and send them as back as FileLine in response.  -->
+    <event name="ReadLines" package="com.apama.file" direction="upstream" encoder="JNullCodec" copyUnmappedToDictionaryPayload="false">
+      <id-rules>
+        <upstream/>
+      </id-rules>
+      <mapping-rules>
+        <map transport="__type" type="string" default="ReadLines" />
+        <map transport="transportName" apama="transportName" type="string" default="FileTransport" />
+        <map transport="requestId" apama="requestId" type="integer" default="0" />
+        <map transport="sessionId" apama="sessionId" type="integer" default="0" />
+        <map transport="numberOfLinesToRead" apama="numberOfLines" type="integer" default="1" />
+      </mapping-rules>
+    </event>
+    
+    <!-- NewFileOpened events will be sent from the adapter when a new file has been opened
+         for reading with a given sessionId. These events are only sent when the OpenFileForReading
+         request was for a wildcard pattern - i.e. *.txt, so the application can know if it 
+         wants to which file lines are currently being sent from. This applies until 
+         an EndOfFile event is sent, after which another NewFileOpened event will be sent 
+         when a new file is available.  -->
+    <event name="NewFileOpened" package="com.apama.file" direction="downstream" encoder="JNullCodec" copyUnmappedToDictionaryPayload="false">
+      <id-rules>
+        <downstream>
+          <id fields="__type" test="==" value="NewFileOpened" />
+        </downstream>
+      </id-rules>
+      <mapping-rules>
+        <map transport="__type" type="string" default="NewFileOpened" />
+        <map transport="transportName" apama="transportName" type="string" default="FileTransport" />        
+        <map transport="sessionId" apama="sessionId" type="integer" default="0" />
+        <map transport="filename" apama="filename" type="string" default="" />
+      </mapping-rules>
+    </event>
+    
+ 
+    <!-- EndOfFile events will be sent from the adapter whenever the end of a file has been reached. 
+             When reading from a single file, the file will still remain open, and any changes made to 
+             the file from external processes will be read as they become available. 
+             
+             When reading from multiple files (i.e. opening with a wildcard), this event will be sent at
+             the end of each file, after which the next event the user should expect will be a 
+             NewFileOpened event as soon as one is available. 
+    -->
+    <event name="EndOfFile" package="com.apama.file" direction="downstream" encoder="JNullCodec" copyUnmappedToDictionaryPayload="false">
+      <id-rules>
+        <downstream>
+          <id fields="__type" test="==" value="EndOfFile" />
+        </downstream>
+      </id-rules>
+      <mapping-rules>
+        <map transport="__type" type="string" default="EndOfFile" />
+        <map transport="transportName" apama="transportName" type="string" default="FileTransport" />        
+        <map transport="sessionId" apama="sessionId" type="integer" default="0" />
+        <map transport="filename" apama="filename" type="string" default="" />
+      </mapping-rules>
+    </event>
+        
+    <!-- CloseFile events can be sent to close an existing file that is being read from or written to,
+         based on it's sessionId. A FileClosed event will be sent in response if successful -->
+    <event name="CloseFile" package="com.apama.file" direction="upstream" encoder="JNullCodec" copyUnmappedToDictionaryPayload="false">
+      <id-rules>
+        <upstream />
+      </id-rules>
+      <mapping-rules>
+        <map transport="__type" type="string" default="CloseFile" />
+        <map transport="transportName" apama="transportName" type="string" default="FileTransport" />
+        <map transport="requestId" apama="requestId" type="integer" default="0" />
+        <map transport="sessionId" apama="sessionId" type="integer" default="0" />        
+      </mapping-rules>
+    </event>
+    
+    
+      <!-- FileClosed events will be sent either in response to explicit CloseFile requests, or when 
+           a file has been closed by the adapter on shutdown. Always associated with a specific
+           sessionId. 
+    -->
+    <event name="FileClosed" package="com.apama.file" direction="downstream" encoder="JNullCodec" copyUnmappedToDictionaryPayload="false">
+      <id-rules>
+        <downstream>
+          <id fields="__type" test="==" value="FileClosed" />
+        </downstream>
+      </id-rules>
+      <mapping-rules>
+        <map transport="__type" type="string" default="FileClosed" />
+        <map transport="transportName" apama="transportName" type="string" default="FileTransport" />    
+        <map transport="requestId" apama="requestId" type="integer" default="0" />    
+        <map transport="sessionId" apama="sessionId" type="integer" default="0" />        
+      </mapping-rules>
+    </event>
+   
+    <!-- FileErrors are returned if an error occurs with a request. -->
+    <event name="FileError" package="com.apama.file" direction="downstream" encoder="JNullCodec" copyUnmappedToDictionaryPayload="false">
+      <id-rules>
+        <downstream>
+          <id fields="__type" test="==" value="FileError" />
+        </downstream>
+      </id-rules>
+      <mapping-rules>
+        <map transport="__type" type="string" default="FileError" />
+        <map transport="transportName" apama="transportName" type="string" default="FileTransport" />
+        <map transport="requestId" apama="requestId" type="integer" default="0" />
+        <map transport="message" apama="message" type="string" default="" />
+      </mapping-rules>
+    </event>
+    
+    <!-- LineWritten events are returned from the adapter.are returned if an error occurs with a request. -->
+    <event name="LineWritten" package="com.apama.file" direction="downstream" encoder="JNullCodec" copyUnmappedToDictionaryPayload="false">
+      <id-rules>
+        <downstream>
+          <id fields="__type" test="==" value="LineWritten" />
+        </downstream>
+      </id-rules>
+      <mapping-rules>
+        <map transport="__type" type="string" default="LineWritten" />
+        <map transport="transportName" apama="transportName" type="string" default="FileTransport" />
+        <map transport="requestId" apama="requestId" type="integer" default="0" />
+        <map transport="sessionId" apama="sessionId" type="integer" default="0" />        
+      </mapping-rules>
+    </event>    
+  </mapping>
+</static>

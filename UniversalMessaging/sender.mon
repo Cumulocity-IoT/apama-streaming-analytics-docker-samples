@@ -1,0 +1,13 @@
+using com.softwareag.connectivity.ConnectivityPlugins;
+
+monitor Sender {
+	constant string UM_CHANNEL := "UM_TestChannel";
+	action onload() {
+		
+		on all wait(1.0) {
+			send SimpleEvent("The current epoch is " + currentTime.toString()) to UM_CHANNEL;
+		}
+
+		ConnectivityPlugins.onApplicationInitialized();
+	}
+}

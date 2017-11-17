@@ -1,0 +1,7 @@
+correlator:
+    initialization:
+        list:
+            - ${APAMA_HOME}/monitors/ConnectivityPluginsControl.mon
+            - ${APAMA_HOME}/monitors/ConnectivityPlugins.mon
+            - ${APAMA_WORK}/UMSample/common.mon
+            - ${APAMA_WORK}/UMSample/sender.mon

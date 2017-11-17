@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Please refer to the main Apama documentation set at the following location:
+	"Developing Apama Applications : Developing Adapters : Standard Apama Adapters : Apama File Adapter" 
+	for more details of the configuration options used in this sample, and any 
+	others that may be available.
+	
+	$Copyright (c) 2008, 2009 Progress Software Corporation. All rights reserved. $
+	$Copyright (c) 2013-2014 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.$
+	Use, reproduction, transfer, publication or disclosure is prohibited except as specifically provided for in your License Agreement with Software AG
+
+-->
+
+<adapter-config xmlns:xi="http://www.w3.org/2001/XInclude">
+	<logging level="INFO" />
+	<plugin-logging level="INFO"  />
+
+	<!-- Configure the embedded JVM with an initial heap size of 64MB -->
+	<java>
+		<classpath path="/apama_home/adapters/lib/JNullCodec.jar" />	
+		<classpath path="/apama_home/adapters/lib/JMultiFileTransport.jar" />						
+	</java>
+
+	<transports>
+		<transport name="JMultiFileTransport"
+			jarName="/apama_home/adapters/lib/JMultiFileTransport.jar"
+			className="com.apama.iaf.transport.file.JMultiFileTransport">
+			<!-- The File Adapter can operate one of two modes:
+				
+				1) Non Simple Mode, which uses the file protocol to deal with read and write
+				requests. The input and output files specified below are ignored, and the 
+				File Adapter will deal with explicit OpenFileToRead and OpenFileToWrite
+				events. Fixed width files and CSV files have to be opened for reading in Non-Simple 
+				mode due to the additional information required to understand their contents.
+				
+				2) Simple mode, where the adapter uses the input and output files 
+				specified to write and read to. The protocol mode is turned off and therefore				 
+				the adapter will only accept the following UPSTREAM events, 
+				with no need to specify the sessionId on either:			     
+				
+					FileLine		- where the first elements contained within the data sequence
+								  	  are written out delimited by the separator specified below
+								  	  (having no separator is acceptable...see details below)
+				
+					ReadLines		- read a specified number of lines from the file. 
+									  
+				and will send the following DOWNSTREAM events:
+				
+					FileLine 		- with a data sequence of one element containing the entire line read
+					
+					EndOfFile		- when the end of the file being read has been reached. The adapter
+									  will continue to probe the file for changes, and will send 
+									  FileLine events when more are available. 
+					
+					FileError 		- (if an error occurred) 
+					
+					LineWritten 	- If required by the user when sending lines to be written, the Adapter
+									  sends back an acknowledgement that the line has been written.
+					
+			-->						
+			<property name="simpleMode" value="false" />
+			
+			<!-- 
+				 Whether or not to allow reading and writing to the same file. 
+				 Note: If a file is already open for reading, it can only be opened for appending to 
+				       even with this property set.
+			 -->
+			<property name="allowReadAndWriteToSameFile" value="true"/>
+			
+			<!-- 
+				 Separator to use when writing files with the Null codec (which is always
+				 the case in Simple mode).
+				 
+				 Each element in the sequence in a FileLine event will be written to the line, 
+				 with the separator specified delimiting the fields. If separator is blank i.e. ""
+				 each element in the list is written immediately after the previous one. 
+				 This is always overriden by the separator specified if the CSV codec (or any other
+				 codec) is used.
+			-->
+			<property name="separator" value=" " />
+			
+			<!-- These properties are only valid in simple mode. -->			
+			<!-- The name of the file to read from -->
+			<property name="inputFile" value="dummyRead.txt" />
+			<!-- The number of lines in the header of the file being read -->
+			<property name="linesInHeader" value="0" />
+			<!-- The name of the file to write to -->
+			<property name="outputFile" value="dummyWrite.txt" />			
+			<!-- whether or not to add data to the existing file, or replace all contents with new data. -->
+			<property name="appendData" value="true" />
+			<!-- Java Regular Expression to filter lines. Lines which comply with this 
+			     parameter, will be read and processed. If grouping is used, the first 
+			     one will be taken as input and the rest ignored. Leave blank for no
+			     pattern matching -->
+			<property name="acceptedLinePattern" value="" />		
+		</transport>
+	</transports>
+
+	<xi:include href="File-static.xml"
+		xpointer="xpointer(/static/codecs)" />
+	<xi:include href="File-static.xml"
+		xpointer="xpointer(/static/mapping)" />
+
+	<!--
+	  IAF connects to the Apama event correlator(s).
+	-->
+	<apama enabled="true">
+		<sinks>
+			<sink host="correlator" port="15903" />
+		</sinks>
+		<sources>
+			<source host="correlator" port="15903"
+				channels="FILE" />
+		</sources>
+	</apama>
+
+
+</adapter-config>

@@ -1,0 +1,155 @@
+package com.apamademo.weather;
+
+/*
+ * Apama DataView sample. Demonstrates the usage of the Apama DataView API
+ * for creating and maintaing data tables that can be show in an Apama
+ * Dashboard Studio dashboard.
+ *
+ * $Copyright (c) 2008-2009 Progress Software Corporation.  All Rights Reserved.$
+ * $Copyright (c) 2013,2015-2016 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.$
+ * Use, reproduction, transfer, publication or disclosure is prohibited except as specifically provided for in your License Agreement with Software AG
+ */
+
+
+event AddLocation {
+	string location;
+}
+
+event DeleteLocation {
+	  string location;
+}
+
+monitor Weather {
+	sequence<string>  locations := ["London","New York","Tokyo","Sydney"];
+	string location;
+
+	action onload() {
+		// Create the weather view
+		com.apama.dataview.DataViewAddDefinition add := new com.apama.dataview.DataViewAddDefinition;
+		add.dvName := "Weather";
+		add.dvDisplayName := "Weather";
+		add.fieldNames := ["location","temperature","humidity","visibility"];
+		add.fieldTypes := ["string","integer","integer","integer"];
+		add.keyFields  := ["location"];
+		route add;
+		
+		// clear any existing data items (we may be reloading this monitor, but the view existed previously
+		com.apama.dataview.DataViewDeleteAllItems deleteAll := new com.apama.dataview.DataViewDeleteAllItems;
+		deleteAll.dvName := "Weather";
+		route deleteAll;
+		
+
+		// Add the set of initial locations
+		string s;
+		for s in locations {
+			location := s;
+			spawn locationHandler();
+		}
+
+		// Add exception handlers - just log errors in this sample
+		on all com.apama.dataview.DataViewException() as dvException {
+			log "*** Weather monitor error: "+dvException.toString() at ERROR;
+		}
+
+		on all com.apama.dataview.DataViewItemException() as dvItemException {
+			log "*** Weather monitor error: "+dvItemException.toString() at ERROR;
+		}
+
+		// Listen for AddLocation events from dashboard and add if not in locations
+		on all AddLocation() as addLocation {
+			if locations.indexOf(addLocation.location) = -1 {
+				location := addLocation.location;
+				locations.append(location);
+				spawn locationHandler();
+			}
+		}
+		
+		// Listen for DeleteLocation events from dashboard and remove if not in locations
+		on all DeleteLocation() as deleteLocation {
+			integer index := locations.indexOf(deleteLocation.location);
+			if index != -1 {
+				locations.remove(index);
+			}
+		}
+	}
+
+	// 
+	// Spawn point for new locations. Adds the location to the DataView and begins
+	// generating random updates for it.
+	//
+	action locationHandler() {
+		integer temp;
+		integer humidity;
+		integer visibility;
+
+		// Set initial weather values for location
+		integer random;
+		random := 30;
+		temp := 50 + random.rand();
+		random := 30;
+		humidity := 40 + random.rand();
+		random := 10;
+		visibility := 1 + random.rand();
+
+		// Add the location to the "Weather" DataView
+		com.apama.dataview.DataViewAddItem item := new com.apama.dataview.DataViewAddItem;
+		item.dvName := "Weather";
+		item.owner := "*";
+		item.timeStamp := -1.0;
+		item.fieldValues := [location,temp.toString(),humidity.toString(),visibility.toString()];
+		route item;
+		
+		// Log that the location was added
+		on com.apama.dataview.DataViewItem (dvName="Weather") as added {
+			log("Weather monitor - DataViewItem added: "+added.dvItemId.toString());
+		}
+		
+		// Listen for DeleteLocation events for this location
+		on DeleteLocation(location = location) {
+			com.apama.dataview.DataViewDeleteItem delete := new com.apama.dataview.DataViewDeleteItem;
+			delete.dvName := "Weather";
+			delete.dvItemId := -1;  // Set the ID to -1 when using keyFields. Without this you would see DataViewItemExceptions
+			delete.keyFields := [location];
+			route delete;
+			die;
+		}
+
+		// Log that the location was deleted
+		on com.apama.dataview.DataViewItemDeleted (dvName="Weather") as deleted {
+			log("Weather monitor - DataViewItemDeleted: "+deleted.dvItemId.toString());
+		}
+		
+		// Randomly fluctuate weather values for location every 5 seconds
+		on all wait (5.0) {
+			random := 5;
+			
+			temp := (temp - 2) + random.rand();
+			humidity := (humidity - 2) + random.rand();
+			visibility := (visibility - 2)  + random.rand();
+			
+			if (temp < 0)       {temp := 0;} 
+			if (humidity < 0)   {humidity := 0;} 
+			if (visibility < 0) {visibility := 0;}
+
+			if (temp > 99)       {temp := 99;} 
+			if (humidity > 99)   {humidity := 99;} 
+			if (visibility > 99) {visibility := 99;}
+			
+// Using Deltas
+//			com.apama.dataview.DataViewUpdateItemDelta update := new com.apama.dataview.DataViewUpdateItemDelta;
+//			update.dvName := "Weather";
+//			update.dvItemId := -1;  // Set the ID to -1 when using keyFields. Without this you would see DataViewItemExceptions
+//			update.timeStamp := -1.0; // so current time will be used for update events
+//			update.fieldValues := {0:location,1:temp.toString(),2:humidity.toString(),3:visibility.toString()};
+//			route update;
+			
+// OR, using full updates
+			com.apama.dataview.DataViewUpdateItem update := new com.apama.dataview.DataViewUpdateItem;
+			update.dvName := "Weather";
+			update.dvItemId := -1;  // Set the ID to -1 when using keyFields
+			update.timeStamp := -1.0; // so current time will be used for update events
+			update.fieldValues := [location,temp.toString(),humidity.toString(),visibility.toString()];
+			route update;
+		}
+	}
+}

@@ -1,0 +1,4 @@
+correlator:
+    initialization:
+        list:
+            - ${PARENT_DIR}/HelloWorld.mon

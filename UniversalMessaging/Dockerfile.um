@@ -1,0 +1,7 @@
+FROM um
+MAINTAINER SoftwareAG
+# These channel settings are actually suboptimal for Apama use; they do not enable the JMS engine as recommended in the Apama documentation.
+# This is a limitation of the 'nmakechan' command line tool. If you want to construct a realm server image that is more suitable for
+# Apama integration, refer to the 'Configuration' samples for help in creating images with more complex configuration.
+RUN umctx nmakechan UM_TestChannel 0 20000 R
+RUN umctx naddchanacl '/UM_TestChannel' '*' '*' write

@@ -1,0 +1,4 @@
+Line 1, Hickory Dickory, Dock
+Line 2, The mouse ran, up the clock
+Line 3, The clock struck 1, the mouse ran down
+Line 4, Hickory Dickory, Dock

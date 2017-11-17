@@ -1,0 +1,99 @@
+using com.apama.adapters.AdapterStatusRegister;
+using com.apama.adapters.AdapterUp;
+
+monitor FileMonitor
+{
+	//initialize the codec and transport name to read and write separately
+	string readCodecName	:= "JNullCodec";
+	string writeCodecName	:= "JNullCodec";
+	string readTransport	:= "JMultiFileTransport";
+	string writeTransport	:= "JMultiFileTransport";
+	
+	action onload()
+	{
+		route AdapterStatusRegister("File", "JNullCodec", "JMultiFileTransport", "", "", "", "FILE");
+		on AdapterUp(adapterName = "File") { adapterUp(); }
+	}
+
+	action adapterUp()
+	{
+		//Initialize the file adapter configuration properties to read from a file
+		com.apama.file.OpenFileForReading readFile := new com.apama.file.OpenFileForReading;
+		readFile.transportName 	:= readTransport;
+		readFile.filename 	:= "inputFile.txt";
+		readFile.codec		:= readCodecName;
+		readFile.requestId 	:= integer.getUnique();
+		readFile.linesInHeader	:= 0;
+		//Initialize the file adapter configuration properties to write into a file
+		com.apama.file.OpenFileForWriting writeFile := new com.apama.file.OpenFileForWriting;
+		writeFile.transportName	:= writeTransport;
+		writeFile.filename	:= "outputFile.txt";
+		writeFile.codec		:= writeCodecName;
+		writeFile.appendData	:= false;
+	
+		emit readFile to "FILE";
+	
+		on all com.apama.file.FileError(*,*,*) as err
+		{
+			log "File error : " + err.message at WARN;
+		}
+
+		on com.apama.file.FileHandle(readTransport,readFile.requestId,*) as readHandle
+		{
+			emit writeFile to "FILE";
+
+			on com.apama.file.FileHandle(writeTransport,writeFile.requestId,*) as writeHandle
+			{
+				log "handles read = " + readHandle.sessionId.toString() at INFO;
+				log "handles write = " + writeHandle.sessionId.toString() at INFO;
+				readMore(readHandle,writeHandle);
+			}
+
+		}
+	}
+
+	action readMore(com.apama.file.FileHandle rHandle, com.apama.file.FileHandle wHandle)
+	{
+		com.apama.file.ReadLines readLine := new com.apama.file.ReadLines;
+		readLine.transportName  := rHandle.transportName;
+		readLine.sessionId      := rHandle.sessionId;
+		readLine.requestId      := integer.getUnique();
+		readLine.numberOfLines  := 20;
+
+		emit readLine to "FILE";
+
+		on com.apama.file.NewFileOpened(readTransport,rHandle.sessionId,*) as nfoEvent
+		{
+			log "File opened: " + nfoEvent.filename at INFO;
+		}
+
+		on com.apama.file.EndOfFile(readTransport,rHandle.sessionId,*) as eofEvent
+		{
+			log "End of file: " + eofEvent.filename at INFO;
+		}
+
+		integer numLines        := 0;
+		integer expectedLines    := readLine.numberOfLines;
+		on all com.apama.file.FileLine(rHandle.transportName,*,rHandle.sessionId,*) as line
+		{
+			numLines := numLines + 1;
+			if numLines > expectedLines
+			{
+				log "too many lines" at WARN;
+			}
+
+			com.apama.file.FileLine writeLine := new com.apama.file.FileLine;
+			writeLine.transportName := writeTransport;
+			writeLine.requestId     := integer.getUnique();
+			writeLine.sessionId     := wHandle.sessionId;
+			writeLine.data          := line.data;
+
+			emit writeLine to "FILE";
+
+			if numLines = expectedLines
+			{
+				readMore(rHandle,wHandle);
+			}
+		}
+	}
+}

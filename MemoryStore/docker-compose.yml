@@ -1,0 +1,16 @@
+version: '2'
+services:
+    # Runs the Apama correlator with the MemoryStore-based application
+    correlator:
+        # Build the image for this container from the Dockerfile in the current directory, which puts EPL files on top of a base Apama image.
+        build: .
+        # Take the /apama_work/MemoryStoreData/ volume, and make it our working directory so the correlator's MemoryStore plugin stores its data here
+        volumes:
+            - data:/apama_work/MemoryStoreData/
+        working_dir: /apama_work/MemoryStoreData/
+        # init.yaml contains the list of files for the application.
+        command: correlator --config /apama_work/MemoryStore/init.yaml
+
+# Create the data volume
+volumes:
+    data:

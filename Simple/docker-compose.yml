@@ -1,0 +1,9 @@
+version: '2'
+services:
+    # Single application container
+    application:
+        # Build the image for this container from the Dockerfile in the current directory, which puts EPL files on top of a base Apama image.
+        build: .
+        working_dir: /apama_work/Simple/
+        # init.yaml contains the list of files for the application.
+        command: correlator --config init.yaml

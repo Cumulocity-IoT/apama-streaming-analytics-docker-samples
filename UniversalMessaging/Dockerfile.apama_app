@@ -1,0 +1,5 @@
+# This DockerFile creates a Docker image derived off of a UM-enabled Apama image, with EPL code for receiving/sending events over UM
+
+FROM apama_um_enabled
+MAINTAINER SoftwareAG
+COPY common.mon receiver.mon sender.mon um-connectivity.yaml init-receiver.yaml init-sender.yaml /apama_work/UMSample/

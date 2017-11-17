@@ -1,15 +1,9 @@
 Docker for Apama applications
 =============================
-The samples in this directory demonstrate how you can use Docker to deploy and
+The samples in this repository demonstrate how you can use Docker to deploy and
 manage entire applications.
 
-You will previously have learnt how to build and run containers for individual
-processes such as the Apama correlator and the Apama IAF. However, an
-application will typically consist of multiple interacting processes. It is
-Docker best-practice to containerize only individual processes, and to link
-them together for network connections and file access.
-
-While all of this can be accomplished by sequences of Docker commands such as
+All of this can be accomplished by sequences of Docker commands such as
 'build' and 'run', Docker Compose automates some
 of this through configuration files. We demonstrate how to use it for
 deploying and managing entire applications in the samples provided.

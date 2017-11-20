@@ -1,9 +1,0 @@
-correlator:
-    initialization:
-        list:
-            - ${APAMA_HOME}/monitors/DataViewService_Interface.mon
-            - ${APAMA_HOME}/monitors/ScenarioService.mon
-            - ${APAMA_HOME}/monitors/DataViewService_Impl_Dict.mon
-            - ${APAMA_HOME}/monitors/scenario_support/ScenarioDeleterSupport.mon
-            - ${PARENT_DIR}/monitors/Weather.mon
-            - ${PARENT_DIR}/bundle_instance_files/Scenario_Service_Throttling_Support/ScenarioServiceThrottlingPeriod.evt

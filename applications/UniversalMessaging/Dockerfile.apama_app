@@ -1,0 +1,14 @@
+# Copyright (c) 2015, 2017 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.
+# Use, reproduction, transfer, publication or disclosure is prohibited except as specifically provided for in your License Agreement with Software AG
+#
+# $Date: 2015-07-15 15:53:16 +0100 (Wed, 15 Jul 2015) $
+# $Revision: 259596 $
+#
+# This DockerFile creates a Docker image derived off of a UM-enabled Apama image, with EPL code for receiving/sending events over UM
+
+FROM apama_um_enabled
+MAINTAINER SoftwareAG
+
+COPY common.mon receiver.mon sender.mon um-connectivity.yaml init-receiver.yaml init-sender.yaml /apama_work/UMSample/
+
+WORKDIR /apama_work/UMSample/

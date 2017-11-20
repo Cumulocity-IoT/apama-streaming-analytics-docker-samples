@@ -1,0 +1,11 @@
+# Copyright (c) 2016 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.
+# Use, reproduction, transfer, publication or disclosure is prohibited except as specifically provided for in your License Agreement with Software AG
+
+correlator:
+    initialization:
+        list:
+            - ${APAMA_HOME}/monitors/StatusSupport.mon
+            - ${APAMA_HOME}/adapters/monitors/IAFStatusManager.mon
+            - ${APAMA_HOME}/adapters/monitors/FileEvents.mon
+            - ${APAMA_HOME}/adapters/monitors/FileStatusManager.mon
+            - ${PARENT_DIR}/FileForwarder.mon

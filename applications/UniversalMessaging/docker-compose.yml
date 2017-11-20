@@ -1,0 +1,60 @@
+# Copyright (c) 2015-2017 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.
+# Use, reproduction, transfer, publication or disclosure is prohibited except as specifically provided for in your License Agreement with Software AG
+#
+# $Date: 2015-07-14 23:35:52 +0100 (Tue, 14 Jul 2015) $
+# $Revision: 259549 $
+
+version: '2'
+services:
+    # Runs the UM realm server
+    umhost:
+        # Build a pre-configured UM (containing the channel that Apama will be using)
+        build:
+            context: .
+            dockerfile: Dockerfile.um
+        # Connect this container to both the 'sender' and 'receiver' networks created below
+        networks:
+            - sender
+            - receiver
+        # Expose port 9000 of the container (default NSP port) to port 9000 of the host machine, so that containers on other hosts that can't
+        # connect with local docker links can connect
+        ports: 
+            - 9000:9000
+    
+    # Runs the Apama correlator, connecting to UM in the 'um' container, which may be on the same or a separate host.
+    # This correlator receives event from channel 'UM_TestChannel'
+    apamareceiver:
+        # Build an image for this container from apama_um_enabled, with Apama code that receives/sends events
+        build:
+            context: .
+            dockerfile: Dockerfile.apama_app
+        # Connect this container to the 'receiver' network created below
+        networks:
+            - receiver
+        depends_on:
+            - umhost
+        # Start up the correlator, init-receiver.yaml lists EPL files for this correlator
+        command: correlator --config /apama_work/UMSample/um-connectivity.yaml --config /apama_work/UMSample/init-receiver.yaml
+
+
+    # Runs the Apama correlator, connecting to UM in the 'um' container, which may be on the same or a separate host.
+    # This correlator sends event to the channel 'UM_TestChannel'
+    apamasender:
+        build:
+            context: .
+            dockerfile: Dockerfile.apama_app
+        # Connect this container to the 'sender' network created below
+        networks:
+            - sender
+        depends_on:
+            - umhost
+        # Start up the correlator, init-sender.yaml lists EPL files for this correlator
+        command: correlator --config /apama_work/UMSample/um-connectivity.yaml --config /apama_work/UMSample/init-sender.yaml
+
+# Create the networks.  The sender and receiver containers are seperated and cannot connect to each other.
+# Uncomment the overlay driver to run distributed on Docker Swarm
+networks:
+    sender:
+        # driver: overlay
+    receiver:
+        # driver: overlay

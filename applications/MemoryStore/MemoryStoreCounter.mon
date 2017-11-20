@@ -1,0 +1,51 @@
+// Copyright (c) 2015-2017 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.
+// Use, reproduction, transfer, publication or disclosure is prohibited except as specifically provided for in your License Agreement with Software AG
+
+using com.apama.memorystore.Schema;
+using com.apama.memorystore.Storage;
+using com.apama.memorystore.Store;
+using com.apama.memorystore.Table;
+using com.apama.memorystore.Row;
+using com.apama.memorystore.Finished;
+
+/** Simple demo application that increments a counter in an on-disk MemoryStore table each time this monitor is loaded */
+monitor Counter {
+	Store store;
+	Table tbl;
+	
+	event SampleSchema {
+		integer counter;
+	}
+
+	/** Prepare the store and table */
+	action onload() {
+		integer id := Storage.prepareOrCreate("counterstore", "counterstore.dat"); 
+
+		on Finished(id, *, *) {
+			store := Storage.open("counterstore");
+
+			integer id := store.prepare("countertable", Schema.schemaFromAny(new SampleSchema));
+			on Finished(id, *, *) {
+				tbl := store.open("countertable");
+				allReady();
+			}
+		}
+	}
+
+	/** Called when the store and table are ready for read/write
+		Reads the counter and increments it in the on-disk table
+	*/
+	action allReady() {
+		Row r := tbl.get("default");
+
+		integer value := r.getInteger("counter");
+		log "Counter table contains value: " + value.toString() at INFO;
+
+		r.setInteger("counter", value + 1);
+		r.commit();
+		integer id := tbl.persist();
+		on Finished(id, *, *) {
+			log "Incremented counter" at INFO;
+		}
+	}
+}

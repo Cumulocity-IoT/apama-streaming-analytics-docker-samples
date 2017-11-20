@@ -1,0 +1,8 @@
+# The this event specifies the global throttle period. 
+# Note: The Web Dashboard deployment application will expect to read this file.
+#
+# Copyright(c) 2005 Progress Software Corporation (PSC).  All rights reserved
+# Copyright (c) 2013 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.
+# Use, reproduction, transfer, publication or disclosure is prohibited except as specifically provided for in your License Agreement with Software AG
+#
+com.apama.scenario.ConfigureUpdates("", {"throttlePeriod":"0.1","sendThrottled":"true"})

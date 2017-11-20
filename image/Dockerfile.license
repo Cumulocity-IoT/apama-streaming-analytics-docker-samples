@@ -1,0 +1,7 @@
+# Copyright (c) 2015 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.
+# Use, reproduction, transfer, publication or disclosure is prohibited except as specifically provided for in your License Agreement with Software AG
+#
+# This Dockerfile uses the base Apama image, to create a new derived image for Apama with the license included in the correct location
+
+FROM apama
+COPY ApamaServerLicense.xml /apama_work/license/ApamaServerLicense.xml 

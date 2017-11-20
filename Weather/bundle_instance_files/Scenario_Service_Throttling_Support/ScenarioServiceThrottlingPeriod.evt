@@ -1,3 +1,0 @@
-# The this event specifies the global throttle period. 
-# Note: The Web Dashboard deployment application will expect to read this file.
-com.apama.scenario.ConfigureUpdates("", {"throttlePeriod":"0.1","sendThrottled":"true"})

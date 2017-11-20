@@ -1,7 +1,0 @@
-monitor HelloWorld {
-	action onload() {
-		on all wait(1.0) {
-			log "Hello world! The current epoch is " + currentTime.toString() at INFO;
-		}
-	}
-}

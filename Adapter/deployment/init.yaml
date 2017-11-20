@@ -1,8 +1,0 @@
-correlator:
-    initialization:
-        list:
-            - ${APAMA_HOME}/monitors/StatusSupport.mon
-            - ${APAMA_HOME}/adapters/monitors/IAFStatusManager.mon
-            - ${APAMA_HOME}/adapters/monitors/FileEvents.mon
-            - ${APAMA_HOME}/adapters/monitors/FileStatusManager.mon
-            - ${PARENT_DIR}/FileForwarder.mon

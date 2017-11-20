@@ -1,0 +1,19 @@
+# Copyright (c) 2015 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.
+# Use, reproduction, transfer, publication or disclosure is prohibited except as specifically provided for in your License Agreement with Software AG
+#
+# $Date: 2015-07-13 15:35:06 +0100 (Mon, 13 Jul 2015) $
+# $Revision: 259415 $
+#
+# This DockerFile creates an Apama image with Universal Messaging libraries
+# from an already-existing Apama image and a Universal Messaging installation
+
+FROM apama
+
+MAINTAINER SoftwareAG
+
+# Copy the UM libraries required for Apama's native integration with UM.
+COPY ./cplus/lib/x86_64/ /um_libs/
+
+# Append /um_libs to LD_LIBRARY_PATH so that UM shared libraries can be
+# dynamically loaded by Apama Correlator at runtime
+ENV LD_LIBRARY_PATH=/um_libs/:$LD_LIBRARY_PATH

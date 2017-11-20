@@ -1,0 +1,16 @@
+# Copyright (c) 2015, 2017 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.
+# Use, reproduction, transfer, publication or disclosure is prohibited except as specifically provided for in your License Agreement with Software AG
+#
+# $Date: 2015-07-13 13:09:45 +0100 (Mon, 13 Jul 2015) $
+# $Revision: 259369 $
+#
+# This Dockerfile creates a preconfigured image from the base UM image, configured to create a channel suitable for Apama's use
+
+FROM um
+MAINTAINER SoftwareAG
+
+# These channel settings are actually suboptimal for Apama use; they do not enable the JMS engine as recommended in the Apama documentation.
+# This is a limitation of the 'nmakechan' command line tool. If you want to construct a realm server image that is more suitable for
+# Apama integration, refer to the 'Configuration' samples for help in creating images with more complex configuration.
+RUN umctx nmakechan UM_TestChannel 0 20000 R
+RUN umctx naddchanacl '/UM_TestChannel' '*' '*' write

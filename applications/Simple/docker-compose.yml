@@ -1,0 +1,10 @@
+# Copyright (c) 2015-2017 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.
+# Use, reproduction, transfer, publication or disclosure is prohibited except as specifically provided for in your License Agreement with Software AG
+
+version: '2'
+services:
+    # Single application container
+    application:
+        # Build the image for this container from the Dockerfile in the current directory, which puts EPL files on top of a base Apama image.
+        # Configures the correlator to start from a yaml config file which injects the EPL files
+        build: .

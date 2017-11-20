@@ -1,5 +1,0 @@
-correlator:
-    initialization:
-        list:
-            - ${APAMA_HOME}/monitors/data_storage/MemoryStore.mon
-            - ${APAMA_WORK}/MemoryStore/MemoryStoreCounter.mon

@@ -1,6 +1,3 @@
-# Copyright (c) 2015-2016 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.
-# Use, reproduction, transfer, publication or disclosure is prohibited except as specifically provided for in your License Agreement with Software AG
-
 Apama packaging kit for Docker
 ==============================
 This package contains configuration and samples to help you containerize and

@@ -213,3 +213,9 @@ from inside Docker.
 Please see the supplied samples which can be found under 'applications/'. You
 should start with the top level README found directly under this folder. Each
 sample application also then has an individual README.
+
+______________________
+These tools are provided as-is and without warranty or support. They do not constitute part of the Software AG product suite. Users are free to use, fork and modify them, subject to the license agreement. While Software AG welcomes contributions, we cannot guarantee to include every contribution in the master project.
+_____________
+Contact us at [TECHcommunity](mailto:technologycommunity@softwareag.com?subject=Github/SoftwareAG) if you have any questions.
+

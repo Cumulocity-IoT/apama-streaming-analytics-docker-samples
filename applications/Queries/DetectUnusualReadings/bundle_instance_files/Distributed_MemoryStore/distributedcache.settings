@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<m:mappingInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:m="urn:mappinginfo" xsi:schemaLocation="urn:mappinginfo mappingInfo.xsd">
+  <m:parameters>
+    <m:parameterMap name="Distributed memory store" type="DISTRIBUTEDSTORE">
+      <m:param type="GENFILELOCATION" value="\bundle_instance_files\Distributed_MemoryStore\config"/>
+      <m:parameterMap name="ApamaQueriesStore" type="TCStore (Terracotta DB)">
+        <m:param type="SPRINGFILE" value="ApamaQueriesStore-spring.xml"/>
+        <m:param type="PROPERTIESFILE" value="ApamaQueriesStore-spring.properties"/>
+      </m:parameterMap>
+    </m:parameterMap>
+  </m:parameters>
+  <m:events/>
+  <m:dbs/>
+</m:mappingInfo>

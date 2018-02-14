@@ -1,0 +1,72 @@
+/*
+ * $Copyright (c) 2014-2016 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.$
+ * Use, reproduction, transfer, publication or disclosure is prohibited except as specifically provided for in your License Agreement with Software AG
+ */ 
+package apamax.querysamples.detectunusualreadings;
+using apamax.querysamples.detectunusualreadings.Util;
+using com.apama.aggregates.avg;
+using com.apama.aggregates.max;
+using com.apama.aggregates.min;
+using com.apama.aggregates.count;
+
+/**
+ * An Apama Query sample to illustrate the use of aggregates and a user-defined 
+ * action.
+ *
+ * This is a generic 'sensor outside normal range' query - e.g. for machines in a factory.  
+ * We discard values where we have a low count of readings.
+ */
+query DetectUnusualReadings {
+
+	parameters {
+		/**
+		 * The type of sensor.
+		 */
+		string sensorType;
+		/**
+		 * The threshold percentage above or
+		 * below which a reading is deemed to 
+		 * be unusual.
+		 */
+		float thresholdPercentage;
+		/**
+		 * If the number of readings is less
+		 * than this then we discard them.
+		 */
+		integer numberOfReadings;
+	}
+
+	inputs {
+		/**
+		 * Partition sensor readings by sensorId.
+		 */
+		SensorReading(type = sensorType) key sensorId retain numberOfReadings;
+	}
+	
+	/**
+	 * Sensor readings are deemed to be unusual if they change significantly from their historical value. 
+	 */
+	find every SensorReading:r 
+		select max(r.value):maxValue
+		select min(r.value):minValue
+		select avg(r.value):avgValue
+	having count(r.value) >= numberOfReadings and Util.outsideRange(minValue, maxValue, avgValue, thresholdPercentage) {
+		/**
+		 * @sends SensorThresholdAlert events to "apamax.querysamples.dashboards" channel.
+		 */
+	 	%send("eventType":".apamax.querysamples.detectunusualreadings.SensorThresholdAlert",
+	 			"title":"Send a SensorThresholdAlert event", "description":"Send a screening alert of an individual suspected of a fever",
+	 			"channel":"\"jms:UniversalMessaging-default-sender\"",
+	 			"fields": {
+	 				"min":"minValue",
+	 				"max":"maxValue",
+	 				"avg":"avgValue",
+	 				"type":"sensorType",
+	 				"sensorId":"sensorId"
+	 			});
+	
+			%custom("title":"Log reciept of messages","description":"Log it") {
+				log "MESSAGE RECV: " + sensorType;
+			}
+	}
+}

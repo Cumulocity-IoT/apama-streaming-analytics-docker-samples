@@ -1,20 +1,7 @@
 # Queries Sample
 
-## DESCRIPTION
-    
-    This sample contains a queries application which will be ran inside a 
-    Docker container. Instances of the queries will be created 
-    and when instantiated certain events will trigger reactions from the 
-    application which can be viewed outside of Docker or Kubernetes
-            
-    The query identifies sensor readings that are outside a
-    specified range. In this example the input events are the
-    resul of screening members of the public for high temperatures
-    and the query sends an alert when an individual who has a
-    temperature has been identified.
-
-     
 ## COPYRIGHT NOTICE
+
     Copyright (c) 2017,2018 Software AG, Darmstadt, Germany and/or its licensors
 
     Licensed under the Apache License, Version 2.0 (the "License"); you may not use this 
@@ -25,31 +12,80 @@
     either express or implied. 
     See the License for the specific language governing permissions and limitations under the License.
     
+
+## DESCRIPTION
+    
+    This sample contains a queries application which will be run inside a 
+    Docker container. Instances of the queries will be created 
+    and when instantiated certain events will trigger reactions from the 
+    application which can be viewed outside of Docker or Kubernetes
+            
+    The query identifies sensor readings that are outside a
+    specified range. In this example the input events are the
+    result of screening members of the public for high temperatures
+    and the query sends an alert when an individual who has a
+    temperature has been identified.
+
+## BEFORE YOU START 
+
+	 The Sample requires a base image for Apama, Terracotta Server and the Terracotta 
+	 cluster-tool. You have several options for Apama and these detailed below.
+
+### Apama Base Images
+| Image                     |description                                                         |
+|---------------------------|--------------------------------------------------------------------|
+|Docker Store               | https://store.docker.com/images/apama-correlator                   |
+|Existing Install           | use the docker packaging kit instructions to build a base image    |
+
+	The Terracotta images can be found below 
+
+### Terracotta Base Images
+| Image                     |description                                                         |
+|---------------------------|--------------------------------------------------------------------|
+|Terracotta-server          | Terracotta repo on https://store.docker.com                        |
+|cluster-tool               | Terracotta repo on https://store.docker.com                        |
+
+	A license for Terracotta is required for the sample to run, this is expected as a URL in this 
+	sample for simplicity. The actual URL will either be a valid license from your install or 
+
+	http://www.terracotta.org/retriever.php?n=TerracottaDB101linux.xml
+
+	for a trial license. 
+	
+	See Terracotta documentation for detailed use of the server and cluster-tool.
+
+	NOTE that it is possible to supply configuration via Docker config and Kubernetes ConfigMap,
+	but this is beyond the scope of this sample please see the terracotta documentation for details.
+
     
 ## FILES
 | file                      |description                                                         |
 |---------------------------|--------------------------------------------------------------------|
 |README.txt                 |This file                                                           |
+|Dockerfile.apama_sag       |Docker definition to add common libraries to an existing Apama image|
 |Dockerfile                 |Docker definition for the correlator container running the query    |
+|Dockerfile.sender          |Docker definition for the correlator  sending events                |
 |docker-compose.yml         |File that defines how docker swarm should start the Terracotta store|
 |docker-compose-corr.yml    |File that defines how docker swarm should run the correlators       |
 |DetectUnusualReadings      |The query definitions and configuration                             |
-|CreateInstance.evt         |File that creates an instance of the query                          |
-|Input.evt                  |The events that trigger the query behaviour.                        |
+|Input.evt                  |The events that trigger the query behaviour                         |
 |tcstore.yml                |Kubernetes configuration defining how to run Terracotta             |
-|stateful.yml               |File defining how to run the correlators                            |
+|stateful.yml               |Kubernetes File defining how to run the correlators                 |
+|sender.yml                 |Kubernetes configuration for the correlator that sends events       |
+|receiver.yml               |Configuration file for that starts the monitoring correlator        |
 
         
 ## RUNNING THE SAMPLE
 
-N.B. the following environment variables can be used in the sample :
+Note the following environment variables can be used in the sample 
 
 | Environment variable  |description                                       |
 |-----------------------|--------------------------------------------------|
 |TC_IMAGE               |The base Terracotta image used                    |
 |CLUSTER_TOOL_IMAGE     |The Terracotta cluster-tool image                 |
 |APAMA_IMAGE            |The base Apama image used to build the application|
-|QUERIES_IMAGE          |The built sample apama correlator image           |
+|QUERIES_IMAGE          |The built sample Apama correlator image           |
+|LICENSE_URL            |Terracotta license URL                            |
 
 
 ### DOCKER:
@@ -71,38 +107,49 @@ To run the sample on Linux:
  
     QUERIES_IMAGE=queries-image EXTERNAL_NETWORK_NAME=sample-tc docker stack deploy -c docker-compose-corr.yml sample-corr
 
-5. In another command prompt from you installation directory, set up an engine_receive to recieve any events sent from the application (defaults to port 15903)
+5. In another command prompt from you installation directory, set up an engine_receive to receive any events sent from the application
 
-    ./engine_receive
-           
-6. From you installation directory send in events that will trigger a reaction from the application within the docker container
+	 run "docker service ps sample-corr_qry-correlators" to get the containers started, you should see something similar to 
 
-    ./engine_send Input.evt
+    |ID          |NAME                         |IMAGE        |NODE| DESIRED STATE|CURRENT STATE         | ERROR| PORTS|
+    |---         |---                          |---          |--- |---           |---                   |---   |---   |
+	 |yg51id8c3o06|sample-corr_qry-correlators.1|queries-image|host|Running       |Running 46 seconds ago|      |*:33039->15903/tcp|
+	 |p5vsx7od7o43|sample-corr_qry-correlators.2|queries-image|host|Running       |Running 46 seconds ago|      |*:33038->15903/tcp|
+
+    choose one of the running containers, look for the PORTS section and use the first number (external port) and 
+	 the value of NODE (the host the container is running on) use this in the engine receive command you run noting 
+	 the details for the next step.
+
+    ./engine_receive -n host -p 33039
            
-9. Switch back to the prompt where you set up engine_receive You should see the following output:
+6. Next send in events that will trigger a reaction from the application within the docker container
+
+    ./engine_send Input.evt -n host -p 33039
+           
+9. Switch back to the prompt where you set up engine_receive You should see the following n your output
 
     apamax.querysamples.detectunusualreadings.SensorThresholdAlert
         
 
 ### KUBERNETES
 
-1. Open a command prompt and type 
+1. Open a terminal and type 
     
     engine_deploy --outputDeployDir ./Queries_deployed DetectUnusualReadings/config/launch/DetectUnusualReadings.deploy
     
-2. Build the image for the Correlator. 
+2. Build the image for the Correlator 
 
     __Note__ that the image needs to be pushed to a repository so "queries-image" should be in the form **your-repository/queries-image:tag**
 
     docker build -f Dockerfile --tag queries-image --build-arg 'APAMA_IMAGE=apama-image' .
 
-3. Build the image for the Sender. 
+3. Build the image for the Sender 
 
     __Note__ that the image needs to be pushed to a repository so "queries-image" should be in the form **your-repository/queries-image:tag**
 
     docker build -f Dockerfile --tag sender-image --build-arg 'APAMA_IMAGE=apama-image' .
 
-4. The images built needs to be put into a repository for kubernetes to use. 
+4. The images built need to be pushed into a repository for kubernetes to use 
 
     docker push queries-image
     docker push sender-image
@@ -112,19 +159,21 @@ To run the sample on Linux:
 
     kubectl create -f tcstore.yml
 
-6. Once Terracotta is up and error free Run and set up the Correlators
+6. Once Terracotta is up and error free, run and set up the Correlators
 
     kubectl create -f stateful.yml
 
 5. Now we can start the receiver and monitor the logs
 
+  	 first run "kubectl get -f stateful.yml" look for the PORTS section and 
+
     kubectl create -f reciever.yml
 
-6. from another terminal watch the logs of the receiver 
+6. From another terminal watch the logs of the receiver 
 
     kubectl logs -f qry-receiver
 
-7. Back in the original terminal, now we start the final pod the sender
+7. Back in the original terminal, start the final pod nvoking the sender
 
     kubectl create -f sender.yml
 

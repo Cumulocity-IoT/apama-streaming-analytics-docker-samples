@@ -1,0 +1,7 @@
+#
+# $Copyright (c) 2014-2015 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.$
+# Use, reproduction, transfer, publication or disclosure is prohibited except as specifically provided for in your License Agreement with Software AG
+#
+
+# This event should be sent after all queries are injected; Software AG Designer will send event files after injections, so the orering relative to other evt files is unimportant.
+com.apama.queries.AllQueriesInjected()

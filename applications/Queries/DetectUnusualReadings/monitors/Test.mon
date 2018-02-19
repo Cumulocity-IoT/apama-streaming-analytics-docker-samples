@@ -1,0 +1,24 @@
+
+/** This monitor is responsible for ...  */
+monitor Test {
+	action onload() {
+		
+		
+		log "Loaded monitor Test" at INFO;
+		
+		spawn test("com.apama.queries") to context("testctx");
+		test("");
+		
+	}
+	
+	
+	action test( string channel )
+	{
+		monitor.subscribe(channel);
+		
+		on all any() as v 
+		{
+			log v.toString() + " on " + channel ;
+		}
+	}
+}

@@ -233,5 +233,5 @@ and other Docker features to run and manage entire multi-process applications
 from inside Docker.
 
 Please see the supplied samples which can be found under 'applications/'. You
-should start with the top level README found directly under this folder. Each
+should start with the top level [README](applications/README.MD) found directly under this folder. Each
 sample application also then has an individual README.

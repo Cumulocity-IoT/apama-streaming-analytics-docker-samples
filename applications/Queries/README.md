@@ -86,23 +86,23 @@ To run the sample on Linux:
 
 1. First in order to deploy the project, open a shell and type:
     
-    engine_deploy --outputDeployDir ./Queries_deployed DetectUnusualReadings/config/launch/DetectUnusualReadings.deploy
+    * engine_deploy --outputDeployDir ./Queries_deployed DetectUnusualReadings/config/launch/DetectUnusualReadings.deploy
  
 2. Build the image for the Correlator, using the base Apama image:
 
-    docker build -f Dockerfile --tag queries-image --build-arg APAMA_IMAGE=\<apama-image> .
+    * docker build -f Dockerfile --tag queries-image --build-arg APAMA_IMAGE=\<apama-image> .
  
 3. Now run the following command to start the Terracotta store and initialise it, using the base Terracotta image and the Terracotta cluster-tool image:
     
-    TC_IMAGE=\<tc-image> CLUSTER_TOOL_IMAGE=\<cluster-tool-image> LICENSE_URL=\<url_terracotta_license> docker stack deploy -c docker-compose.yml sample-tc
+    * TC_IMAGE=\<tc-image> CLUSTER_TOOL_IMAGE=\<cluster-tool-image> LICENSE_URL=\<url_terracotta_license> docker stack deploy -c docker-compose.yml sample-tc
    
 4. You can confirm that the Terracotta containers are successfully started by checking the following:
  
-    docker service logs sample-tc_cluster-tool 
+    * docker service logs sample-tc_cluster-tool 
 
 5. Once the containers are running for Terracotta and there are no errors start the correlators:
  
-    QUERIES_IMAGE=\<queries-image> EXTERNAL_NETWORK_PREFIX=sample-tc docker stack deploy -c docker-compose-corr.yml sample-corr
+    * QUERIES_IMAGE=\<queries-image> EXTERNAL_NETWORK_PREFIX=sample-tc docker stack deploy -c docker-compose-corr.yml sample-corr
 
 6. In another command prompt from your installation directory, set up an engine_receive to receive any events sent from the application, as follows:
 
@@ -117,66 +117,66 @@ To run the sample on Linux:
     the value of NODE (the host the container is running on) use this in the engine receive command you run, noting 
     the details for the next step.
 
-    engine_receive -n host -p 33039 -c apamax.querysamples.screeningalerts
+    * engine_receive -n host -p 33039 -c apamax.querysamples.screeningalerts
 
 7. Next send in events that will trigger a reaction from the application within the docker container:
 
-    engine_send Input.evt -n host -p 33039
+    * engine_send Input.evt -n host -p 33039
 
 8. Switch back to the prompt where you set up engine_receive. You should see an alert of the following event type, 
 amongst other output:
 
-    apamax.querysamples.detectunusualreadings.SensorThresholdAlert
+    * apamax.querysamples.detectunusualreadings.SensorThresholdAlert
 
 
 ### KUBERNETES
 
 1. Open a terminal and type:
     
-    engine_deploy --outputDeployDir ./Queries_deployed DetectUnusualReadings/config/launch/DetectUnusualReadings.deploy
+    * engine_deploy --outputDeployDir ./Queries_deployed DetectUnusualReadings/config/launch/DetectUnusualReadings.deploy
     
 2. Build the image for the Correlator, using the base Apama image:
 
     __Note__ that the image needs to be pushed to a repository so "queries-image" should be in the form **your-repository:queries-image**
 
-    docker build -f Dockerfile --tag queries-image --build-arg APAMA_IMAGE=\<apama-image> .
+    * docker build -f Dockerfile --tag queries-image --build-arg APAMA_IMAGE=\<apama-image> .
 
 3. Build the image for the Sender:
 
     __Note__ that the image needs to be pushed to a repository so "sender-image" should be in the form **your-repository:sender-image**
 
-    docker build -f Dockerfile.sender --tag sender-image --build-arg APAMA_IMAGE=\<apama-image> .
+    * docker build -f Dockerfile.sender --tag sender-image --build-arg APAMA_IMAGE=\<apama-image> .
 
 4. The images built need to be pushed into a repository for kubernetes to use:
 
-    docker push **your-repository:queries-image**
-    docker push **your-repository:sender-image**
+    * docker push **your-repository:queries-image**
+    * docker push **your-repository:sender-image**
 
 5. Next get kubernetes to run and set up the Terracotta store, first replace the image with those created above for Terracotta:
 
-    kubectl create -f tcstore.yml
+    * kubectl create -f tcstore.yml
 
 6. Once Terracotta has successfully started (kubectl get -f tcstore.yml), run and set up the Correlators.
     To do this, edit the file to replace the image with the queries-image created:
 
-    kubectl create -f stateful.yml
+    * kubectl create -f stateful.yml
 
 7. To start the receiver first edit the file to replace the image with the apama-image, 
     then run:
-        kubectl create -f receiver.yml
+    * kubectl create -f receiver.yml
 
 8. From another terminal watch the logs of the receiver:
 
-    kubectl logs -f qry-receiver
+    * kubectl logs -f qry-receiver
 
 9. Back in the original terminal, start the final pod invoking the sender.
     Edit the file to replace the image with the sender-image created, then run:
 
-    kubectl create -f sender.yml
+    * kubectl create -f sender.yml
 
 10. The terminal in which you are watching the receiver logs should show an output event of type:
 
-    apamax.querysamples.detectunusualreadings.SensorThresholdAlert
+    * apamax.querysamples.detectunusualreadings.SensorThresholdAlert
 
 
 

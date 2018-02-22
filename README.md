@@ -39,6 +39,9 @@ This package makes the following assumptions:
     
     * To build your own image Apama will need to be installed on a Linux machine 
     using either the commercial or the full community installation.
+    
+    If you are using the pre-built image you will need to clone this repository to 
+    a suitable location. 
 
     Docker 17.12.0-ce or later is installed and its daemon is running
     (https://docs.docker.com/installation/#installation).

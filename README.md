@@ -237,8 +237,8 @@ should start with the top level [README](applications/README.md) found directly 
 
 Each sample application also then has an individual README:
 
-|Readme |
-|       |
+|Readme|
+|---|
 |[Adapter](Adapter/README.MD)|
 |[MemoryStore](MemoryStore/README.MD)|
 |[Queries](Queries/README.MD)|

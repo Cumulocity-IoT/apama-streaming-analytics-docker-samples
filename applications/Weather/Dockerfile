@@ -9,7 +9,8 @@
 # See the License for the specific language governing permissions and limitations under the License.
 
 # Create an image from the base Apama image, copying the project in it ready to deploy
-FROM apama
+ARG APAMA_IMAGE=apama
+FROM ${APAMA_IMAGE}
 COPY init.yaml /apama_work/Weather/
 COPY monitors /apama_work/Weather/monitors
 COPY bundle_instance_files /apama_work/Weather/bundle_instance_files

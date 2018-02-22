@@ -13,7 +13,8 @@
 #
 # This Dockerfile creates a preconfigured image from the base UM image, configured to create a channel suitable for Apama's use
 
-FROM um
+ARG UM_IMAGE=um
+FROM ${UM_IMAGE}
 MAINTAINER SoftwareAG
 
 # These channel settings are actually suboptimal for Apama use; they do not enable the JMS engine as recommended in the Apama documentation.

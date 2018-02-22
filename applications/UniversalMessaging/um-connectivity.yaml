@@ -20,7 +20,7 @@ dynamicChainManagers:
   UMManager:
     transport: UMTransport
     managerConfig:
-      rnames: nsp://umhost:9000
+      rnames: nsp://umsample-umhost:9000
       channel:
         prefix: ""
         missingChannelMode: ignore

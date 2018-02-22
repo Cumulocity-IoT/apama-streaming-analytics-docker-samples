@@ -9,7 +9,8 @@
 # See the License for the specific language governing permissions and limitations under the License.
 
 # Create an image from the base Apama image, with an IAF (File adapter) configuration in it
-FROM apama
+ARG APAMA_IMAGE=apama
+FROM ${APAMA_IMAGE}
 COPY File.xml inputFile.txt File-static.xml /apama_work/Adapter/
 
 WORKDIR /apama_work/Adapter

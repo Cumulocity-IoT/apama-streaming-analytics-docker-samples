@@ -18,19 +18,23 @@
 
 -->
 
+<!DOCTYPE root [
+	<!ENTITY APAMA_HOME "/opt/softwareag/Apama">
+]>
+
 <adapter-config xmlns:xi="http://www.w3.org/2001/XInclude">
 	<logging level="INFO" />
 	<plugin-logging level="INFO"  />
 
 	<!-- Configure the embedded JVM with an initial heap size of 64MB -->
 	<java>
-		<classpath path="/apama_home/adapters/lib/JNullCodec.jar" />	
-		<classpath path="/apama_home/adapters/lib/JMultiFileTransport.jar" />						
+		<classpath path="&APAMA_HOME;/adapters/lib/JNullCodec.jar" />	
+		<classpath path="&APAMA_HOME;/adapters/lib/JMultiFileTransport.jar" />						
 	</java>
 
 	<transports>
 		<transport name="JMultiFileTransport"
-			jarName="/apama_home/adapters/lib/JMultiFileTransport.jar"
+			jarName="&APAMA_HOME;/adapters/lib/JMultiFileTransport.jar"
 			className="com.apama.iaf.transport.file.JMultiFileTransport">
 			<!-- The File Adapter can operate one of two modes:
 				
@@ -113,10 +117,10 @@
 	-->
 	<apama enabled="true">
 		<sinks>
-			<sink host="correlator" port="15903" />
+			<sink host="adapter-correlator" port="15903" />
 		</sinks>
 		<sources>
-			<source host="correlator" port="15903"
+			<source host="adapter-correlator" port="15903"
 				channels="FILE" />
 		</sources>
 	</apama>

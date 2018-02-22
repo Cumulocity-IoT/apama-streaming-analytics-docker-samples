@@ -1,3 +1,16 @@
+License
+=======
+Copyright (c) 2017 Software AG, Darmstadt, Germany and/or its licensors
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
+file except in compliance with the License. You may obtain a copy of the License at
+http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software distributed under the
+License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+either express or implied. 
+See the License for the specific language governing permissions and limitations under the License.
+
+
 Use UM for communication between two Apama correlators
 ======================================================
 This sample demonstrates two Apama correlators communicating with each other
@@ -45,15 +58,19 @@ Kubernetes
 If you are running via Kubernetes this sample creates the following
 resources which can be accessed via logs and must be deleted via delete:
 
-	* pod bus
-	* pod sender
-	* pod receiver
-	* service umhost
+	* pod umsample-bus
+	* pod umsample-sender
+	* pod umsample-receiver
+	* service umsample-umhost
 
-You must also build two images, push them to a repository and substitute in the image names:
+You must also build two images, push them to a repository and substitute in the
+image names:
 
 	> docker build -t um-image -f Dockerfile.um .
 	> docker build -t correlator-image -f Dockerfile.apama_app
+
+This sample uses an init-container for the correlator to wait for the UM
+service to become available before starting the correlator.
 
 Output
 ------

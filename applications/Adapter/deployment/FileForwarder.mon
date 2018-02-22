@@ -27,6 +27,7 @@ monitor FileMonitor
 
 	action adapterUp()
 	{
+		log "Adapter up." at INFO;
 		//Initialize the file adapter configuration properties to read from a file
 		com.apama.file.OpenFileForReading readFile := new com.apama.file.OpenFileForReading;
 		readFile.transportName 	:= readTransport;

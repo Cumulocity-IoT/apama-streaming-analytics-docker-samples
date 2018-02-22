@@ -9,7 +9,8 @@
 # See the License for the specific language governing permissions and limitations under the License.
 
 # Create an image from the base Apama image, with an EPL application in it ready to deploy
-FROM apama
+ARG APAMA_IMAGE=apama
+FROM ${APAMA_IMAGE}
 COPY init.yaml FileForwarder.mon /apama_work/Adapter/
 
 WORKDIR /apama_work/Adapter

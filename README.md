@@ -37,7 +37,7 @@ This package makes the following assumptions:
     * The Pre-built image is available from:
     https://store.docker.com/images/apama-correlator
     
-    * To build your own image Apama will need to be installed on a Linux machine 
+    * To build your own image, Apama will need to be installed on a Linux machine 
     using either the commercial or the full community installation.
     
     If you are using the pre-built image you will need to clone this repository to 

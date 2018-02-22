@@ -239,9 +239,9 @@ Each sample application also then has an individual README:
 
 |Readme|
 |---|
-|[Adapter](Adapter/README.MD)|
-|[MemoryStore](MemoryStore/README.MD)|
-|[Queries](Queries/README.MD)|
-|[Simple](Simple/README.MD)|
-|[UniversalMessaging](UniversalMessaging/README.MD)|
-|[Weather](Weather/README.MD)|
+|[Adapter](applications/Adapter/README.MD)|
+|[MemoryStore](applications/MemoryStore/README.MD)|
+|[Queries](applications/Queries/README.MD)|
+|[Simple](applications/Simple/README.MD)|
+|[UniversalMessaging](applications/UniversalMessaging/README.MD)|
+|[Weather](applications/Weather/README.MD)|

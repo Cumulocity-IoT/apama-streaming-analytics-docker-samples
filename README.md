@@ -233,5 +233,15 @@ and other Docker features to run and manage entire multi-process applications
 from inside Docker.
 
 Please see the supplied samples which can be found under 'applications/'. You
-should start with the top level [README](applications/README.md) found directly under this folder. Each
-sample application also then has an individual README.
+should start with the top level [README](applications/README.md) found directly under this folder. 
+
+Each sample application also then has an individual README:
+
+|Readme |
+|       |
+|[Adapter](Adapter/README.MD)|
+|[MemoryStore](MemoryStore/README.MD)|
+|[Queries](Queries/README.MD)|
+|[Simple](Simple/README.MD)|
+|[UniversalMessaging](UniversalMessaging/README.MD)|
+|[Weather](Weather/README.MD)|

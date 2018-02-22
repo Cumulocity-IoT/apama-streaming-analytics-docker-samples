@@ -1,4 +1,6 @@
-License
+# Apama samples for Docker and Kubernetes
+
+## License
 =======
 Copyright (c) 2017-2018 Software AG, Darmstadt, Germany and/or its licensors
 
@@ -11,7 +13,7 @@ either express or implied.
 See the License for the specific language governing permissions and limitations under the License.
 
 
-Apama packaging kit for Docker
+## Apama packaging kit for Docker
 ==============================
 This package contains configuration and samples to help you containerize and
 run Apama components and applications on the Docker platform.
@@ -25,7 +27,7 @@ Inc. in the United States and/or other countries. Docker, Inc. and other
 parties may also have trademark rights in other terms used herein.
 
 
-Prerequisites
+## Prerequisites
 =============
 This package makes the following assumptions:
 
@@ -54,7 +56,7 @@ This package makes the following assumptions:
 Note: We have tested this package with the Docker daemon hosted on CentOS 7.1.
 
 
-Building a Docker image
+## Building a Docker image
 =======================
 The file 'image/Dockerfile' is a Dockerfile that can be used to turn your
 Apama installation into a Docker image, which can then be used to run Apama
@@ -89,7 +91,7 @@ At this point it is just an image, the Docker equivalent of a VM template,
 not a running process. 
 
 
-Running a Docker image
+## Running a Docker image
 ======================
 You can turn your new image into a running container with the 'docker run'
 command. But before you do, there are a number of configuration options you
@@ -135,7 +137,7 @@ CONTAINER ID        IMAGE               COMMAND           CREATED             ST
 41d25137fbd0        apama:latest        "correlator -j"   2 seconds ago       Up Less than a second   16903/tcp, 28888/tcp, 28889/tcp, 3278/tcp, 3279/tcp, 0.0.0.0:15903->15903/tcp   apama_in_docker  
 
 
-Interacting with the container
+## Interacting with the container
 ==============================
 Now you will be able to interact with the correlator running inside the
 container. Because ports from the container have been mapped to the host
@@ -157,7 +159,7 @@ see the evidence with another Apama command, similarly invoked:
 This will show you the existing 'HelloWorld' monitor.
 
 
-Log files
+## Log files
 =========
 Docker treats anything emitted on the console by a contained process as
 logging, and stores it appropriately. All of the examples and samples in this
@@ -169,7 +171,7 @@ to see the log message that announced the injection of the .mon file from the
 above example.
  
 
-Licensing
+## Licensing
 =========
 The image you have just created will be able to run the correlator, but the
 correlator will run unlicensed and restricted. There is a Dockerfile 
@@ -185,7 +187,7 @@ If you run and inspect logs from this image, you will notice that the
 correlator is no longer complaining about the lack of a license.
 
 
-Image management
+## Image management
 ================
 By default, the images you create will reside on the Docker system on your
 local machine. This is sufficient for these examples and samples. However, to
@@ -212,7 +214,7 @@ purpose of sharing your images with other Docker users, as the CentOS project
 chooses to do. Needless to say, you should not be uploading any Apama-related
 images to the Docker Hub or any other public registry.
 
-Generating Deployment Files
+## Generating Deployment Files
 ===========================
 Some of these Docker samples use an 'initialization.yaml' configuration
 file when starting the correlator process to allow the correlator to initialize
@@ -223,7 +225,7 @@ from the Apama Command prompt of your Software AG installation:
 
     > engine_deploy ./apama-samples/studio/demos/Weather --outputDeployDir ./apama-samples/docker/applications/Weather
 
-Next steps
+## Next steps
 ==========
 There are multiple samples provided that teach you how to use Docker Compose
 and other Docker features to run and manage entire multi-process applications

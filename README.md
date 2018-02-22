@@ -1,5 +1,6 @@
-License
-=======
+# Apama samples for Docker and Kubernetes
+
+## License
 Copyright (c) 2017-2018 Software AG, Darmstadt, Germany and/or its licensors
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
@@ -11,8 +12,7 @@ either express or implied.
 See the License for the specific language governing permissions and limitations under the License.
 
 
-Apama packaging kit for Docker
-==============================
+## Apama packaging kit for Docker
 This package contains configuration and samples to help you containerize and
 run Apama components and applications on the Docker platform.
 
@@ -25,24 +25,32 @@ Inc. in the United States and/or other countries. Docker, Inc. and other
 parties may also have trademark rights in other terms used herein.
 
 
-Prerequisites
-=============
+## Prerequisites
 This package makes the following assumptions:
 
-    You have some familiarity with Docker technology.
+    You have some familiarity with Docker and Kubernetes technology.
 
-    You have Apama installed on a Linux machine using either the commercial or
-    the full community installation. This package is not supported with the
-    Apama core installation, however the application samples will work with
-    both this package and the pre-built core image available on Docker Store.
-    That image is available from:
+    This package is not supported with the Apama core installation, however the 
+    application samples will work with just this package and the pre-built 
+    correlator image available on Docker Store. 
+    
+    * The Pre-built image is available from:
     https://store.docker.com/images/apama-correlator
+    
+    * To build your own image Apama will need to be installed on a Linux machine 
+    using either the commercial or the full community installation.
+    
+    If you are using the pre-built image you will need to clone this repository to 
+    a suitable location. 
 
     Docker 17.12.0-ce or later is installed and its daemon is running
     (https://docs.docker.com/installation/#installation).
 
     Docker Compose 1.16.1 or later is installed
     (https://docs.docker.com/compose/install/).
+    
+    Kubernetes 1.8.0 or later is installed and the server is running
+    https://kubernetes.io/docs/setup/
 
     You are logged in as root. For security reasons, only the root user is
     allowed to interact with the Docker daemon. It is easy to find out how to
@@ -51,11 +59,11 @@ This package makes the following assumptions:
     users can control Docker. We don't recommended this on production systems.
     Any user that can access the Docker daemon can escalate to root.
 
-Note: We have tested this package with the Docker daemon hosted on CentOS 7.1.
+Note: We have tested this package with the Docker daemon hosted on CentOS 
+Linux release 7.4
 
 
-Building a Docker image
-=======================
+## Building a Docker image
 The file 'image/Dockerfile' is a Dockerfile that can be used to turn your
 Apama installation into a Docker image, which can then be used to run Apama
 executables within containers e.g. the correlator, IAF, dashboard server,
@@ -82,15 +90,15 @@ You can see that an image has been created using this command:
 
     > docker images 
 
-REPOSITORY        TAG             IMAGE ID            CREATED             VIRTUAL SIZE
-apama             latest          bd738c940cc9        39 seconds ago      806.4 MB
+|REPOSITORY        |TAG             |IMAGE ID            |CREATED             |VIRTUAL SIZE |
+|---               |---             |---                 |---                 |---          |
+|apama             |latest          |bd738c940cc9        |39 seconds ago      |806.4 MB     |
 
 At this point it is just an image, the Docker equivalent of a VM template,
 not a running process. 
 
 
-Running a Docker image
-======================
+## Running a Docker image
 You can turn your new image into a running container with the 'docker run'
 command. But before you do, there are a number of configuration options you
 will need to consider.
@@ -131,12 +139,12 @@ You can then look for your running container:
 
     > docker ps
 
-CONTAINER ID        IMAGE               COMMAND           CREATED             STATUS                  PORTS                                                                           NAMES
-41d25137fbd0        apama:latest        "correlator -j"   2 seconds ago       Up Less than a second   16903/tcp, 28888/tcp, 28889/tcp, 3278/tcp, 3279/tcp, 0.0.0.0:15903->15903/tcp   apama_in_docker  
+|CONTAINER ID      |IMAGE           |COMMAND             |CREATED             |STATUS       |PORTS      |NAMES|
+|---               |---             |---                 |---                 |---          |---        |---          |
+|41d25137fbd0      |apama:latest    |"correlator -j"     |2 seconds ago       |Up Less than a second |16903/tcp, 28888/tcp, 28889/tcp, 3278/tcp, 3279/tcp, 0.0.0.0:15903->15903/tcp   |apama_in_docker  |
 
 
-Interacting with the container
-==============================
+## Interacting with the container
 Now you will be able to interact with the correlator running inside the
 container. Because ports from the container have been mapped to the host
 operating system's networking stack, you can run Apama commands outside of
@@ -157,8 +165,7 @@ see the evidence with another Apama command, similarly invoked:
 This will show you the existing 'HelloWorld' monitor.
 
 
-Log files
-=========
+## Log files
 Docker treats anything emitted on the console by a contained process as
 logging, and stores it appropriately. All of the examples and samples in this
 package ensure that Apama components log to the console. Try:
@@ -169,8 +176,7 @@ to see the log message that announced the injection of the .mon file from the
 above example.
  
 
-Licensing
-=========
+## Licensing
 The image you have just created will be able to run the correlator, but the
 correlator will run unlicensed and restricted. There is a Dockerfile 
 'image/Dockerfile.license' that uses the existing Apama image to create
@@ -185,8 +191,7 @@ If you run and inspect logs from this image, you will notice that the
 correlator is no longer complaining about the lack of a license.
 
 
-Image management
-================
+## Image management
 By default, the images you create will reside on the Docker system on your
 local machine. This is sufficient for these examples and samples. However, to
 take full advantage of Docker in a production environment you may wish to set
@@ -212,8 +217,7 @@ purpose of sharing your images with other Docker users, as the CentOS project
 chooses to do. Needless to say, you should not be uploading any Apama-related
 images to the Docker Hub or any other public registry.
 
-Generating Deployment Files
-===========================
+## Generating Deployment Files
 Some of these Docker samples use an 'initialization.yaml' configuration
 file when starting the correlator process to allow the correlator to initialize
 itself. To generate the 'initialization.yaml' file, the
@@ -223,12 +227,21 @@ from the Apama Command prompt of your Software AG installation:
 
     > engine_deploy ./apama-samples/studio/demos/Weather --outputDeployDir ./apama-samples/docker/applications/Weather
 
-Next steps
-==========
+## Next steps
 There are multiple samples provided that teach you how to use Docker Compose
 and other Docker features to run and manage entire multi-process applications
 from inside Docker.
 
 Please see the supplied samples which can be found under 'applications/'. You
-should start with the top level README found directly under this folder. Each
-sample application also then has an individual README.
+should start with the top level [README](applications/README.md) found directly under this folder. 
+
+Each sample application also then has an individual README:
+
+|Readme|
+|---|
+|[Adapter](applications/Adapter/README.md)|
+|[MemoryStore](applications/MemoryStore/README.md)|
+|[Queries](applications/Queries/README.md)|
+|[Simple](applications/Simple/README.md)|
+|[UniversalMessaging](applications/UniversalMessaging/README.md)|
+|[Weather](applications/Weather/README.md)|

@@ -9,18 +9,51 @@
 # See the License for the specific language governing permissions and limitations under the License.
 
 apiVersion: v1
-kind: Pod
+kind: PersistentVolume
+metadata:
+  name: memstore-data
+spec:
+  accessModes:
+    - ReadWriteMany
+  capacity:
+    storage: 1Gi
+  hostPath:
+    path: /data/memstore-data
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: memstore-data-claim
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1beta2
+kind: Deployment
 metadata:
   name: memstore-sample
 spec:
-  containers:
-    - name: memstore-sample
-      image: memstore-image
-      ports:
-        - containerPort: 15903
-      volumeMounts:
-        - mountPath: /apama_work/MemoryStoreData
-          name: memorystore-data
-  volumes:
-    - name: memorystore-data
-      emptyDir: {}
+  replicas: 1
+  selector:
+    matchLabels:
+      app: memstore
+  template:
+    metadata:
+      labels:
+        app: memstore
+    spec:
+      containers:
+        - name: memstore-sample
+          image: memstore-image
+          ports:
+            - containerPort: 15903
+          volumeMounts:
+            - mountPath: /apama_work/MemoryStoreData
+              name: memorystore-data
+      volumes:
+        - name: memorystore-data
+          persistentVolumeClaim:
+            claimName: memstore-data-claim

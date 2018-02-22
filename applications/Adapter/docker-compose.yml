@@ -8,18 +8,18 @@
 # either express or implied. 
 # See the License for the specific language governing permissions and limitations under the License.
 
-version: '2'
+version: '3.3'
 services:
     # Runs the Apama correlator with an application that talks to the IAF and issues commands to the File adapter
-    correlator:
+    adapter-correlator:
         # Build the image for this container from the Dockerfile in ./deployment/, which puts the EPL for this application on top of a base
         # Apama image
         build: ./deployment/
 
     # Starts the IAF running the File adapter, which connects to the contained correlator. The IAF configuration is built into the image, using
     # a Dockerfile that builds on top of the base Apama image.
-    iaf:
+    adapter-iaf:
         # Build the image for this container from the Dockerfile in ./iaf/, which puts IAF configuration on top of a base Apama image
         build: ./iaf/
         depends_on:
-            - correlator
+            - adapter-correlator

@@ -1,3 +1,16 @@
+License
+=======
+Copyright (c) 2017 Software AG, Darmstadt, Germany and/or its licensors
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
+file except in compliance with the License. You may obtain a copy of the License at
+http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software distributed under the
+License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+either express or implied. 
+See the License for the specific language governing permissions and limitations under the License.
+
+
 Docker for Apama applications
 =============================
 The samples in this directory demonstrate how you can use Docker to deploy and
@@ -26,6 +39,19 @@ image using the Dockerfile provided, with the name 'apama' as described in the
 earlier README. 
 
 
+Using Docker Store
+==================
+Whilst the samples make the assumptions listed above, it is also possible to
+use images uploaded to Docker Store by SoftwareAG. To alter the samples to use
+Docker Store for Apama, add the following to the docker build command:
+
+--build-arg APAMA_IMAGE=store/softwareag/apama-correlator:<major version>.<minor version>
+
+giving, for example:
+
+docker build -t myimage . --build-arg APAMA_IMAGE=store/softwareag/apama-correlator:10.1
+
+
 Docker Compose
 ==============
 Docker Compose is invoked using the 'docker-compose' tool, which is documented
@@ -33,6 +59,18 @@ at http://docs.docker.com/compose/. You should already have 'docker-compose'
 installed and available on your PATH. These samples drive the tool through the
 use of configuration files called 'docker-compose.yml', the format of which is
 documented at http://docs.docker.com/compose/yml/ .
+
+To use Docker Store from within the Docker Compose yaml files, change the
+following pattern, under services/application or services/correlator from:
+
+build: .
+
+to:
+
+build:
+    context: .
+    args:
+        APAMA_IMAGE: store/softwareag/apama-correlator:<major version>.<minor version>
 
 Kubernetes
 ==========
@@ -47,10 +85,11 @@ Running the samples using Docker Compose
 The most educational way to go through the sample applications is in this
 order:
 
-    Simple/          Injecting EPL into a correlator
-    Adapter/         Connecting a correlator and the IAF
-    Weather/         Running Ant-exported projects and generating dashboards
-    MemoryStore/     Using volumes for persistent state across rebuilds
+    Simple/                Injecting EPL into a correlator
+    Adapter/               Connecting a correlator and the IAF (not available with Apama Core)
+    Weather/               Running Ant-exported projects and generating dashboards (not available with Apama Core)
+    MemoryStore/           Using volumes for persistent state across rebuilds
+    UniversalMessaging/    Use UM for communication between two Apama correlators (not available with Apama Core)
 
 Each sample contains a README with information specific to that sample,
 describing what it does and how to interact with the containers that it
@@ -109,8 +148,8 @@ retrieved by the Kubernetes server:
 	> docker push registry/org/repository:image
 
 Lastly you must modify the provided kubernetes.yml to have the registry tag of
-the new image in the place of 'imagename'. Now you are able to create the
-deployment in Kubernetes:
+the new image in the place of the various '-image's. Now you are able to create
+the deployment in Kubernetes:
 
 	> kubectl create -f kubernetes.yml
 
@@ -122,9 +161,9 @@ To inspect the logs from the containers in the pod:
 
 	> kubectl logs sample
 
-To remove the pod:
+To remove the deployment:
 
-	> kubectl delete pod sample
+	> kubectl delete -f kubernetes.fml
 
 docker-compose.yml cheat sheet
 ==============================
@@ -204,11 +243,38 @@ are some ideas to get started:
 Changes from previous releases
 ==============================
 
-Version 2 of Compose YAML files
+Version 3.3 of Compose YAML files
 -------------------------------
 This gives us access to much more Compose functionality (such as network,
 volumes, etc) and Version 1 is deprecated and expected to be removed at
 some point.
+
+
+Deployment Containers
+---------------------
+We have moved away from using deployment containers (where a short lived
+container would inject code into a separate container running the correlator).
+We have moved away from using engine_inject on the command line (which also
+required using engine_management --waitFor to wait for the correlator to
+start).
+
+We now use the --config command line argument to the correlator to specify an
+init.yaml configuration file which lists what files (.mon, .evt, .cdp or .jar)
+to inject at startup. This is good practice and allows for use with Docker
+Swarm and to easily scale distributed applications.
+
+
+Links
+-----
+We no longer use container 'links', instead using networking to connect
+container together.  'links' are deprecated and do not work on multi-host
+Swarms.
+
+
+Volumes
+-------
+Volumes are now first class Compose citizens and we no longer need to
+create dedicated data volume containers.
 
 
 Deployment Containers

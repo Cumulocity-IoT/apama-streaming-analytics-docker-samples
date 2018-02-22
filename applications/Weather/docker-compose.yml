@@ -8,7 +8,7 @@
 # either express or implied. 
 # See the License for the specific language governing permissions and limitations under the License.
 
-version: '2'
+version: '3.3'
 services:
     # Runs the Apama correlator with the Weather sample, using an Ant-exported project
     correlator:

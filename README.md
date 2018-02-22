@@ -1,3 +1,16 @@
+License
+=======
+Copyright (c) 2017 Software AG, Darmstadt, Germany and/or its licensors
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
+file except in compliance with the License. You may obtain a copy of the License at
+http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software distributed under the
+License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+either express or implied. 
+See the License for the specific language governing permissions and limitations under the License.
+
+
 Apama packaging kit for Docker
 ==============================
 This package contains configuration and samples to help you containerize and
@@ -18,12 +31,17 @@ This package makes the following assumptions:
 
     You have some familiarity with and interest in the Docker technology
 
-    You have Apama installed on a Linux machine
+    You have Apama installed on a Linux machine using either the commercial or
+    the full community installation. This package is not supported with the
+    Apama core installation, however the application samples will work with
+    both this package and the pre-built core image available on docker store.
+    That image is available from:
+    https://store.docker.com/images/apama-correlator
 
-    Docker 1.11.0 or later is installed and its daemon is running
+    Docker 17.12.0-ce or later is installed and its daemon is running
     (https://docs.docker.com/installation/#installation)
 
-    Docker Compose 1.7.0 or later is installed
+    Docker Compose 1.16.1 or later is installed
     (https://docs.docker.com/compose/install/)
 
     You are logged in as root. For security reasons, only the root user is
@@ -213,9 +231,3 @@ from inside Docker.
 Please see the supplied samples which can be found under 'applications/'. You
 should start with the top level README found directly under this folder. Each
 sample application also then has an individual README.
-
-______________________
-These tools are provided as-is and without warranty or support. They do not constitute part of the Software AG product suite. Users are free to use, fork and modify them, subject to the license agreement. While Software AG welcomes contributions, we cannot guarantee to include every contribution in the master project.
-_____________
-Contact us at [TECHcommunity](mailto:technologycommunity@softwareag.com?subject=Github/SoftwareAG) if you have any questions.
-

@@ -11,23 +11,27 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: engine
+  name: adapter-engine
   labels:
-    app: "correlator"
+    app: "adapter-correlator"
 spec:
   containers:
-    - name: correlator
+    - name: adapter-correlator
       image: correlator-image
       ports:
         - containerPort: 15903
+      readinessProbe:
+        httpGet:
+          path: /ping
+          port: 15903
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: correlator
+  name: adapter-correlator
 spec:
   selector:
-    app: correlator
+    app: adapter-correlator
   ports:
   - protocol: TCP
     port: 15903
@@ -36,10 +40,14 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: iaf
+  name: adapter-iaf
 spec:
+  initContainers:
+    - name: wait-for-correlator
+      image: busybox
+      command: ['sh', '-c', 'until nslookup adapter-correlator; do echo waiting for correlator; sleep 2; done;']
   containers:
-    - name: iaf
+    - name: adapter-iaf
       image: iaf-image
       ports:
         - containerPort: 16903

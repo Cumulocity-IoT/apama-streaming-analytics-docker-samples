@@ -11,10 +11,10 @@
 # $Date: 2015-07-14 23:35:52 +0100 (Tue, 14 Jul 2015) $
 # $Revision: 259549 $
 
-version: '2'
+version: '3.3'
 services:
     # Runs the UM realm server
-    umhost:
+    umsample-umhost:
         # Build a pre-configured UM (containing the channel that Apama will be using)
         build:
             context: .
@@ -39,7 +39,7 @@ services:
         networks:
             - receiver
         depends_on:
-            - umhost
+            - umsample-umhost
         # Start up the correlator, init-receiver.yaml lists EPL files for this correlator
         command: correlator --config /apama_work/UMSample/um-connectivity.yaml --config /apama_work/UMSample/init-receiver.yaml
 
@@ -54,7 +54,7 @@ services:
         networks:
             - sender
         depends_on:
-            - umhost
+            - umsample-umhost
         # Start up the correlator, init-sender.yaml lists EPL files for this correlator
         command: correlator --config /apama_work/UMSample/um-connectivity.yaml --config /apama_work/UMSample/init-sender.yaml
 

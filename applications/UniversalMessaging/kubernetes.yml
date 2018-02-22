@@ -11,12 +11,12 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: bus
+  name: umsample-bus
   labels:
-    app: "um"
+    app: "umsample-um"
 spec:
   containers:
-    - name: um
+    - name: umsample-um
       image: um-image
       ports:
         - containerPort: 9000
@@ -24,10 +24,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: umhost
+  name: umsample-umhost
 spec:
   selector:
-    app: um
+    app: umsample-um
   ports:
   - protocol: TCP
     port: 9000
@@ -36,10 +36,10 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: sender
+  name: umsample-sender
 spec:
   containers:
-    - name: sender
+    - name: umsample-sender
       image: correlator-image
       ports:
         - containerPort: 15903
@@ -48,10 +48,14 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: receiver
+  name: umsample-receiver
 spec:
+  initContainers:
+    - name: wait-for-um
+      image: busybox
+      command: ['sh', '-c', 'until nslookup umsample-umhost; do echo waiting for UM; sleep 2; done;']
   containers:
-    - name: receiver
+    - name: umsample-receiver
       image: correlator-image
       ports:
         - containerPort: 15903

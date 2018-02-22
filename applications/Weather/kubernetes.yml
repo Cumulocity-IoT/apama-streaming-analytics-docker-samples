@@ -11,23 +11,27 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: engine
+  name: weather-engine
   labels:
-    app: "correlator"
+    app: "weather-correlator"
 spec:
   containers:
-    - name: correlator
+    - name: weather-correlator
       image: correlator-image
       ports:
         - containerPort: 15903
+      readinessProbe:
+        httpGet:
+          path: /ping
+          port: 15903
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: correlator
+  name: weather-correlator
 spec:
   selector:
-    app: correlator
+    app: weather-correlator
   ports:
   - protocol: TCP
     port: 15903
@@ -36,17 +40,25 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: dashboard
+  name: weather-dashboard
   labels:
-    app: "dashboard"
+    app: "weather-dashboard"
 spec:
+  initContainers:
+    - name: wait-for-correlator
+      image: busybox
+      command: ['sh', '-c', 'until nslookup weather-correlator; do echo waiting for correlator; sleep 2; done;']
   containers:
-    - name: dashboard
+    - name: weather-dashboard
       image: apama-image
       ports:
         - containerPort: 3278
         - containerPort: 28888
-      command: ["dashboard_server", "-c", "default:correlator:15903:false"]
+      command: ["dashboard_server", "-c", "default:weather-correlator:15903:false"]
+      readinessProbe:
+        httpGet:
+          path: /ping
+          port: 28888
 ---
 apiVersion: v1
 kind: Service
@@ -55,7 +67,7 @@ metadata:
 spec:
   type: NodePort
   selector:
-    app: dashboard
+    app: weather-dashboard
   ports:
   - port: 3278
     name: weather-data

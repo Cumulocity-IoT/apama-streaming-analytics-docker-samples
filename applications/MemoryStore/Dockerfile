@@ -9,7 +9,8 @@
 # See the License for the specific language governing permissions and limitations under the License.
 
 # Create an image from the base Apama image, with the MemoryStore application in it ready to deploy
-FROM apama
+ARG APAMA_IMAGE=apama
+FROM ${APAMA_IMAGE}
 COPY init.yaml MemoryStoreCounter.mon /apama_work/MemoryStore/
 
 WORKDIR /apama_work/MemoryStoreData

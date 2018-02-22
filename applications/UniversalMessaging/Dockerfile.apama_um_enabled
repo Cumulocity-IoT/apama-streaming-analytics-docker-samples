@@ -14,7 +14,8 @@
 # This DockerFile creates an Apama image with Universal Messaging libraries
 # from an already-existing Apama image and a Universal Messaging installation
 
-FROM apama
+ARG APAMA_IMAGE=apama
+FROM ${APAMA_IMAGE}
 
 MAINTAINER SoftwareAG
 

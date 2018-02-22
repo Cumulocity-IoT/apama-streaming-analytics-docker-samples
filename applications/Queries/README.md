@@ -94,7 +94,7 @@ To run the sample on Linux:
  
 3. Now run the following command to start the Terracotta store and initialise it, using the base Terracotta image and the Terracotta cluster-tool image:
     
-    TC_IMAGE=<tc-image> CLUSTER_TOOL_IMAGE=\<cluster-tool-image> LICENSE_URL=\<url_terracotta_license> docker stack deploy -c docker-compose.yml sample-tc
+    TC_IMAGE=\<tc-image> CLUSTER_TOOL_IMAGE=\<cluster-tool-image> LICENSE_URL=\<url_terracotta_license> docker stack deploy -c docker-compose.yml sample-tc
    
 4. You can confirm that the Terracotta containers are successfully started by checking the following:
  

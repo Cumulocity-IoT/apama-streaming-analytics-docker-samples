@@ -90,11 +90,11 @@ To run the sample on Linux:
  
 2. Build the image for the Correlator, using the base Apama image:
 
-    docker build -f Dockerfile --tag queries-image --build-arg APAMA_IMAGE=<apama-image> .
+    docker build -f Dockerfile --tag queries-image --build-arg APAMA_IMAGE=\<apama-image> .
  
 3. Now run the following command to start the Terracotta store and initialise it, using the base Terracotta image and the Terracotta cluster-tool image:
     
-    TC_IMAGE=<tc-image> CLUSTER_TOOL_IMAGE=<cluster-tool-image> LICENSE_URL=<url_terracotta_license> docker stack deploy -c docker-compose.yml sample-tc
+    TC_IMAGE=<tc-image> CLUSTER_TOOL_IMAGE=\<cluster-tool-image> LICENSE_URL=\<url_terracotta_license> docker stack deploy -c docker-compose.yml sample-tc
    
 4. You can confirm that the Terracotta containers are successfully started by checking the following:
  
@@ -102,7 +102,7 @@ To run the sample on Linux:
 
 5. Once the containers are running for Terracotta and there are no errors start the correlators:
  
-    QUERIES_IMAGE=<queries-image> EXTERNAL_NETWORK_PREFIX=sample-tc docker stack deploy -c docker-compose-corr.yml sample-corr
+    QUERIES_IMAGE=\<queries-image> EXTERNAL_NETWORK_PREFIX=sample-tc docker stack deploy -c docker-compose-corr.yml sample-corr
 
 6. In another command prompt from your installation directory, set up an engine_receive to receive any events sent from the application, as follows:
 
@@ -139,13 +139,13 @@ amongst other output:
 
     __Note__ that the image needs to be pushed to a repository so "queries-image" should be in the form **your-repository:queries-image**
 
-    docker build -f Dockerfile --tag queries-image --build-arg APAMA_IMAGE=<apama-image> .
+    docker build -f Dockerfile --tag queries-image --build-arg APAMA_IMAGE=\<apama-image> .
 
 3. Build the image for the Sender:
 
     __Note__ that the image needs to be pushed to a repository so "sender-image" should be in the form **your-repository:sender-image**
 
-    docker build -f Dockerfile.sender --tag sender-image --build-arg APAMA_IMAGE=<apama-image> .
+    docker build -f Dockerfile.sender --tag sender-image --build-arg APAMA_IMAGE=\<apama-image> .
 
 4. The images built need to be pushed into a repository for kubernetes to use:
 

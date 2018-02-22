@@ -1,5 +1,5 @@
 /*
- * $Copyright (c) 2014-2016 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.$
+ * $Copyright (c) 2014-2016,2018 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.$
  * Use, reproduction, transfer, publication or disclosure is prohibited except as specifically provided for in your License Agreement with Software AG
  */ 
 package apamax.querysamples.detectunusualreadings;
@@ -56,7 +56,7 @@ query DetectUnusualReadings {
 		 */
 	 	%send("eventType":".apamax.querysamples.detectunusualreadings.SensorThresholdAlert",
 	 			"title":"Send a SensorThresholdAlert event", "description":"Send a screening alert of an individual suspected of a fever",
-	 			"channel":"\"jms:UniversalMessaging-default-sender\"",
+	 			"channel":"\"apamax.querysamples.screeningalerts\"",
 	 			"fields": {
 	 				"min":"minValue",
 	 				"max":"maxValue",
@@ -65,8 +65,8 @@ query DetectUnusualReadings {
 	 				"sensorId":"sensorId"
 	 			});
 	
-			%custom("title":"Log reciept of messages","description":"Log it") {
-				log "MESSAGE RECV: " + sensorType;
+			%custom("title":"Log receipt of messages","description":"Log it") {
+				log "Query has received incoming message for sensor type: " + sensorType at INFO;
 			}
 	}
 }

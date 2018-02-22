@@ -16,4 +16,4 @@ spec:
    containers:
      - name: receiver
        image: 'apama-image'
-       command: ['engine_receive', '-n', 'qry-correlator-set-1.qry-correlator-service', '-p', '15903']
+       command: ['engine_receive', '-n', 'qry-correlator-set-1.qry-correlator-service', '-p', '15903', "-c","apamax.querysamples.screeningalerts"]

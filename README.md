@@ -1,6 +1,6 @@
 License
 =======
-Copyright (c) 2017 Software AG, Darmstadt, Germany and/or its licensors
+Copyright (c) 2017-2018 Software AG, Darmstadt, Germany and/or its licensors
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
 file except in compliance with the License. You may obtain a copy of the License at
@@ -29,29 +29,30 @@ Prerequisites
 =============
 This package makes the following assumptions:
 
-    You have some familiarity with and interest in the Docker technology
+    You have some familiarity with Docker technology.
 
     You have Apama installed on a Linux machine using either the commercial or
     the full community installation. This package is not supported with the
     Apama core installation, however the application samples will work with
-    both this package and the pre-built core image available on docker store.
+    both this package and the pre-built core image available on Docker Store.
     That image is available from:
     https://store.docker.com/images/apama-correlator
 
     Docker 17.12.0-ce or later is installed and its daemon is running
-    (https://docs.docker.com/installation/#installation)
+    (https://docs.docker.com/installation/#installation).
 
     Docker Compose 1.16.1 or later is installed
-    (https://docs.docker.com/compose/install/)
+    (https://docs.docker.com/compose/install/).
 
     You are logged in as root. For security reasons, only the root user is
     allowed to interact with the Docker daemon. It is easy to find out how to
-    rectify this by just searching online. One option would be to change the
+    rectify this by searching online. One option would be to change the
     permissions on Docker's socket ('/var/run/docker.sock') so that regular
     users can control Docker. We don't recommended this on production systems.
     Any user that can access the Docker daemon can escalate to root.
 
 Note: We have tested this package with the Docker daemon hosted on CentOS 7.1.
+
 
 Building a Docker image
 =======================
@@ -61,8 +62,8 @@ executables within containers e.g. the correlator, IAF, dashboard server,
 engine_* tools etc.
 
 The Docker build instruction should be run from the root of your Software AG
-installation e.g.  '/opt/softwareag/'. From that directory, Docker can be asked
-to build the image using instructions from the Dockerfile:
+installation, for example '/opt/softwareag/'. From that directory, Docker can 
+be asked to build the image using instructions from the Dockerfile:
 
     > docker build --tag apama --file ./Apama/samples/docker/image/Dockerfile .
 
@@ -77,14 +78,14 @@ The image is also set up to allow trouble-free execution; suitable environment
 variables and defaults are set. You can see this in more detail by reading the
 Dockerfile and the embedded commentary.
 
-You can see that an image has been created like so:
+You can see that an image has been created using this command:
 
     > docker images 
 
 REPOSITORY        TAG             IMAGE ID            CREATED             VIRTUAL SIZE
 apama             latest          bd738c940cc9        39 seconds ago      806.4 MB
 
-But at this point it is just an image, the Docker equivalent of a VM template,
+At this point it is just an image, the Docker equivalent of a VM template,
 not a running process. 
 
 
@@ -143,7 +144,7 @@ Docker to do this. A Docker-based application should not normally rely on
 processes in the host operating system, but this approach is sufficient for
 the current example.
 
-From an Apama command prompt in this directory:
+From a shell in this directory, source Apama/bin/apama_env then run:
 
     > engine_inject -p 15903 -n localhost applications/Simple/HelloWorld.mon
 
@@ -160,7 +161,7 @@ Log files
 =========
 Docker treats anything emitted on the console by a contained process as
 logging, and stores it appropriately. All of the examples and samples in this
-package ensure that Apama components log to the console. Try
+package ensure that Apama components log to the console. Try:
 
     > docker logs apama_in_docker
 
@@ -171,7 +172,7 @@ above example.
 Licensing
 =========
 The image you have just created will be able to run the correlator, but the
-correlator will run unlicensed and restricted. There is a Dockerfile
+correlator will run unlicensed and restricted. There is a Dockerfile 
 'image/Dockerfile.license' that uses the existing Apama image to create
 another Apama image that has a license in the correct location. To make use of
 it, change directory to where the license file called 'ApamaServerLicense.xml'
@@ -216,14 +217,14 @@ Generating Deployment Files
 Some of these Docker samples use an 'initialization.yaml' configuration
 file when starting the correlator process to allow the correlator to initialize
 itself. To generate the 'initialization.yaml' file, the
-'engine_deploy' tool is used on a Designer project.  See
+'engine_deploy' tool is execute on a Designer project or directory. See the 
 documentation for details, but an example using the 'Weather' sample can be run
 from the Apama Command prompt of your Software AG installation:
 
     > engine_deploy ./apama-samples/studio/demos/Weather --outputDeployDir ./apama-samples/docker/applications/Weather
 
-Next step
-=========
+Next steps
+==========
 There are multiple samples provided that teach you how to use Docker Compose
 and other Docker features to run and manage entire multi-process applications
 from inside Docker.

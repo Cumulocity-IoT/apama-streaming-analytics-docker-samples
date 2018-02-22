@@ -1,6 +1,6 @@
 License
 =======
-Copyright (c) 2017 Software AG, Darmstadt, Germany and/or its licensors
+Copyright (c) 2017-2018 Software AG, Darmstadt, Germany and/or its licensors
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
 file except in compliance with the License. You may obtain a copy of the License at
@@ -11,19 +11,19 @@ either express or implied.
 See the License for the specific language governing permissions and limitations under the License.
 
 
-Docker for Apama applications
+Using containers for Apama applications
 =============================
-The samples in this directory demonstrate how you can use Docker to deploy and
+The samples in this directory demonstrate how you can use Docker or Kubernetes to deploy and
 manage entire applications.
 
 You will previously have learnt how to build and run containers for individual
 processes such as the Apama correlator and the Apama IAF. However, an
 application will typically consist of multiple interacting processes. It is
-Docker best-practice to containerize only individual processes, and to link
-them together for network connections and file access.
+best-practice in the Docker world to containerize only individual processes, 
+and to link them together for network connections and file access.
 
-While all of this can be accomplished by sequences of Docker commands such as
-'build' and 'run', Docker Compose automates some
+While all of this can be accomplished by sequences of Docker or Kubernetes commands such as
+'build' and 'run', Both Docker and Kubernetes provide methods to automates some
 of this through configuration files. We demonstrate how to use it for
 deploying and managing entire applications in the samples provided.
 
@@ -42,12 +42,12 @@ earlier README.
 Using Docker Store
 ==================
 Whilst the samples make the assumptions listed above, it is also possible to
-use images uploaded to Docker Store by SoftwareAG. To alter the samples to use
-Docker Store for Apama, add the following to the docker build command:
+use images uploaded to Docker Store by Software AG. To change the samples to use
+Docker Store for Apama, add the following to the "docker build" command:
 
 --build-arg APAMA_IMAGE=store/softwareag/apama-correlator:<major version>.<minor version>
 
-giving, for example:
+resulting in a full command similar to:
 
 docker build -t myimage . --build-arg APAMA_IMAGE=store/softwareag/apama-correlator:10.1
 
@@ -65,19 +65,28 @@ following pattern, under services/application or services/correlator from:
 
 build: .
 
-to:
+... to this:
 
 build:
     context: .
     args:
         APAMA_IMAGE: store/softwareag/apama-correlator:<major version>.<minor version>
 
+Docker Stack
+==========
+Additionally to Docker Compose, docker stack can be used to get levels of scalability and resource
+management. Docker stack https://docs.docker.com/engine/reference/commandline/stack/
+uses the docker-compose.yml files with added specific entries detailing how to deploy
+the containers. 
+
+Prior to running docker stack samples the daemon being used should be enabled by an administrator
+using docker swarm init. https://docs.docker.com/engine/reference/commandline/swarm_init/
+
 Kubernetes
 ==========
-As an alternative to Docker Compose each sample also contains Kubernetes
-configuration files called 'kubernetes.yml'. This format is documented at
-https://kubernetes-v1-4.github.io/docs/user-guide/pods/multi-container/ .
-These can be used to deploy to any Kubernetes cluster.
+As an alternative to Docker Compose and stack, each sample also contains Kubernetes
+configuration files usually called 'kubernetes.yml'. This format is documented at
+https://kubernetes.io/docs/reference/ These can be used to deploy to any Kubernetes cluster.
 
 
 Running the samples using Docker Compose
@@ -89,7 +98,8 @@ order:
     Adapter/               Connecting a correlator and the IAF (not available with Apama Core)
     Weather/               Running Ant-exported projects and generating dashboards (not available with Apama Core)
     MemoryStore/           Using volumes for persistent state across rebuilds
-    UniversalMessaging/    Use UM for communication between two Apama correlators (not available with Apama Core)
+    UniversalMessaging/    Using UM for communication between two Apama correlators (not available with Apama Core)
+    Queries/               Using Stack and Kubernetes to start multiple correlators against a shared Terracotta store 
 
 Each sample contains a README with information specific to that sample,
 describing what it does and how to interact with the containers that it
@@ -110,14 +120,14 @@ described in the 'docker-compose.yml' configuration file. It will then bring
 up containers for each of them, configuring and linking them together as
 specified.
 
-You can then inspect the logs of each container 
+You can then inspect the logs of each container:
 
     > docker-compose logs
 
 The output will be streamed to your console, colour-coded to distinguish each
 container.
 
-When you are done, stop and remove all containers launched by Compose
+When you are done, stop and remove all containers launched by Compose:
 
     > docker-compose stop
     > docker-compose rm
@@ -171,7 +181,7 @@ docker-compose.yml cheat sheet
 'services:'
 
 This describes what services should be created for this Composition and is a
-top-level configuation.
+top-level configuration.
 
 'image:'
 
@@ -191,7 +201,7 @@ This can be used in 2 places.  At the top-level, it describes what networks
 Compose should create.  When used in a service, it says which networks the
 services container should connect to.  Containers on the same network to
 discover and connect to each other using the services name as a hostname.
-This allows for seperation of different containers onto different networks.
+This allows for separation of different containers onto different networks.
 
 See https://docs.docker.com/compose/networking/
 
@@ -221,8 +231,8 @@ inter-container should remain private.
 Express dependency between services to ensure start ordering.
 
 
-Further work
-============
+Next steps
+==========
 After exploring these samples, you might wish to create your own Docker-ized
 applications, extending the existing samples and/or using the comprehensive
 documentation available on Docker's website (http://docs.docker.com/). Here
@@ -242,6 +252,11 @@ are some ideas to get started:
   
 Changes from previous releases
 ==============================
+
+Additional Queries Sample
+-------------------------------
+Demonstrates Kubernetes StatefulSet and docker stack commands to handle 
+replication of Apama applications.
 
 Version 3.3 of Compose YAML files
 -------------------------------

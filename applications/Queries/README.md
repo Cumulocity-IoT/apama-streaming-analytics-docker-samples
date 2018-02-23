@@ -27,6 +27,10 @@ and the query sends an alert when an individual who has a
 temperature has been identified.
 
 ## BEFORE YOU START 
+**NOTE** At the time of writing, this sample does not work on the Azure platform. 
+Azure uses Docker version 17.04 and kubernetes version 1.7.9 
+which do not provide some of the capabilities required. **The sample has been tested
+against private installations using docker 17.12+ and Kubernetes 1.8+.**
 
 The Sample requires a base image for Apama, Terracotta DB Server and the Terracotta 
 cluster-tool. You have several options for Apama and these are detailed below.

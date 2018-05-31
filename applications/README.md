@@ -100,6 +100,7 @@ order:
     MemoryStore/           Using volumes for persistent state across rebuilds
     UniversalMessaging/    Using UM for communication between two Apama correlators (not available with Apama Core)
     Queries/               Using Stack and Kubernetes to start multiple correlators against a shared Terracotta store 
+    Secrets/               Using Docker and Kubernetes secrets to pass encrypted data to the correlator through config files
 
 Each sample contains a README with information specific to that sample,
 describing what it does and how to interact with the containers that it
@@ -173,7 +174,7 @@ To inspect the logs from the containers in the pod:
 
 To remove the deployment:
 
-	> kubectl delete -f kubernetes.fml
+	> kubectl delete -f kubernetes.yml
 
 docker-compose.yml cheat sheet
 ==============================
@@ -252,6 +253,11 @@ are some ideas to get started:
   
 Changes from previous releases
 ==============================
+
+Additional Secrets Sample
+-------------------------------
+Demonstrates use of Docker and Kubernetes secrets to pass encrypted data
+to the correlator through config files.
 
 Additional Queries Sample
 -------------------------------

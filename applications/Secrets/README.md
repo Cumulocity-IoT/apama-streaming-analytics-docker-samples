@@ -22,8 +22,28 @@ used to securely provide credentials to the system.
 Running with Docker
 ==============
 
-Detailed instructions on running the sample as a Compose-based application
-can be found in the README in the parent directory.
+This sample can't be run with docker-compose, due to limitations with secrets. There are two types of secrets,
+'file' or 'external' secrets. File secrets can only be used locally and not with a remote docker host. External
+secrets are not compatible with docker-compose. Therefore the sample should be run using the docker service
+command.
+
+First, create the secret
+
+    > echo "CORRELATOR_NAME=MyCorrelatorName" | docker secret create secret.properties -
+
+Then build the sample. You can pass in the corerlator to use, in the same way described in
+the parent README under 'Using Docker Store'
+
+    > docker build -t sample .
+
+Create the service in detatched mode, passing in the secret.
+
+    > docker service create --name sample --secret=secret.properties -d sample
+
+Inspect the logs to see if the correlator name was successfully read.
+
+    > docker service logs sample
+
 
 Running with Kubernetes
 ==============
@@ -31,7 +51,7 @@ Running with Kubernetes
 Prior to running the sample in Kubernetes you must create the Kubernetes secret
 in the system. 
 
-    > kubectl create -f kubernetes-secret.yaml
+    > kubectl create -f kubernetes-secret.yml
 
 This sample can be run with Kubernetes following the steps in the README in the
 parent directory. 

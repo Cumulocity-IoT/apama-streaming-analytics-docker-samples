@@ -243,5 +243,6 @@ Each sample application also then has an individual README:
 |[MemoryStore](applications/MemoryStore/README.md)|
 |[Queries](applications/Queries/README.md)|
 |[Simple](applications/Simple/README.md)|
+|[Secrets](applications/Secrets/README.md)|
 |[UniversalMessaging](applications/UniversalMessaging/README.md)|
 |[Weather](applications/Weather/README.md)|

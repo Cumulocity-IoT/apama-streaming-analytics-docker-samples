@@ -38,6 +38,17 @@ These sample applications assume that you have already created the base Apama
 image using the Dockerfile provided, with the name 'apama' as described in the
 earlier README. 
 
+The most educational way to go through the sample applications is in this
+order:
+
+    Simple/                Injecting EPL into a correlator
+    Adapter/               Connecting a correlator and the IAF (not available with Apama Core)
+    Weather/               Running Ant-exported projects and generating dashboards (not available with Apama Core)
+    MemoryStore/           Using volumes for persistent state across rebuilds
+    UniversalMessaging/    Using UM for communication between two Apama correlators (not available with Apama Core)
+    Queries/               Using Stack and Kubernetes to start multiple correlators against a shared Terracotta store
+    Secrets/               Using Docker and Kubernetes secrets to pass encrypted data to the correlator through config files
+
 
 Using Docker Store
 ==================
@@ -91,17 +102,6 @@ https://kubernetes.io/docs/reference/ These can be used to deploy to any Kuberne
 
 Running the samples using Docker Compose
 ========================================
-The most educational way to go through the sample applications is in this
-order:
-
-    Simple/                Injecting EPL into a correlator
-    Adapter/               Connecting a correlator and the IAF (not available with Apama Core)
-    Weather/               Running Ant-exported projects and generating dashboards (not available with Apama Core)
-    MemoryStore/           Using volumes for persistent state across rebuilds
-    UniversalMessaging/    Using UM for communication between two Apama correlators (not available with Apama Core)
-    Queries/               Using Stack and Kubernetes to start multiple correlators against a shared Terracotta store 
-    Secrets/               Using Docker and Kubernetes secrets to pass encrypted data to the correlator through config files
-
 Each sample contains a README with information specific to that sample,
 describing what it does and how to interact with the containers that it
 creates. The 'docker-compose.yml' configuration file in each sample is also

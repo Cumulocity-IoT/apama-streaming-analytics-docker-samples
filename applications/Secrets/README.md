@@ -17,7 +17,8 @@ See the License for the specific language governing permissions and limitations 
 
 This sample demonstrates how to use secrets in Docker and Kubernetes to set variables in correlator
 config files. The secrets can then be loaded at runtime into a correlator or other containers. This can be
-used to securely provide credentials to the system.
+used to securely provide credentials to the system. In addition, the same pattern can be used with Docker
+configs or Kubernetes config maps to manage non-secret runtime configuration.
 
 Running with Docker
 ==============

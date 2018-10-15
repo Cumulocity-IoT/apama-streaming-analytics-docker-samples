@@ -1,4 +1,4 @@
-# Copyright (c) 2017 Software AG, Darmstadt, Germany and/or its licensors
+# Copyright (c) 2017-2018 Software AG, Darmstadt, Germany and/or its licensors
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not use this 
 # file except in compliance with the License. You may obtain a copy of the License at
@@ -11,8 +11,10 @@
 # Create an image from the base Apama image, copying the project in it ready to deploy
 ARG APAMA_IMAGE=apama
 FROM ${APAMA_IMAGE}
-COPY init.yaml /apama_work/Weather/
-COPY monitors /apama_work/Weather/monitors
-COPY bundle_instance_files /apama_work/Weather/bundle_instance_files
+COPY --chown=sagadmin:sagadmin init.yaml ${APAMA_WORK}/Weather/
+COPY --chown=sagadmin:sagadmin monitors ${APAMA_WORK}/Weather/monitors
+COPY --chown=sagadmin:sagadmin bundle_instance_files ${APAMA_WORK}/Weather/bundle_instance_files
 
-CMD ["correlator", "--config", "/apama_work/Weather"]
+WORKDIR ${APAMA_WORK}
+
+CMD ["correlator", "--config", "Weather"]

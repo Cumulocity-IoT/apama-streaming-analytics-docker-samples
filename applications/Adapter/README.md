@@ -24,14 +24,14 @@ application or via Kubernetes can be found in the README in the parent
 directory. If you are running via Kubernetes this sample creates the following
 resources which can be accessed via logs and must be deleted via delete:
 
-	* pod adapter-engine
-	* pod adapter-iaf
-	* service adapter-correlator
+* pod adapter-engine
+* pod adapter-iaf
+* service adapter-correlator
 
 You must also build the following sub-directories and substitute in image names:
 
-	* iaf
-	* deployment
+* iaf
+* deployment
 
 This sample uses an init-container for the IAF to wait for the correlator service 
 to become available before starting the IAF.

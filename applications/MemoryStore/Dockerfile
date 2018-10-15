@@ -1,4 +1,4 @@
-# Copyright (c) 2017 Software AG, Darmstadt, Germany and/or its licensors
+# Copyright (c) 2017-2018 Software AG, Darmstadt, Germany and/or its licensors
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not use this 
 # file except in compliance with the License. You may obtain a copy of the License at
@@ -9,9 +9,10 @@
 # See the License for the specific language governing permissions and limitations under the License.
 
 # Create an image from the base Apama image, with the MemoryStore application in it ready to deploy
-ARG APAMA_IMAGE=apama
+ARG APAMA_IMAGE=daerepository03.eur.ad.sag:4443/apama/correlator:PI
 FROM ${APAMA_IMAGE}
-COPY init.yaml MemoryStoreCounter.mon /apama_work/MemoryStore/
-
-WORKDIR /apama_work/MemoryStoreData
-CMD ["correlator", "--config", "/apama_work/MemoryStore/init.yaml"]
+COPY --chown=sagadmin:sagadmin init.yaml MemoryStoreCounter.mon ${APAMA_WORK}/MemoryStore/
+# ensure our volume will have the correct permissions once mounted
+RUN mkdir ${APAMA_WORK}/MemoryStoreData 
+WORKDIR ${APAMA_WORK}/MemoryStoreData
+CMD ["correlator", "--config", "../MemoryStore/init.yaml"]

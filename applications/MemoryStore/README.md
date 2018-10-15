@@ -47,9 +47,9 @@ application or via Kubernetes can be found in the README in the parent
 directory. If you are running via Kubernetes this sample creates the following
 resources which can be accessed via logs and must be deleted via delete:
 
-	* deployment memstore-sample
-	* pv memstore-data
-	* pvc memstore-data-claim
+* deployment memstore-sample
+* pv memstore-data
+* pvc memstore-data-claim
 
 Inspecting and restarting with docker-compose
 ---------------------------------------------

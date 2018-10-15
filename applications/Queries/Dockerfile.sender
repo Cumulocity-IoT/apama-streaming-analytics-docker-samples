@@ -13,7 +13,7 @@
 ARG APAMA_IMAGE=apama
 FROM ${APAMA_IMAGE}
 
-COPY Input.evt /apama_work/
+COPY --chown=sagadmin:sagadmin Input.evt ${APAMA_WORK}/Input.evt
 
 #init.yaml lists the EPL to inject at startup:
 CMD ["engine_send", "-n", "qry-correlator-set-1.qry-correlator-service", "-p", "15903", "/apama_work/Input.evt"]

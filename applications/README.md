@@ -1,5 +1,7 @@
+
 License
 =======
+
 Copyright (c) 2017-2018 Software AG, Darmstadt, Germany and/or its licensors
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
@@ -10,9 +12,9 @@ License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF 
 either express or implied. 
 See the License for the specific language governing permissions and limitations under the License.
 
-
 Using containers for Apama applications
 =============================
+
 The samples in this directory demonstrate how you can use Docker or Kubernetes to deploy and
 manage entire applications.
 
@@ -41,30 +43,32 @@ earlier README.
 The most educational way to go through the sample applications is in this
 order:
 
-    Simple/                Injecting EPL into a correlator
-    Adapter/               Connecting a correlator and the IAF (not available with Apama Core)
-    Weather/               Running Ant-exported projects and generating dashboards (not available with Apama Core)
-    MemoryStore/           Using volumes for persistent state across rebuilds
-    UniversalMessaging/    Using UM for communication between two Apama correlators (not available with Apama Core)
-    Queries/               Using Stack and Kubernetes to start multiple correlators against a shared Terracotta store
-    Secrets/               Using Docker and Kubernetes secrets to pass encrypted data to the correlator through config files
-
+| Sample              | Description |
+|---------------------|-------------|
+| Simple/             | Injecting EPL into a correlator |
+| Adapter/            | Connecting a correlator and the IAF (not available with Apama Core)|
+| Weather/            | Running Ant-exported projects and generating dashboards (not available with Apama Core)|
+| MemoryStore/        | Using volumes for persistent state across rebuilds|
+| UniversalMessaging/ | Using UM for communication between two Apama correlators (not available with Apama Core)|
+| Queries/            | Using Stack and Kubernetes to start multiple correlators against a shared Terracotta store|
+| Secrets/            | Using Docker and Kubernetes secrets to pass encrypted data to the correlator through config files|
 
 Using Docker Store
 ==================
+
 Whilst the samples make the assumptions listed above, it is also possible to
 use images uploaded to Docker Store by Software AG. To change the samples to use
 Docker Store for Apama, add the following to the "docker build" command:
 
---build-arg APAMA_IMAGE=store/softwareag/apama-correlator:<major version>.<minor version>
+    --build-arg APAMA_IMAGE=store/softwareag/apama-correlator:<major version>.<minor version>
 
 resulting in a full command similar to:
 
-docker build -t myimage . --build-arg APAMA_IMAGE=store/softwareag/apama-correlator:10.1
-
+    docker build -t myimage . --build-arg APAMA_IMAGE=store/softwareag/apama-correlator:10.1
 
 Docker Compose
 ==============
+
 Docker Compose is invoked using the 'docker-compose' tool, which is documented
 at http://docs.docker.com/compose/. You should already have 'docker-compose'
 installed and available on your PATH. These samples drive the tool through the
@@ -74,34 +78,36 @@ documented at http://docs.docker.com/compose/yml/ .
 To use Docker Store from within the Docker Compose yaml files, change the
 following pattern, under services/application or services/correlator from:
 
-build: .
+    build: .
 
 ... to this:
 
-build:
-    context: .
-    args:
-        APAMA_IMAGE: store/softwareag/apama-correlator:<major version>.<minor version>
+    build:
+        context: .
+        args:
+            APAMA_IMAGE: store/softwareag/apama-correlator:<major version>.<minor version>
 
 Docker Stack
 ==========
+
 Additionally to Docker Compose, docker stack can be used to get levels of scalability and resource
 management. Docker stack https://docs.docker.com/engine/reference/commandline/stack/
 uses the docker-compose.yml files with added specific entries detailing how to deploy
-the containers. 
+the containers.
 
 Prior to running docker stack samples the daemon being used should be enabled by an administrator
 using docker swarm init. https://docs.docker.com/engine/reference/commandline/swarm_init/
 
 Kubernetes
 ==========
+
 As an alternative to Docker Compose and stack, each sample also contains Kubernetes
 configuration files usually called 'kubernetes.yml'. This format is documented at
 https://kubernetes.io/docs/reference/ These can be used to deploy to any Kubernetes cluster.
 
-
 Running the samples using Docker Compose
 ========================================
+
 Each sample contains a README with information specific to that sample,
 describing what it does and how to interact with the containers that it
 creates. The 'docker-compose.yml' configuration file in each sample is also
@@ -231,9 +237,9 @@ inter-container should remain private.
 
 Express dependency between services to ensure start ordering.
 
-
 Next steps
 ==========
+
 After exploring these samples, you might wish to create your own Docker-ized
 applications, extending the existing samples and/or using the comprehensive
 documentation available on Docker's website (http://docs.docker.com/). Here
@@ -250,29 +256,31 @@ are some ideas to get started:
   'docker-compose' tool that allow you to rebuild and restart individual
   containers in a running Compose environment.
 
-  
 Changes from previous releases
 ==============================
 
 Additional Secrets Sample
 -------------------------------
+
 Demonstrates use of Docker and Kubernetes secrets to pass encrypted data
 to the correlator through config files.
 
 Additional Queries Sample
 -------------------------------
+
 Demonstrates Kubernetes StatefulSet and docker stack commands to handle 
 replication of Apama applications.
 
 Version 3.3 of Compose YAML files
 -------------------------------
+
 This gives us access to much more Compose functionality (such as network,
 volumes, etc) and Version 1 is deprecated and expected to be removed at
 some point.
 
-
 Deployment Containers
 ---------------------
+
 We have moved away from using deployment containers (where a short lived
 container would inject code into a separate container running the correlator).
 We have moved away from using engine_inject on the command line (which also
@@ -284,47 +292,20 @@ init.yaml configuration file which lists what files (.mon, .evt, .cdp or .jar)
 to inject at startup. This is good practice and allows for use with Docker
 Swarm and to easily scale distributed applications.
 
-
 Links
 -----
+
 We no longer use container 'links', instead using networking to connect
 container together.  'links' are deprecated and do not work on multi-host
 Swarms.
 
-
 Volumes
 -------
+
 Volumes are now first class Compose citizens and we no longer need to
 create dedicated data volume containers.
 
-
-Deployment Containers
----------------------
-We have moved away from using deployment containers (where a short lived
-container would inject code into a separate container running the correlator).
-We have moved away from using engine_inject on the command line (which also
-required using engine_management --waitFor to wait for the correlator to
-start).
-
-We now use the --config command line argument to the correlator to specify an
-init.yaml configuration file which lists what files (.mon, .evt, .cdp or .jar)
-to inject at startup. This is good practice and allows for use with Docker
-Swarm and to easily scale distributed applications.
-
-
-Links
------
-We no longer use container 'links', instead using networking to connect
-container together.  'links' are deprecated and do not work on multi-host
-Swarms.
-
-
-Volumes
--------
-Volumes are now first class Compose citizens and we no longer need to
-create dedicated data volume containers.
-
-Kubernetes
-----------
+Kubernetes configuration
+------------------------
 
 Added Kubernetes configuration for each sample.

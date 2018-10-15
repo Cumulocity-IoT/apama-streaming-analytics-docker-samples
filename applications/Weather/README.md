@@ -53,7 +53,7 @@ operating system, allowing you to visualise the demo in the Dashboard Viewer:
    If you're running using kubernetes you will need to use this command to
 	find the port used:
 
-	> kubectl describe service weather
+		> kubectl describe service weather
 
 4. File->Open and choose \demos\Weather\dashboards\Weather.rtv from your Apama
    installation

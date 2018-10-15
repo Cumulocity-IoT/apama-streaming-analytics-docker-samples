@@ -1,4 +1,4 @@
-# Copyright (c) 2017 Software AG, Darmstadt, Germany and/or its licensors
+# Copyright (c) 2017-2018 Software AG, Darmstadt, Germany and/or its licensors
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not use this 
 # file except in compliance with the License. You may obtain a copy of the License at
@@ -11,7 +11,8 @@
 # Create an image from the base Apama image, with an EPL application in it ready to deploy
 ARG APAMA_IMAGE=apama
 FROM ${APAMA_IMAGE}
-COPY init.yaml HelloWorld.mon /apama_work/Simple/
+COPY --chown=sagadmin:sagadmin init.yaml HelloWorld.mon ${APAMA_WORK}/Simple/
 
-WORKDIR /apama_work/Simple
+WORKDIR ${APAMA_WORK}/Simple
+
 CMD ["correlator", "--config", "init.yaml"]

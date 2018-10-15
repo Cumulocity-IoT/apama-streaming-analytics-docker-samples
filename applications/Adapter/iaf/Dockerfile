@@ -1,4 +1,4 @@
-# Copyright (c) 2017 Software AG, Darmstadt, Germany and/or its licensors
+# Copyright (c) 2017-2018 Software AG, Darmstadt, Germany and/or its licensors
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not use this 
 # file except in compliance with the License. You may obtain a copy of the License at
@@ -11,7 +11,8 @@
 # Create an image from the base Apama image, with an IAF (File adapter) configuration in it
 ARG APAMA_IMAGE=apama
 FROM ${APAMA_IMAGE}
-COPY File.xml inputFile.txt File-static.xml /apama_work/Adapter/
 
-WORKDIR /apama_work/Adapter
+COPY --chown=sagadmin:sagadmin File.xml inputFile.txt File-static.xml ${APAMA_WORK}/Adapter/
+
+WORKDIR ${APAMA_WORK}/Adapter
 CMD ["iaf", "File.xml"]

@@ -1,0 +1,55 @@
+# Copyright (c) 2017, 2018 Software AG, Darmstadt, Germany and/or its licensors
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may not use this 
+# file except in compliance with the License. You may obtain a copy of the License at
+# http://www.apache.org/licenses/LICENSE-2.0
+# Unless required by applicable law or agreed to in writing, software distributed under the
+# License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+# either express or implied. 
+# See the License for the specific language governing permissions and limitations under the License.
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: umsample-bus
+  labels:
+    app: "umsample-um"
+spec:
+  containers:
+    - name: umsample-um
+      image: um-image
+      ports:
+        - containerPort: 9000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: umsample-umhost
+spec:
+  selector:
+    app: umsample-um
+  ports:
+  - protocol: TCP
+    port: 9000
+    targetPort: 9000
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: add-channel
+spec:
+  template:
+    metadata:
+      name: add-channel
+    spec:
+      initContainers:
+        - name: wait-for-um
+          image: busybox
+          command: ['sh', '-c', 'until nslookup umsample-umhost; do echo waiting for UM; sleep 2; done;']
+      containers:
+      - name: add-channel-0
+        image: um-image
+        command: ["runUMTool.sh"]
+        args: ["CreateChannel", "-rname=nsp://umsample-umhost:9000", "-channelname=UM_TestChannel", "-type=R", "-honourcapacity=true", "-maxevents=20000", "-subject=*@*", "-publish=true", "-subscribe=true"]
+      restartPolicy: OnFailure
+

@@ -11,5 +11,8 @@
 
 ARG APAMA_IMAGE=apama
 FROM ${APAMA_IMAGE}
-COPY correlator-config.yaml /correlator-config.yaml
-CMD ["correlator", "--config", "/correlator-config.yaml", "--config", "/run/secrets/"]
+
+COPY --chown=sagadmin:sagadmin correlator-config.yaml ${APAMA_WORK}/correlator-config.yaml
+
+WORKDIR ${APAMA_WORK}
+CMD ["correlator", "--config", "correlator-config.yaml", "--config", "/run/secrets/"]

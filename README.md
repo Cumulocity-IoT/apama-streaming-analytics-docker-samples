@@ -28,36 +28,36 @@ parties may also have trademark rights in other terms used herein.
 ## Prerequisites
 This package makes the following assumptions:
 
-    You have some familiarity with Docker and Kubernetes technology.
+* You have some familiarity with Docker and Kubernetes technology.
 
-    This package is not supported with the Apama core installation, however the 
-    application samples will work with just this package and the pre-built 
-    correlator image available on Docker Store. 
-    
-    * The Pre-built image is available from:
-    https://store.docker.com/images/apama-correlator
-    
-    * To build your own image, Apama will need to be installed on a Linux machine 
-    using either the commercial or the full community installation.
-    
-    If you are using the pre-built image you will need to clone this repository to 
-    a suitable location. 
+* This package is not supported with the Apama core installation, however the 
+application samples will work with just this package and the pre-built 
+correlator image available on Docker Store. 
 
-    Docker 17.12.0-ce or later is installed and its daemon is running
-    (https://docs.docker.com/installation/#installation).
+* The Pre-built image is available from:
+https://store.docker.com/images/apama-correlator
 
-    Docker Compose 1.16.1 or later is installed
-    (https://docs.docker.com/compose/install/).
-    
-    Kubernetes 1.8.0 or later is installed and the server is running
-    https://kubernetes.io/docs/setup/
+* To build your own image, Apama will need to be installed on a Linux machine 
+using either the commercial or the full community installation.
 
-    You are logged in as root. For security reasons, only the root user is
-    allowed to interact with the Docker daemon. It is easy to find out how to
-    rectify this by searching online. One option would be to change the
-    permissions on Docker's socket ('/var/run/docker.sock') so that regular
-    users can control Docker. We don't recommended this on production systems.
-    Any user that can access the Docker daemon can escalate to root.
+* If you are using the pre-built image you will need to clone this repository to 
+a suitable location. 
+
+* Docker 17.12.0-ce or later is installed and its daemon is running
+(https://docs.docker.com/installation/#installation).
+
+* Docker Compose 1.16.1 or later is installed
+(https://docs.docker.com/compose/install/).
+
+* Kubernetes 1.8.0 or later is installed and the server is running
+https://kubernetes.io/docs/setup/
+
+* You are logged in as root. For security reasons, only the root user is
+allowed to interact with the Docker daemon. It is easy to find out how to
+rectify this by searching online. One option would be to change the
+permissions on Docker's socket ('/var/run/docker.sock') so that regular
+users can control Docker. We don't recommended this on production systems.
+Any user that can access the Docker daemon can escalate to root.
 
 Note: We have tested this package with the Docker daemon hosted on CentOS 
 Linux release 7.4
@@ -103,32 +103,33 @@ You can turn your new image into a running container with the 'docker run'
 command. But before you do, there are a number of configuration options you
 will need to consider.
 
-Default executable:
-    By default, the image will execute a Java-enabled correlator.
-    This is configured in the CMD element of the Dockerfile. If you want to
-    override for an existing image, the last parameter to 'docker run' should
-    be a command such as 'iaf' followed by some options to the IAF.
+### Default executable:
 
-    You might prefer to edit the CMD element to a different default, and
-    rebuild the image.
+By default, the image will execute a Java-enabled correlator.
+This is configured in the CMD element of the Dockerfile. If you want to
+override for an existing image, the last parameter to 'docker run' should
+be a command such as 'iaf' followed by some options to the IAF.
 
-Exposed ports:
-    As a virtualization platform, Docker runs each container in its own
-    isolated network stack. Any exposure to the host operating system's
-    network stack, or to that of other containers, must be explicit.
-    Via the EXPOSE element of the Dockerfile, the image designates the ports
-    that it may be listening on. In this case, these are the default ports of
-    every Apama component.  As above, you might ultimately wish to change this
-    and rebuild.
+You might prefer to edit the CMD element to a different default, and
+rebuild the image.
 
-    The simplest way to make use of this is via the '-p' option which maps a
-    listening port in the container to a listening port on the host networking
-    stack. For this image, you will probably want to map port 15903, the
-    default listening port of the correlator.
+### Exposed ports:
+As a virtualization platform, Docker runs each container in its own
+isolated network stack. Any exposure to the host operating system's
+network stack, or to that of other containers, must be explicit.
+Via the EXPOSE element of the Dockerfile, the image designates the ports
+that it may be listening on. In this case, these are the default ports of
+every Apama component.  As above, you might ultimately wish to change this
+and rebuild.
 
-    The more usual/idiomatic way is to link containers directly together,
-    entirely ignoring the host operating system, but this is covered in later
-    samples.
+The simplest way to make use of this is via the '-p' option which maps a
+listening port in the container to a listening port on the host networking
+stack. For this image, you will probably want to map port 15903, the
+default listening port of the correlator.
+
+The more usual/idiomatic way is to link containers directly together,
+entirely ignoring the host operating system, but this is covered in later
+samples.
 
 Ultimately, turning your new image into a running container will look
 something like this:
@@ -243,6 +244,5 @@ Each sample application also then has an individual README:
 |[MemoryStore](applications/MemoryStore/README.md)|
 |[Queries](applications/Queries/README.md)|
 |[Simple](applications/Simple/README.md)|
-|[Secrets](applications/Secrets/README.md)|
 |[UniversalMessaging](applications/UniversalMessaging/README.md)|
 |[Weather](applications/Weather/README.md)|

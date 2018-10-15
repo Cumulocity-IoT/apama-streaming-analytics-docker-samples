@@ -11,4 +11,4 @@
 # This Dockerfile uses the base Apama image, to create a new derived image for Apama with the license included in the correct location
 
 FROM apama
-COPY ApamaServerLicense.xml /apama_work/license/ApamaServerLicense.xml 
+COPY --chown=1724:1724 ApamaServerLicense.xml ${APAMA_WORK}/license/ApamaServerLicense.xml 

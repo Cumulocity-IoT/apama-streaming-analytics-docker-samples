@@ -20,5 +20,5 @@ FROM ${APAMA_IMAGE}
 MAINTAINER SoftwareAG
 
 # Copy the libraries required to talk to JMS and TDB
-COPY common/lib/ /opt/softwareag/common/lib
+COPY --chown=sagadmin:sagadmin common/lib/ /opt/softwareag/common/lib
 

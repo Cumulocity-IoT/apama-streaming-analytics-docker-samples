@@ -21,6 +21,10 @@ services:
         networks:
             - sender
             - receiver
+        # Expose port 9000 of the container (default NSP port) to port 9000 of the host machine, so that containers on other hosts that can't
+        # connect with local docker links can connect
+        ports: 
+            - 9000:9000
     umsample-create:
         image: ${UM_IMAGE}
         networks: 

@@ -18,25 +18,26 @@ FROM centos:7
 
 MAINTAINER SoftwareAG
 
-ARG APAMA_HOME=@DOCKER_APAMA_HOME@
-ARG APAMA_WORK=@DOCKER_APAMA_WORK@
-ARG SAG_HOME=@DOCKER_APAMA_HOME@/..
+ARG APAMA_HOME=/opt/softwareag/Apama
+ARG APAMA_WORK=/apama_work
+ARG SAG_HOME=/opt/softwareag/Apama/..
 
-RUN /sbin/groupadd -g @DOCKER_USER@ sagadmin && /sbin/useradd -d / -M -N -g @DOCKER_USER@ -u @DOCKER_USER@ sagadmin
+RUN /sbin/groupadd -g 1724 sagadmin && /sbin/useradd -d / -M -N -g 1724 -u 1724 sagadmin
 
 # Copy and customize the minimal contents from the installation in order to
 # run non-interactive Apama components
-COPY --chown=@DOCKER_USER@:@DOCKER_USER@ ./common/security/ ${APAMA_HOME}/../common/security/
-COPY --chown=@DOCKER_USER@:@DOCKER_USER@ ./jvm/jvm/ /java_home/
-COPY --chown=@DOCKER_USER@:@DOCKER_USER@ ./Apama/adapters/ ${APAMA_HOME}/adapters/
-COPY --chown=@DOCKER_USER@:@DOCKER_USER@ ./Apama/bin/ ${APAMA_HOME}/bin/
-COPY --chown=@DOCKER_USER@:@DOCKER_USER@ ./Apama/catalogs/ ${APAMA_HOME}/catalogs/
-COPY --chown=@DOCKER_USER@:@DOCKER_USER@ ./Apama/lib/ ${APAMA_HOME}/lib/
-COPY --chown=@DOCKER_USER@:@DOCKER_USER@ ./Apama/third_party/ ${APAMA_HOME}/third_party/
-COPY --chown=@DOCKER_USER@:@DOCKER_USER@ ./Apama/monitors/ ${APAMA_HOME}/monitors/
-COPY --chown=@DOCKER_USER@:@DOCKER_USER@ ./Apama/connectivity/ ${APAMA_HOME}/connectivity/
-COPY --chown=@DOCKER_USER@:@DOCKER_USER@ ./Apama/etc ${APAMA_HOME}/etc/
-COPY --chown=@DOCKER_USER@:@DOCKER_USER@ ./common/lib/ext ${APAMA_HOME}/../common/lib/ext
+COPY --chown=1724:1724 ./common/security/ ${APAMA_HOME}/../common/security/
+COPY --chown=1724:1724 ./jvm/jvm/ /java_home/
+COPY --chown=1724:1724 ./Apama/adapters/ ${APAMA_HOME}/adapters/
+COPY --chown=1724:1724 ./Apama/bin/ ${APAMA_HOME}/bin/
+COPY --chown=1724:1724 ./Apama/catalogs/ ${APAMA_HOME}/catalogs/
+COPY --chown=1724:1724 ./Apama/include/ ${APAMA_HOME}/include/
+COPY --chown=1724:1724 ./Apama/lib/ ${APAMA_HOME}/lib/
+COPY --chown=1724:1724 ./Apama/third_party/ ${APAMA_HOME}/third_party/
+COPY --chown=1724:1724 ./Apama/monitors/ ${APAMA_HOME}/monitors/
+COPY --chown=1724:1724 ./Apama/connectivity/ ${APAMA_HOME}/connectivity/
+COPY --chown=1724:1724 ./Apama/etc ${APAMA_HOME}/etc/
+COPY --chown=1724:1724 ./common/lib/ext ${APAMA_HOME}/../common/lib/ext
 
 # Set the environment appropriate to running Apama executables
 ENV PATH=${APAMA_HOME}/bin/:/java_home/bin:${APAMA_HOME}/third_party/apache_ant/bin:${APAMA_HOME}/third_party/python/bin:$PATH\
@@ -46,17 +47,17 @@ ENV PATH=${APAMA_HOME}/bin/:/java_home/bin:${APAMA_HOME}/third_party/apache_ant/
 	 SAG_HOME=${SAG_HOME}/\
     APAMA_JRE=/java_home/jre/\
     JAVA_HOME=/java_home/\
-    APAMA_LIBRARY_VERSION=@APAMA_LIBRARY_VERSION@\
+    APAMA_LIBRARY_VERSION=10.3\
     ANT_HOME=${APAMA_HOME}/third_party/apache_ant\
-    PYTHONPATH=${APAMA_HOME}/third_party/python/@LIB_PYTHON3_SITE_PACKAGES_SUFFIX@
+    PYTHONPATH=${APAMA_HOME}/third_party/python/lib/python3.6/site-packages
 
 # Expose the default server port for the correlator, IAF, dashboard server management, dashboard server data, display server management and
 # display server data respectively (Apama Core only contains a correlator)
 EXPOSE 15903 16903 28888 3278 28889 3279
 
-RUN mkdir -p ${APAMA_WORK} && chown @DOCKER_USER@:@DOCKER_USER@ ${APAMA_WORK} && chown @DOCKER_USER@:@DOCKER_USER@ ${APAMA_HOME} && chown @DOCKER_USER@:@DOCKER_USER@ ${SAG_HOME}
+RUN mkdir -p ${APAMA_WORK} && chown 1724:1724 ${APAMA_WORK} && chown 1724:1724 ${APAMA_HOME} && chown 1724:1724 ${SAG_HOME}
 
-USER @DOCKER_USER@
+USER 1724
 
 # This is the current working directory, and also the location that the
 # (default CMD) correlator obtains the licence file from; license/license.txt,

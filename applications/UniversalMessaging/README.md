@@ -30,7 +30,7 @@ script has been sourced.
 ### Apama Base Images
 | Image                     |description                                                         |
 |---------------------------|--------------------------------------------------------------------|
-|Docker Store               | https://store.docker.com/images/apama-correlator                   |
+|Docker Store               | https://hub.docker.com/_/apama-correlator                   |
 |Existing Install           | use the docker packaging kit instructions to build a base image    |
 
 If you are using the docker packaging kit from an existing install you will
@@ -50,8 +50,8 @@ The Universal Messaging images can be found below
 ### Universal Messaging Base Images
 | Image                     |description                                                         |
 |---------------------------|--------------------------------------------------------------------|
-|universalmessaging-server  | Universal Messaging repo on https://store.docker.com               |
-|cluster-tool               | Universal Messaging repo on https://store.docker.com               |
+|universalmessaging-server  | Universal Messaging repo on https://hub.docker.com               |
+|cluster-tool               | Universal Messaging repo on https://hub.docker.com               |
 
 See Universal Messaging documentation for detailed use of the server and tools within.
 

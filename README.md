@@ -35,7 +35,7 @@ application samples will work with just this package and the pre-built
 correlator image available on Docker Store. 
 
 * The Pre-built image is available from:
-https://store.docker.com/images/apama-correlator
+https://hub.docker.com/_/apama-correlator
 
 * To build your own image, Apama will need to be installed on a Linux machine 
 using either the commercial or the full community installation.

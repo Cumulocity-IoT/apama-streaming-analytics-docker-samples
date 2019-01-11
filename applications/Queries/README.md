@@ -38,7 +38,7 @@ script has been sourced.
 ### Apama Base Images
 | Image                     |description                                                         |
 |---------------------------|--------------------------------------------------------------------|
-|Docker Store               | https://store.docker.com/images/apama-correlator                   |
+|Docker Store               | https://hub.docker.com/_/apama-correlator                   |
 |Existing Install           | use the docker packaging kit instructions to build a base image    |
 
 The Terracotta images can be found below 
@@ -46,8 +46,8 @@ The Terracotta images can be found below
 ### Terracotta Base Images
 | Image                     |description                                                         |
 |---------------------------|--------------------------------------------------------------------|
-|Terracotta-server          | Terracotta repo on https://store.docker.com                        |
-|cluster-tool               | Terracotta repo on https://store.docker.com                        |
+|Terracotta-server          | Terracotta repo on https://hub.docker.com                        |
+|cluster-tool               | Terracotta repo on https://hub.docker.com                        |
 
 A license for Terracotta is required for the sample to run, this is expected as a URL in this 
 sample for simplicity. The actual URL will either be a valid license from your install or 

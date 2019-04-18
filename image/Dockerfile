@@ -66,4 +66,4 @@ WORKDIR ${APAMA_WORK}/
 
 # The default operation for the image is to start a correlator, but this can
 # be overridden by the command given to 'docker run'
-CMD ["correlator", "-j"] 
+CMD ["correlator", "-j"]

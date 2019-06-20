@@ -10,7 +10,6 @@ License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF 
 either express or implied. 
 See the License for the specific language governing permissions and limitations under the License.
 
-
 Simple
 ======
 This sample is a very simple application, deploying a trivial EPL program into
@@ -22,9 +21,12 @@ resources which can be accessed via logs and must be deleted via delete:
 
 	* pod simple-sample
 
-
 Running with Docker-Compose
 ==============
+
+Get the Apama Correlator container [here](https://hub.docker.com/_/apama-correlator)
+
+
 
 To run with Docker Compose, execute docker-compose from this directory
 

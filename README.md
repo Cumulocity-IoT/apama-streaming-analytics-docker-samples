@@ -165,6 +165,33 @@ see the evidence with another Apama command, similarly invoked:
 
 This will show you the existing 'HelloWorld' monitor.
 
+### Interacting with the container from another container
+
+Apama commands can also be run from an Apama container. First, stand up the correlator, either using the option above or the following simple option without a port exposed. At the time of this writing, '10.3' is the latest version but please update if it is out of date.
+
+Example command to run correlator:
+
+```
+docker run -d --name correlator_container store/softwareag/apama-correlator:10.3
+```
+
+Then sample file can be passed to the Apama instance by using a local volume. Update <YourPath> to the local path where this repo resides. For example:
+
+```
+docker run --rm -t -i -v /<YourPath>/apama-streaming-analytics-docker-samples/applications/Simple/HelloWorld.mon:/apama_work/HelloWorld.mon --link correlator_container:apama store/softwareag/apama-correlator:10.3 engine_inject /apama_work/HelloWorld.mon -n apama
+```
+
+Finally, the status of the Correlator can be checked as well:
+
+```
+docker run --rm -t -i --link correlator_container:apama store/softwareag/apama-correlator:10.3 engine_inspect -n apama
+```
+
+Or if you wish to watch it:
+
+```
+docker run --rm -t -i --link correlator_container:apama store/softwareag/apama-correlator:10.3 engine_watch -n apama
+```
 
 ## Log files
 Docker treats anything emitted on the console by a contained process as

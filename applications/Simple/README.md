@@ -24,9 +24,7 @@ resources which can be accessed via logs and must be deleted via delete:
 Running with Docker-Compose
 ==============
 
-Get the Apama Correlator container [here](https://hub.docker.com/_/apama-correlator)
-
-
+Get the Apama Correlator container [here](https://hub.docker.com/_/apama-correlator). More information about building your own image can be found in the parent directory.
 
 To run with Docker Compose, execute docker-compose from this directory
 

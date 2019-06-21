@@ -167,30 +167,43 @@ This will show you the existing 'HelloWorld' monitor.
 
 ### Interacting with the container from another container
 
-Apama commands can also be run from an Apama container. First, stand up the correlator, either using the option above or the following simple option without a port exposed. At the time of this writing, '10.3' is the latest version but please update if it is out of date.
-
-Example command to run correlator:
+Apama commands can also be run from an Apama container. To begin you need to create a common network in docker that the containers will share:
 
 ```
-docker run -d --name correlator_container store/softwareag/apama-correlator:10.3
+docker network create my-network
 ```
 
-Then sample file can be passed to the Apama instance by using a local volume. Update <YourPath> to the local path where this repo resides. For example:
+Now, start up the correlator, either using the option above or the following simple option without a port exposed. At the time of this writing, '10.3' is the latest version but please update if it is out of date.
 
 ```
-docker run --rm -t -i -v /<YourPath>/apama-streaming-analytics-docker-samples/applications/Simple/HelloWorld.mon:/apama_work/HelloWorld.mon --link correlator_container:apama store/softwareag/apama-correlator:10.3 engine_inject /apama_work/HelloWorld.mon -n apama
+docker run -d --net my-network --name correlator_container store/softwareag/apama-correlator:10.3
 ```
 
+An optional stage which will prove that the network is working as expected is to fire up a busybox container and ping the apama container by name:
+
+```docker run -it --name mybusybox --net my-network --rm busybox
+# ping correlator_container
+PING correlator_container (192.168.48.2): 56 data bytes
+64 bytes from 192.168.48.2: seq=0 ttl=64 time=0.145 ms
+64 bytes from 192.168.48.2: seq=1 ttl=64 time=0.105 ms
+...
+```
+
+Then the sample file can be passed to the Apama instance by using a local volume. Update <YourPath> to the local path where this repo resides. For example:
+
+```
+docker run --rm -t -i -v /<YourPath>/apama-streaming-analytics-docker-samples/applications/Simple/HelloWorld.mon:/apama_work/HelloWorld.mon --net my-network store/softwareag/apama-correlator:10.3 engine_inject /apama_work/HelloWorld.mon -n correlator_container
+```
 Finally, the status of the Correlator can be checked as well:
 
 ```
-docker run --rm -t -i --link correlator_container:apama store/softwareag/apama-correlator:10.3 engine_inspect -n apama
+docker run --rm -t -i --net my-network store/softwareag/apama-correlator:10.3 engine_inspect -n correlator_container
 ```
 
 Or if you wish to watch it:
 
 ```
-docker run --rm -t -i --link correlator_container:apama store/softwareag/apama-correlator:10.3 engine_watch -n apama
+docker run --rm -t -i --net my-network store/softwareag/apama-correlator:10.3 engine_watch -n correlator_container
 ```
 
 ## Log files

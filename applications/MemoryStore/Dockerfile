@@ -9,7 +9,7 @@
 # See the License for the specific language governing permissions and limitations under the License.
 
 # Create an image from the base Apama image, with the MemoryStore application in it ready to deploy
-ARG APAMA_IMAGE=daerepository03.eur.ad.sag:4443/apama/correlator:PI
+ARG APAMA_IMAGE=apama
 FROM ${APAMA_IMAGE}
 COPY --chown=sagadmin:sagadmin init.yaml MemoryStoreCounter.mon ${APAMA_WORK}/MemoryStore/
 # ensure our volume will have the correct permissions once mounted

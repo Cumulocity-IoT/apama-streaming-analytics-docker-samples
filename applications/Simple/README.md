@@ -46,4 +46,4 @@ application_1  | 2019-06-20 15:31:51.405 INFO  [140501751678720] - HelloWorld [1
 Troubleshooting Docker-Compose
 =======
 
-You may have to remove docker-compose defaults located at  .docker/config.json to ensure the project builds in the default manner. 
+Please make sure that the contents of .docker/config.json are correct and pointing to the right docker host or you may have problems building. 

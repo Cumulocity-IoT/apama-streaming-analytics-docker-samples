@@ -37,7 +37,6 @@ container telling you "Hello world!".
 
 Sample Expected Output:
 ```
-application_1  | 2019-06-20 15:31:50.356 ##### [140502313332608] - Correlator, version 10.3.1.1.349560, running
 application_1  | 2019-06-20 15:31:50.357 INFO  [140501802022656] - Added monitor HelloWorld
 application_1  | 2019-06-20 15:31:50.357 INFO  [140501802022656] - Injected MonitorScript from file /apama_work/Simple/HelloWorld.mon (227ec20012df1a8d7263f9ee56b78cb9), size 770 bytes, compile time 0.00 seconds
 application_1  | 2019-06-20 15:31:51.405 INFO  [140501751678720] - HelloWorld [1] Hello world! The current epoch is 1561044711.354903

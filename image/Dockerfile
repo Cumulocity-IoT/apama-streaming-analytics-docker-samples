@@ -1,4 +1,4 @@
-# Copyright (c) 2017-2018 Software AG, Darmstadt, Germany and/or its licensors
+# Copyright (c) 2017-2019 Software AG, Darmstadt, Germany and/or its licensors
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not use this 
 # file except in compliance with the License. You may obtain a copy of the License at
@@ -38,18 +38,19 @@ COPY --chown=1724:1724 ./Apama/monitors/ ${APAMA_HOME}/monitors/
 COPY --chown=1724:1724 ./Apama/connectivity/ ${APAMA_HOME}/connectivity/
 COPY --chown=1724:1724 ./Apama/etc ${APAMA_HOME}/etc/
 COPY --chown=1724:1724 ./common/lib/ext ${APAMA_HOME}/../common/lib/ext
+COPY --chown=1724:1724 ./common/lib/ant ${APAMA_HOME}/../common/lib/ant
 
 # Set the environment appropriate to running Apama executables
-ENV PATH=${APAMA_HOME}/bin/:/java_home/bin:${APAMA_HOME}/third_party/apache_ant/bin:${APAMA_HOME}/third_party/python/bin:$PATH\
+ENV PATH=${APAMA_HOME}/bin/:/java_home/bin:${SAG_HOME}/common/lib/ant/bin:${APAMA_HOME}/third_party/python/bin:$PATH\
     LD_LIBRARY_PATH=${APAMA_HOME}/lib/:${APAMA_HOME}/adapters/lib/:/java_home/jre/lib/amd64/server/:/java_home/jre/lib/amd64/:${APAMA_HOME}/third_party/python/lib:${APAMA_WORK}/lib/\
     APAMA_HOME=${APAMA_HOME}/\
     APAMA_WORK=${APAMA_WORK}/\
 	 SAG_HOME=${SAG_HOME}/\
     APAMA_JRE=/java_home/jre/\
     JAVA_HOME=/java_home/\
-    APAMA_LIBRARY_VERSION=10.3\
-    ANT_HOME=${APAMA_HOME}/third_party/apache_ant\
-    PYTHONPATH=${APAMA_HOME}/third_party/python/lib/python3.6/site-packages
+    APAMA_LIBRARY_VERSION=10.5\
+    ANT_HOME=${SAG_HOME}/common/lib/ant\
+    PYTHONPATH=${APAMA_HOME}/third_party/python/lib/python3.7/site-packages
 
 # Expose the default server port for the correlator, IAF, dashboard server management, dashboard server data, display server management and
 # display server data respectively (Apama Core only contains a correlator)

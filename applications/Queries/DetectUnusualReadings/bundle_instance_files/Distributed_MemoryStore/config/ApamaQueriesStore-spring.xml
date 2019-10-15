@@ -13,7 +13,7 @@
 			<!-- Comma-separated list of host:port for the servers to connect to -->
 			<property name="servers" value="${servers.ApamaQueriesStore}"/>
 
-			<!-- Optionally set this to match the cluster name provided to the Terracotta DB Cluster Tool when 
+			<!-- Optionally set this to match the cluster name provided to the Terracotta Cluster Tool when 
 			configuring the Terracotta Server Array, but they do not have to match. -->
 			<property name="clusterName" value="Terracotta"/>
 	

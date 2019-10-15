@@ -28,7 +28,7 @@ temperature has been identified.
 
 ## BEFORE YOU START 
 
-The Sample requires a base image for Apama, Terracotta DB Server and the Terracotta 
+The Sample requires a base image for Apama, Terracotta Server and the Terracotta 
 cluster-tool. You have several options for Apama and these are detailed below.
 
 To ensure that the environment is configured correctly for Apama, all the 
@@ -52,11 +52,11 @@ The Terracotta images can be found below
 A license for Terracotta is required for the sample to run, this is expected as a URL in this 
 sample for simplicity. The actual URL will either be a valid license from your install or 
 
-http://www.terracotta.org/retriever.php?n=TerracottaDB101linux.xml
+http://www.terracotta.org/retriever.php?n=Terracotta105linux.xml
 
 for a trial license. 
 
-See Terracotta DB documentation for detailed use of the server and cluster-tool.
+See Terracotta documentation for detailed use of the server and cluster-tool.
 
 Note that it is possible to supply configuration via Docker config and Kubernetes ConfigMap,
 but this is beyond the scope of this sample please see the terracotta documentation for details.

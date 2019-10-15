@@ -13,7 +13,8 @@ kind: PersistentVolume
 metadata:
   name: memstore-data
 spec:
-  storageClassName: standard
+  storageClassName: manual
+  persistentVolumeReclaimPolicy: Recycle
   accessModes:
     - ReadWriteMany
   capacity:
@@ -26,6 +27,7 @@ apiVersion: v1
 metadata:
   name: memstore-data-claim
 spec:
+  storageClassName: manual
   accessModes:
     - ReadWriteMany
   resources:

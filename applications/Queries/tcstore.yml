@@ -21,7 +21,7 @@ spec:
       containers:
       - name: cluster-tool-0
         image: 'clustertool-image'
-        args: ["configure", "-n", "main", "-s", "qry-tcdb-svc:9410"]
+        args: ["-t", "2000", "configure", "-n", "main", "-s", "qry-tcdb-svc:9410"]
         env:
         - name: ACCEPT_EULA
           value: "Y"

@@ -39,6 +39,7 @@ COPY --chown=1724:1724 ./Apama/connectivity/ ${APAMA_HOME}/connectivity/
 COPY --chown=1724:1724 ./Apama/etc ${APAMA_HOME}/etc/
 COPY --chown=1724:1724 ./common/lib/ext ${APAMA_HOME}/../common/lib/ext
 COPY --chown=1724:1724 ./common/lib/ant ${APAMA_HOME}/../common/lib/ant
+COPY --chown=1724:1724 ./common/lib/glassfish ${APAMA_HOME}/../common/lib/glassfish
 
 # Set the environment appropriate to running Apama executables
 ENV PATH=${APAMA_HOME}/bin/:/java_home/bin:${SAG_HOME}/common/lib/ant/bin:${APAMA_HOME}/third_party/python/bin:$PATH\

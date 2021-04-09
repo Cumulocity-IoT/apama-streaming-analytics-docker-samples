@@ -12,16 +12,16 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: cluster-tool
+  name: config-tool
 spec:
   template:
     metadata:
-      name: cluster-tool
+      name: config-tool
     spec:
       containers:
-      - name: cluster-tool-0
-        image: 'clustertool-image'
-        args: ["-t", "2000", "configure", "-n", "main", "-s", "qry-tcdb-svc:9410"]
+      - name: config-tool-0
+        image: 'configtool-image'
+        args: ["activate","-l","/licenses/license.xml","-n", "main", "-s", "qry-tcdb-svc:9410"]
         env:
         - name: ACCEPT_EULA
           value: "Y"
@@ -63,6 +63,8 @@ spec:
           env: 
           - name: ACCEPT_EULA
             value: 'Y'
+          - name: HOSTNAME
+            value: 'qry-tcdb-svc'
           - name: OFFHEAP_RESOURCE1_NAME
             value: 'main'
           - name: OFFHEAP_RESOURCE1_UNIT

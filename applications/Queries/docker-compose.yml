@@ -10,9 +10,9 @@
 #
 version: '3.3'
 services:
-  cluster-tool:
-    image: ${CLUSTER_TOOL_IMAGE}
-    command: ["configure", "-n", "main", "-s", "qry-tcdb-svc:9410"]
+  config-tool:
+    image: ${CONFIG_TOOL_IMAGE}
+    command: ["activate", "-l", "/licenses/license.xml", "-n", "main", "-s", "qry-tcdb-svc:9410"]
     environment:
       -  ACCEPT_EULA=Y
       -  LICENSE_URL=${LICENSE_URL}
@@ -22,9 +22,11 @@ services:
       restart_policy:
         condition: on-failure
   qry-tcdb-svc:
+     hostname: qry-tcdb-svc
      image: ${TC_IMAGE}
      environment:
        -  ACCEPT_EULA=Y 
+       -  HOSTNAME=qry-tcdb-svc
        -  OFFHEAP_RESOURCE1_NAME=main
        -  OFFHEAP_RESOURCE1_UNIT=MB
        -  OFFHEAP_RESOURCE1_SIZE=512

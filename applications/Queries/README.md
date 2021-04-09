@@ -2,7 +2,7 @@
 
 ## COPYRIGHT NOTICE
 
-Copyright (c) 2017-2019 Software AG, Darmstadt, Germany and/or its licensors
+Copyright (c) 2017-2020 Software AG, Darmstadt, Germany and/or its licensors
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this 
 file except in compliance with the License. You may obtain a copy of the License at
@@ -29,7 +29,7 @@ temperature has been identified.
 ## BEFORE YOU START 
 
 The Sample requires a base image for Apama, Terracotta Server and the Terracotta 
-cluster-tool. You have several options for Apama and these are detailed below.
+config-tool. You have several options for Apama and these are detailed below.
 
 To ensure that the environment is configured correctly for Apama, all the 
 commands below should be executed from a shell where the Apama/bin/apama_env 
@@ -47,7 +47,7 @@ The Terracotta images can be found below
 | Image                     |description                                                         |
 |---------------------------|--------------------------------------------------------------------|
 |Terracotta-server          | Terracotta repo on https://hub.docker.com                        |
-|cluster-tool               | Terracotta repo on https://hub.docker.com                        |
+|config-tool                | Terracotta repo on https://hub.docker.com                        |
 
 A license for Terracotta is required for the sample to run, this is expected as a URL in this 
 sample for simplicity. The actual URL will either be a valid license from your install or 
@@ -56,7 +56,7 @@ http://www.terracotta.org/retriever.php?n=Terracotta105linux.xml
 
 for a trial license. 
 
-See Terracotta documentation for detailed use of the server and cluster-tool.
+See Terracotta documentation for detailed use of the server and config-tool.
 
 Note that it is possible to supply configuration via Docker config and Kubernetes ConfigMap,
 but this is beyond the scope of this sample please see the terracotta documentation for details.
@@ -86,15 +86,17 @@ To run the sample on Linux:
 
 1. Build the image for the Correlator, using the base Apama image:
 
-        docker build -f Dockerfile --tag queries-image --build-arg APAMA_IMAGE=<apama-image> .
+        docker build -f Dockerfile --tag queries-image --build-arg APAMA_IMAGE=<apama-image> --build-arg APAMA_BUILDER=<apama-builder-image> .
  
-2. Now run the following command to start the Terracotta store and initialise it, using the base Terracotta image and the Terracotta cluster-tool image:
+2. Now run the following command to start the Terracotta store and initialise it, using the base Terracotta image and the Terracotta config-tool image:
     
-        TC_IMAGE=<tc-image> CLUSTER_TOOL_IMAGE=<cluster-tool-image> LICENSE_URL=<url_terracotta_license> docker stack deploy -c docker-compose.yml sample-tc
+        TC_IMAGE=<terracotta-server>  CONFIG_TOOL_IMAGE=<terracotta-config-tool>  LICENSE_URL=<url_terracotta_license>  docker stack deploy -c docker-compose.yml sample-tc
    
 3. You can confirm that the Terracotta containers are successfully started by checking the following:
  
-        docker service logs sample-tc_cluster-tool 
+        docker service logs sample-tc_config-tool 
+
+Wait for the logs to show that the license has been applied successfully.
 
 4. Once the containers are running for Terracotta and there are no errors start the correlators:
  
@@ -131,13 +133,13 @@ amongst other output:
 
     __Note__ that the image needs to be pushed to a repository so "queries-image" should be in the form **your-repository:queries-image**
 
-        docker build -f Dockerfile --tag queries-image --build-arg APAMA_IMAGE=<apama-image> .
+        docker build -f Dockerfile --tag queries-image --build-arg APAMA_IMAGE=<apama-image> --build-arg APAMA_BUILDER=<apama-builder-image> .
 
 2. Build the image for the Sender:
 
     __Note__ that the image needs to be pushed to a repository so "sender-image" should be in the form **your-repository:sender-image**
 
-        docker build -f Dockerfile.sender --tag sender-image --build-arg APAMA_IMAGE=<apama-image> .
+        docker build -f Dockerfile.sender --tag sender-image --build-arg APAMA_IMAGE=<apama-image> --build-arg APAMA_BUILDER=<apama-builder-image> .
 
 3. The images built need to be pushed into a repository for kubernetes to use:
 

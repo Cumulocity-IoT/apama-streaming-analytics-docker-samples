@@ -13,10 +13,10 @@ kind: PersistentVolume
 metadata:
   name: memstore-data
 spec:
-  storageClassName: manual
+  storageClassName: local-path
   persistentVolumeReclaimPolicy: Recycle
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   capacity:
     storage: 1Gi
   hostPath:
@@ -27,9 +27,9 @@ apiVersion: v1
 metadata:
   name: memstore-data-claim
 spec:
-  storageClassName: manual
+  storageClassName: local-path
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi

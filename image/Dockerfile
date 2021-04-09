@@ -1,4 +1,4 @@
-# Copyright (c) 2017-2019 Software AG, Darmstadt, Germany and/or its licensors
+# Copyright (c) 2017-2020 Software AG, Darmstadt, Germany and/or its licensors
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not use this 
 # file except in compliance with the License. You may obtain a copy of the License at
@@ -12,11 +12,11 @@
 # from an existing Apama installation. The build should be run from the root
 # of your Software AG installation. e.g. '/opt/softwareag/'
 
-# Pull CentOS 7 base image from the Docker Hub - this is the latest supported
+# Pull CentOS 8 base image from the Docker Hub - this is the latest supported
 # operating system for this version of Apama.
-FROM centos:7
+FROM centos:8
 
-MAINTAINER SoftwareAG
+LABEL maintainer="SoftwareAG"
 
 ARG APAMA_HOME=/opt/softwareag/Apama
 ARG APAMA_WORK=/apama_work
@@ -49,7 +49,7 @@ ENV PATH=${APAMA_HOME}/bin/:/java_home/bin:${SAG_HOME}/common/lib/ant/bin:${APAM
 	 SAG_HOME=${SAG_HOME}/\
     APAMA_JRE=/java_home/jre/\
     JAVA_HOME=/java_home/\
-    APAMA_LIBRARY_VERSION=10.5\
+    APAMA_LIBRARY_VERSION=10.7\
     ANT_HOME=${SAG_HOME}/common/lib/ant\
     PYTHONPATH=${APAMA_HOME}/third_party/python/lib/python3.7/site-packages
 

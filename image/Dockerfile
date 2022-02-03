@@ -43,15 +43,15 @@ COPY --chown=1724:1724 ./common/lib/glassfish ${APAMA_HOME}/../common/lib/glassf
 
 # Set the environment appropriate to running Apama executables
 ENV PATH=${APAMA_HOME}/bin/:/java_home/bin:${SAG_HOME}/common/lib/ant/bin:${APAMA_HOME}/third_party/python/bin:$PATH\
-    LD_LIBRARY_PATH=${APAMA_HOME}/lib/:${APAMA_HOME}/adapters/lib/:/java_home/jre/lib/amd64/server/:/java_home/jre/lib/amd64/:${APAMA_HOME}/third_party/python/lib:${APAMA_WORK}/lib/\
+    LD_LIBRARY_PATH=${APAMA_HOME}/lib/:${APAMA_HOME}/adapters/lib/:/java_home/lib/server/:${APAMA_HOME}/third_party/python/lib64:${APAMA_WORK}/lib/\
     APAMA_HOME=${APAMA_HOME}/\
     APAMA_WORK=${APAMA_WORK}/\
 	 SAG_HOME=${SAG_HOME}/\
-    APAMA_JRE=/java_home/jre/\
+    APAMA_JRE=/java_home/\
     JAVA_HOME=/java_home/\
-    APAMA_LIBRARY_VERSION=10.7\
+    APAMA_LIBRARY_VERSION=10.11\
     ANT_HOME=${SAG_HOME}/common/lib/ant\
-    PYTHONPATH=${APAMA_HOME}/third_party/python/lib/python3.7/site-packages
+    PYTHONPATH=${APAMA_HOME}/third_party/python/lib64/python3.9/site-packages
 
 # Expose the default server port for the correlator, IAF, dashboard server management, dashboard server data, display server management and
 # display server data respectively (Apama Core only contains a correlator)

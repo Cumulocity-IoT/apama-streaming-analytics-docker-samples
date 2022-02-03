@@ -18,6 +18,7 @@ spec:
   containers:
     - name: adapter-correlator
       image: correlator-image
+      imagePullPolicy: Always
       ports:
         - containerPort: 15903
       readinessProbe:
@@ -49,5 +50,6 @@ spec:
   containers:
     - name: adapter-iaf
       image: iaf-image
+      imagePullPolicy: Always
       ports:
         - containerPort: 16903

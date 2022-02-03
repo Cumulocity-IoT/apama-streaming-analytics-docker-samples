@@ -20,6 +20,7 @@ spec:
   containers:
     - name: umsample-sender
       image: correlator-image
+      imagePullPolicy: Always
       ports:
         - containerPort: 15903
       command: ["correlator", "--config", "/apama_work/UMSample/um-connectivity.yaml", "--config", "/apama_work/UMSample/init-sender.yaml"]
@@ -36,6 +37,7 @@ spec:
   containers:
     - name: umsample-receiver
       image: correlator-image
+      imagePullPolicy: Always
       ports:
         - containerPort: 15903
       command: ["correlator", "--config", "/apama_work/UMSample/um-connectivity.yaml", "--config", "/apama_work/UMSample/init-receiver.yaml"]

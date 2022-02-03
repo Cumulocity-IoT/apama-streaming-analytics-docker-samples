@@ -1,7 +1,7 @@
 # Apama samples for Docker and Kubernetes
 
 ## License
-Copyright (c) 2017-2020 Software AG, Darmstadt, Germany and/or its licensors
+Copyright (c) 2017-2021 Software AG, Darmstadt, Germany and/or its licensors
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
 file except in compliance with the License. You may obtain a copy of the License at
@@ -18,7 +18,7 @@ run Apama components and applications on the Docker platform.
 
 See the Supported Platforms document for information about recommended Docker
 versions and support. This is available from the following web page:
-http://documentation.softwareag.com/apama/index.htm. 
+https://documentation.softwareag.com/apama/index.htm. 
 
 Docker and the Docker logo are trademarks or registered trademarks of Docker,
 Inc. in the United States and/or other countries. Docker, Inc. and other

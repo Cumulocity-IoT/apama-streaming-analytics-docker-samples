@@ -53,6 +53,7 @@ spec:
       containers:
         - name: memstore-sample
           image: memstore-image
+          imagePullPolicy: Always
           ports:
             - containerPort: 15903
           volumeMounts:

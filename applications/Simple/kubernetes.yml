@@ -16,5 +16,6 @@ spec:
   containers:
     - name: simple-sample
       image: simple-image
+      imagePullPolicy: Always
       ports:
         - containerPort: 15903

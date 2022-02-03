@@ -18,6 +18,7 @@ spec:
   containers:
     - name: weather-correlator
       image: correlator-image
+      imagePullPolicy: Always
       ports:
         - containerPort: 15903
       readinessProbe:
@@ -51,6 +52,7 @@ spec:
   containers:
     - name: weather-dashboard
       image: apama-image
+      imagePullPolicy: Always
       ports:
         - containerPort: 3278
         - containerPort: 28888

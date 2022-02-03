@@ -18,6 +18,7 @@ spec:
   containers:
     - name: umsample-um
       image: um-image
+      imagePullPolicy: Always
       ports:
         - containerPort: 9000
 ---
@@ -49,6 +50,7 @@ spec:
       containers:
       - name: add-channel-0
         image: um-image
+        imagePullPolicy: Always
         command: ["runUMTool.sh"]
         args: ["CreateChannel", "-rname=nsp://umsample-umhost:9000", "-channelname=UM_TestChannel", "-type=R", "-honourcapacity=true", "-maxevents=20000", "-subject=*@*", "-publish=true", "-subscribe=true"]
       restartPolicy: OnFailure

@@ -18,7 +18,7 @@ See the License for the specific language governing permissions and limitations 
 This sample contains a queries application which will be run inside a 
 Docker container. Instances of the queries will be created 
 and when instantiated certain events will trigger reactions from the 
-application which can be viewed outside of Docker or Kubernetes
+application which can be viewed outside of Docker 
 
 The query identifies sensor readings that are outside a
 specified range. In this example the input events are the
@@ -58,7 +58,7 @@ for a trial license.
 
 See Terracotta documentation for detailed use of the server and config-tool.
 
-Note that it is possible to supply configuration via Docker config and Kubernetes ConfigMap,
+Note that it is possible to supply configuration via Docker config, 
 but this is beyond the scope of this sample please see the terracotta documentation for details.
 
 
@@ -73,15 +73,10 @@ but this is beyond the scope of this sample please see the terracotta documentat
 |docker-compose-corr.yml    |File that defines how docker swarm should run the correlators       |
 |DetectUnusualReadings      |The query definitions and configuration                             |
 |Input.evt                  |The events that trigger the query behaviour                         |
-|tcstore.yml                |Kubernetes configuration defining how to run Terracotta             |
-|stateful.yml               |Kubernetes File defining how to run the correlators                 |
-|sender.yml                 |Kubernetes configuration for the correlator that sends events       |
-|receiver.yml               |Configuration file for that starts the monitoring correlator        |
 
 
-## RUNNING THE SAMPLE
+## RUNNING THE SAMPLE IN DOCKER
 
-### DOCKER:
 To run the sample on Linux:
 
 1. Build the image for the Correlator, using the base Apama image:
@@ -125,53 +120,4 @@ Wait for the logs to show that the license has been applied successfully.
 amongst other output:
 
     apamax.querysamples.detectunusualreadings.SensorThresholdAlert
-
-
-### KUBERNETES
-
-1. Build the image for the Correlator, using the base Apama image:
-
-    __Note__ that the image needs to be pushed to a repository so "queries-image" should be in the form **your-repository:queries-image**
-
-        docker build -f Dockerfile --tag queries-image --build-arg APAMA_IMAGE=<apama-image> --build-arg APAMA_BUILDER=<apama-builder-image> .
-
-2. Build the image for the Sender:
-
-    __Note__ that the image needs to be pushed to a repository so "sender-image" should be in the form **your-repository:sender-image**
-
-        docker build -f Dockerfile.sender --tag sender-image --build-arg APAMA_IMAGE=<apama-image> --build-arg APAMA_BUILDER=<apama-builder-image> .
-
-3. The images built need to be pushed into a repository for kubernetes to use:
-
-        docker push **your-repository:queries-image**
-        docker push **your-repository:sender-image**
-
-4. Next get kubernetes to run and set up the Terracotta store, first replace the image with those created above for Terracotta:
-
-        kubectl create -f tcstore.yml
-
-5. Once Terracotta has successfully started (kubectl get -f tcstore.yml), run and set up the Correlators.
-    To do this, edit the file to replace the image with the queries-image created:
-
-        kubectl create -f stateful.yml
-
-6. To start the receiver first edit the file to replace the image with the apama-image, 
-    then run:
-        kubectl create -f receiver.yml
-
-7. From another terminal watch the logs of the receiver:
-
-        kubectl logs -f qry-receiver
-
-8. Back in the original terminal, start the final pod invoking the sender.
-    Edit the file to replace the image with the sender-image created, then run:
-
-        kubectl create -f sender.yml
-
-9. The terminal in which you are watching the receiver logs should show an output event of type:
-
-    apamax.querysamples.detectunusualreadings.SensorThresholdAlert
-
-
-
 

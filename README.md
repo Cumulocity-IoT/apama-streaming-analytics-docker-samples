@@ -1,7 +1,7 @@
 # Apama samples for Docker and Kubernetes
 
 ## License
-Copyright (c) 2017-2021 Software AG, Darmstadt, Germany and/or its licensors
+Copyright (c) 2017-2022 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.  
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
 file except in compliance with the License. You may obtain a copy of the License at
@@ -35,7 +35,7 @@ application samples will work with just this package and the pre-built
 correlator image available on Docker Store. 
 
 * The Pre-built image is available from:
-https://hub.docker.com/_/apama-correlator
+https://hub.docker.com/r/softwareag/apama-correlator
 
 * To build your own image, Apama will need to be installed on a Linux machine 
 using either the commercial or the full community installation.
@@ -73,12 +73,12 @@ The Docker build instruction should be run from the root of your Software AG
 installation, for example '/opt/softwareag/'. From that directory, Docker can 
 be asked to build the image using instructions from the Dockerfile:
 
-    > docker build --tag apama --file ./Apama/samples/docker/image/Dockerfile .
+> docker build --tag apama --file ./Apama/samples/docker/image/Dockerfile .
 
 Docker will output its progress, and after a minute or so will exit with a
 message like:
 
-    Successfully built 739214af8fb3
+Successfully built 739214af8fb3
 
 The instructions in the Dockerfile create an image containing the minimal
 contents from your installation that are necessary to run Apama executables.
@@ -88,7 +88,7 @@ Dockerfile and the embedded commentary.
 
 You can see that an image has been created using this command:
 
-    > docker images 
+> docker images 
 
 |REPOSITORY        |TAG             |IMAGE ID            |CREATED             |VIRTUAL SIZE |
 |---               |---             |---                 |---                 |---          |
@@ -134,11 +134,11 @@ samples.
 Ultimately, turning your new image into a running container will look
 something like this:
 
-    > docker run -d -p 15903:15903 --name apama_in_docker apama
+> docker run -d -p 15903:15903 --name apama_in_docker apama
 
 You can then look for your running container:
 
-    > docker ps
+> docker ps
 
 |CONTAINER ID      |IMAGE           |COMMAND             |CREATED             |STATUS       |PORTS      |NAMES|
 |---               |---             |---                 |---                 |---          |---        |---          |
@@ -155,13 +155,13 @@ the current example.
 
 From a shell in this directory, source Apama/bin/apama_env then run:
 
-    > engine_inject -p 15903 -n localhost applications/Simple/HelloWorld.mon
+> engine_inject -p 15903 -n localhost applications/Simple/HelloWorld.mon
 
 Some simple EPL will then be executed inside your containerized correlator.
 Note the use of 'localhost' and '15903' to connect to the mapped port. You can
 see the evidence with another Apama command, similarly invoked:
 
-    > engine_inspect -p 15903 -n localhost 
+> engine_inspect -p 15903 -n localhost 
 
 This will show you the existing 'HelloWorld' monitor.
 
@@ -176,7 +176,7 @@ docker network create my-network
 Now, start up the correlator, either using the option above or the following simple option without a port exposed. At the time of this writing, '10.3' is the latest version but please update if it is out of date.
 
 ```
-docker run -d --net my-network --name correlator_container store/softwareag/apama-correlator:10.3
+docker run -d --net my-network --name correlator_container softwareag/apama-correlator:10.3
 ```
 
 An optional stage which will prove that the network is working as expected is to fire up a busybox container and ping the apama container by name:
@@ -192,18 +192,18 @@ PING correlator_container (192.168.48.2): 56 data bytes
 Then the sample file can be passed to the Apama instance by using a local volume. Update <YourPath> to the local path where this repo resides. For example:
 
 ```
-docker run --rm -t -i -v /<YourPath>/apama-streaming-analytics-docker-samples/applications/Simple/HelloWorld.mon:/apama_work/HelloWorld.mon --net my-network store/softwareag/apama-correlator:10.3 engine_inject /apama_work/HelloWorld.mon -n correlator_container
+docker run --rm -t -i -v /<YourPath>/apama-streaming-analytics-docker-samples/applications/Simple/HelloWorld.mon:/apama_work/HelloWorld.mon --net my-network softwareag/apama-correlator:10.3 engine_inject /apama_work/HelloWorld.mon -n correlator_container
 ```
 Finally, the status of the Correlator can be checked as well:
 
 ```
-docker run --rm -t -i --net my-network store/softwareag/apama-correlator:10.3 engine_inspect -n correlator_container
+docker run --rm -t -i --net my-network softwareag/apama-correlator:10.3 engine_inspect -n correlator_container
 ```
 
 Or if you wish to watch it:
 
 ```
-docker run --rm -t -i --net my-network store/softwareag/apama-correlator:10.3 engine_watch -n correlator_container
+docker run --rm -t -i --net my-network softwareag/apama-correlator:10.3 engine_watch -n correlator_container
 ```
 
 ## Log files
@@ -211,11 +211,11 @@ Docker treats anything emitted on the console by a contained process as
 logging, and stores it appropriately. All of the examples and samples in this
 package ensure that Apama components log to the console. Try:
 
-    > docker logs apama_in_docker
+> docker logs apama_in_docker
 
 to see the log message that announced the injection of the .mon file from the
 above example.
- 
+
 
 ## Licensing
 The image you have just created will be able to run the correlator, but the
@@ -226,7 +226,7 @@ it, change directory to where the license file called 'ApamaServerLicense.xml'
 is located. You can then build a new image, and replace the existing Apama
 image by using the same tag as before:
 
-    > docker build --tag apama --file ./Apama/samples/docker/image/Dockerfile.license .
+> docker build --tag apama --file ./Apama/samples/docker/image/Dockerfile.license .
 
 If you run and inspect logs from this image, you will notice that the
 correlator is no longer complaining about the lack of a license.
@@ -243,7 +243,7 @@ across many different machines can use it. Docker can use the registry to
 obtain images by name, rather than requiring them to be made available
 locally. For example
 
-    > docker run internal-docker.example.com:5000/apama
+> docker run internal-docker.example.com:5000/apama
 
 will pull 'apama' from your registry and run it, just as if it was built
 locally. If you plan to be running your containerized Apama application across
@@ -266,7 +266,7 @@ itself. To generate the 'initialization.yaml' file, the
 documentation for details, but an example using the 'Weather' sample can be run
 from the Apama Command prompt of your Software AG installation:
 
-    > engine_deploy ./apama-samples/studio/demos/Weather --outputDeployDir ./apama-samples/docker/applications/Weather
+> engine_deploy ./apama-samples/studio/demos/Weather --outputDeployDir ./apama-samples/docker/applications/Weather
 
 ## Next steps
 There are multiple samples provided that teach you how to use Docker Compose

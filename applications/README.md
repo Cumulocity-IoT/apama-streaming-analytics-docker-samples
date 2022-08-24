@@ -2,7 +2,7 @@
 License
 =======
 
-Copyright (c) 2017-2018 Software AG, Darmstadt, Germany and/or its licensors
+Copyright (c) 2017-2022 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.  
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
 file except in compliance with the License. You may obtain a copy of the License at
@@ -60,11 +60,11 @@ Whilst the samples make the assumptions listed above, it is also possible to
 use images uploaded to Docker Store by Software AG. To change the samples to use
 Docker Store for Apama, add the following to the "docker build" command:
 
-    --build-arg APAMA_IMAGE=store/softwareag/apama-correlator:<major version>.<minor version>
+    --build-arg APAMA_IMAGE=softwareag/apama-correlator:<major version>.<minor version>
 
 resulting in a full command similar to:
 
-    docker build -t myimage . --build-arg APAMA_IMAGE=store/softwareag/apama-correlator:10.1
+    docker build -t myimage . --build-arg APAMA_IMAGE=softwareag/apama-correlator:10.11
 
 Docker Compose
 ==============
@@ -85,7 +85,7 @@ following pattern, under services/application or services/correlator from:
     build:
         context: .
         args:
-            APAMA_IMAGE: store/softwareag/apama-correlator:<major version>.<minor version>
+            APAMA_IMAGE: softwareag/apama-correlator:<major version>.<minor version>
 
 Docker Stack
 ==========

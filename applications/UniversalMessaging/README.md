@@ -1,6 +1,6 @@
 License
 =======
-Copyright (c) 2017-2019 Software AG, Darmstadt, Germany and/or its licensors
+Copyright (c) 2017-2022 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors. 
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
 file except in compliance with the License. You may obtain a copy of the License at
@@ -30,7 +30,7 @@ script has been sourced.
 ### Apama Base Images
 | Image                     |description                                                         |
 |---------------------------|--------------------------------------------------------------------|
-|Docker Store               | https://hub.docker.com/_/apama-correlator                   |
+|Docker Store               | https://hub.docker.com/r/softwareag/apama-correlator                   |
 |Existing Install           | use the docker packaging kit instructions to build a base image    |
 
 If you are using the docker packaging kit from an existing install you will

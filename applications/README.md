@@ -18,9 +18,7 @@ Using containers for Apama applications
 The samples in this directory demonstrate how you can use Docker or Kubernetes to deploy and
 manage entire applications.
 
-You will previously have learnt how to build and run containers for individual
-processes such as the Apama correlator and the Apama IAF. However, an
-application will typically consist of multiple interacting processes. It is
+An application will typically consist of multiple interacting processes. It is
 best-practice in the Docker world to containerize only individual processes, 
 and to link them together for network connections and file access.
 
@@ -36,10 +34,6 @@ actually useful in an application. These samples also contain Dockerfiles that
 create derived images on top of the base image, copying in the necessary
 files.
 
-These sample applications assume that you have already created the base Apama
-image using the Dockerfile provided, with the name 'apama' as described in the
-earlier README. 
-
 The most educational way to go through the sample applications is in this
 order:
 
@@ -50,21 +44,7 @@ order:
 | Weather/            | Running Ant-exported projects and generating dashboards (not available with Apama Core)|
 | MemoryStore/        | Using volumes for persistent state across rebuilds|
 | UniversalMessaging/ | Using UM for communication between two Apama correlators (not available with Apama Core)|
-| Queries/            | Using Stack and Kubernetes to start multiple correlators against a shared Terracotta store|
 | Secrets/            | Using Docker and Kubernetes secrets to pass encrypted data to the correlator through config files|
-
-Using Docker Store
-==================
-
-Whilst the samples make the assumptions listed above, it is also possible to
-use images uploaded to Docker Store by Software AG. To change the samples to use
-Docker Store for Apama, add the following to the "docker build" command:
-
-    --build-arg APAMA_IMAGE=softwareag/apama-correlator:<major version>.<minor version>
-
-resulting in a full command similar to:
-
-    docker build -t myimage . --build-arg APAMA_IMAGE=softwareag/apama-correlator:10.11
 
 Docker Compose
 ==============
@@ -74,18 +54,6 @@ at http://docs.docker.com/compose/. You should already have 'docker-compose'
 installed and available on your PATH. These samples drive the tool through the
 use of configuration files called 'docker-compose.yml', the format of which is
 documented at http://docs.docker.com/compose/yml/ .
-
-To use Docker Store from within the Docker Compose yaml files, change the
-following pattern, under services/application or services/correlator from:
-
-    build: .
-
-... to this:
-
-    build:
-        context: .
-        args:
-            APAMA_IMAGE: softwareag/apama-correlator:<major version>.<minor version>
 
 Docker Stack
 ==========
@@ -264,12 +232,6 @@ Additional Secrets Sample
 
 Demonstrates use of Docker and Kubernetes secrets to pass encrypted data
 to the correlator through config files.
-
-Additional Queries Sample
--------------------------------
-
-Demonstrates Kubernetes StatefulSet and docker stack commands to handle 
-replication of Apama applications.
 
 Version 3.3 of Compose YAML files
 -------------------------------

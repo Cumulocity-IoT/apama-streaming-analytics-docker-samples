@@ -2,7 +2,7 @@
 
 ## COPYRIGHT NOTICE
 
-Copyright (c) 2018 Software AG, Darmstadt, Germany and/or its licensors
+Copyright (c) 2018, 2022 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this 
 file except in compliance with the License. You may obtain a copy of the License at
@@ -33,7 +33,7 @@ First, create the secret
     > echo "CORRELATOR_NAME=MyCorrelatorName" | docker secret create secret.properties -
 
 Then build the sample. You can pass in the corerlator to use, in the same way described in
-the parent README under 'Using Docker Store'
+the parent README under 'Using Docker Hub'
 
     > docker build -t sample .
 

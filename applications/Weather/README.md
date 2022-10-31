@@ -1,6 +1,6 @@
 License
 =======
-Copyright (c) 2017 Software AG, Darmstadt, Germany and/or its licensors
+Copyright (c) 2017, 2022 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
 file except in compliance with the License. You may obtain a copy of the License at
@@ -10,6 +10,11 @@ License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF 
 either express or implied. 
 See the License for the specific language governing permissions and limitations under the License.
 
+Pre-requisites
+=======
+
+This sample will make use of dashboard server, which requires a full installation and so uses a custom Apama image.
+This must be created before proceeding with this sample see ['../../image/README'](../../image/README.md).
 
 Weather
 =======

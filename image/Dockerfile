@@ -26,7 +26,6 @@ RUN /sbin/groupadd -g 1724 sagadmin && /sbin/useradd -d / -M -N -g 1724 -u 1724 
 
 # Copy and customize the minimal contents from the installation in order to
 # run non-interactive Apama components
-COPY --chown=1724:1724 ./common/security/ ${APAMA_HOME}/../common/security/
 COPY --chown=1724:1724 ./jvm/jvm/ /java_home/
 COPY --chown=1724:1724 ./Apama/adapters/ ${APAMA_HOME}/adapters/
 COPY --chown=1724:1724 ./Apama/bin/ ${APAMA_HOME}/bin/
@@ -49,7 +48,7 @@ ENV PATH=${APAMA_HOME}/bin/:/java_home/bin:${SAG_HOME}/common/lib/ant/bin:${APAM
 	 SAG_HOME=${SAG_HOME}/\
     APAMA_JRE=/java_home/\
     JAVA_HOME=/java_home/\
-    APAMA_LIBRARY_VERSION=10.11\
+    APAMA_LIBRARY_VERSION=10.15\
     ANT_HOME=${SAG_HOME}/common/lib/ant\
     PYTHONPATH=${APAMA_HOME}/third_party/python/lib64/python3.9/site-packages
 

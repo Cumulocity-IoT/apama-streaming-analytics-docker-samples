@@ -30,7 +30,7 @@ script has been sourced.
 ### Apama Base Images
 | Image                     |description                                                         |
 |---------------------------|--------------------------------------------------------------------|
-|Docker Store               | https://hub.docker.com/r/softwareag/apama-correlator                   |
+|Docker Hub                 | https://hub.docker.com/r/softwareag/apama-correlator-suite         |
 |Existing Install           | use the docker packaging kit instructions to build a base image    |
 
 If you are using the docker packaging kit from an existing install you will
@@ -42,7 +42,7 @@ directory of your Universal Messaging installation (i.e.
     > docker build -f Dockerfile.apama_um_enabled -t apama_um_enabled .
 
 Docker will then build a new Apama image 'apama_um_enabled', with the required
-UM libraries. If you are using the official image from Docker Store rather
+UM libraries. If you are using the official image from Docker Hub rather
 than the enclosed packaging kit then you can skip this step.
 
 The Universal Messaging images can be found below 

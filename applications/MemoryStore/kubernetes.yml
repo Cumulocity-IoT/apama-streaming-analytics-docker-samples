@@ -50,6 +50,8 @@ spec:
     spec:
       securityContext:
         runAsUser: 0 # needed when using a hostPath volume. In deployment use a properly configured volume with user permissions set
+      nodeSelector:
+        kubernetes.io/arch: amd64
       containers:
         - name: memstore-sample
           image: memstore-image

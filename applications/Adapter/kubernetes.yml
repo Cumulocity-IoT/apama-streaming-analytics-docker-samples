@@ -15,6 +15,8 @@ metadata:
   labels:
     app: "adapter-correlator"
 spec:
+  nodeSelector:
+    kubernetes.io/arch: amd64
   containers:
     - name: adapter-correlator
       image: correlator-image
@@ -43,6 +45,8 @@ kind: Pod
 metadata:
   name: adapter-iaf
 spec:
+  nodeSelector:
+    kubernetes.io/arch: amd64
   initContainers:
     - name: wait-for-correlator
       image: busybox

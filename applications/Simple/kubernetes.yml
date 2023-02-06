@@ -13,6 +13,8 @@ kind: Pod
 metadata:
   name: simple-sample
 spec:
+  nodeSelector:
+    kubernetes.io/arch: amd64
   containers:
     - name: simple-sample
       image: simple-image

@@ -49,7 +49,7 @@ spec:
     kubernetes.io/arch: amd64
   initContainers:
     - name: wait-for-correlator
-      image: busybox
+      image: busybox:1.28
       command: ['sh', '-c', 'until nslookup adapter-correlator; do echo waiting for correlator; sleep 2; done;']
   containers:
     - name: adapter-iaf

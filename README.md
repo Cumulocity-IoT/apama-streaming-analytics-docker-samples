@@ -1,7 +1,7 @@
 # Apama samples for Docker and Kubernetes
 
 ## License
-Copyright (c) 2017-2022 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.  
+Copyright (c) 2017-2023 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.  
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
 file except in compliance with the License. You may obtain a copy of the License at
@@ -110,7 +110,8 @@ docker run -d --net my-network --name correlator_container softwareag/apama-corr
 
 An optional stage which will prove that the network is working as expected is to fire up a busybox container and ping the apama container by name:
 
-```docker run -it --name mybusybox --net my-network --rm busybox
+```
+docker run -it --name mybusybox --net my-network --rm busybox
 # ping correlator_container
 PING correlator_container (192.168.48.2): 56 data bytes
 64 bytes from 192.168.48.2: seq=0 ttl=64 time=0.145 ms

@@ -1,5 +1,5 @@
 ## License
-Copyright (c) 2017-2022 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.  
+Copyright (c) 2017-2022, 2024 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.  
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
 file except in compliance with the License. You may obtain a copy of the License at
@@ -21,15 +21,13 @@ executables within containers e.g. the correlator, IAF, dashboard server,
 engine_* tools etc.
 
 The Docker build instruction should be run from the root of your Software AG
-installation, for example '/opt/softwareag/'. From that directory, Docker can 
+installation, for example '/opt/cumulocity/'. From that directory, Docker can 
 be asked to build the image using instructions from the Dockerfile:
 
 > docker build --tag apama --file ./Apama/samples/docker/image/Dockerfile .
 
-Docker will output its progress, and after a minute or so will exit with a
-message like:
-
-Successfully built 739214af8fb3
+Docker will output its progress, and after a minute or so will exit with a success code,
+and no errors logged.
 
 The instructions in the Dockerfile create an image containing the minimal
 contents from your installation that are necessary to run Apama executables.

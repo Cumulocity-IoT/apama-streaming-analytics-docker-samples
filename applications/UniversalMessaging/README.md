@@ -30,7 +30,7 @@ script has been sourced.
 ### Apama Base Images
 | Image                     |description                                                         |
 |---------------------------|--------------------------------------------------------------------|
-|Docker Hub                 | https://hub.docker.com/r/softwareag/apama-correlator-suite         |
+|Docker Hub                 | https://gallery.ecr.aws/apama/apama-correlator-suite         |
 |Existing Install           | use the docker packaging kit instructions to build a base image    |
 
 If you are using the docker packaging kit from an existing install you will

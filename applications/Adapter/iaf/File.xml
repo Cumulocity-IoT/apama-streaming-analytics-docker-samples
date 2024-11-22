@@ -19,7 +19,7 @@
 -->
 
 <!DOCTYPE root [
-	<!ENTITY APAMA_HOME "/opt/softwareag/Apama">
+	<!ENTITY APAMA_HOME "/opt/cumulocity/Apama">
 ]>
 
 <adapter-config xmlns:xi="http://www.w3.org/2001/XInclude">

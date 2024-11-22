@@ -1,4 +1,4 @@
-# Copyright (c) 2017-2018 Software AG, Darmstadt, Germany and/or its licensors
+# Copyright (c) 2017-2018, 2024 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not use this 
 # file except in compliance with the License. You may obtain a copy of the License at
@@ -9,10 +9,10 @@
 # See the License for the specific language governing permissions and limitations under the License.
 
 # Create an image from the base Apama image, with an EPL application in it ready to deploy
-ARG APAMA_IMAGE=apama
+ARG APAMA_IMAGE=public.ecr.aws/apama
 FROM ${APAMA_IMAGE}
 
-COPY --chown=sagadmin:sagadmin init.yaml FileForwarder.mon ${APAMA_WORK}/Adapter/
+COPY --chown=apama:apama init.yaml FileForwarder.mon ${APAMA_WORK}/Adapter/
 
 WORKDIR ${APAMA_WORK}/Adapter
 CMD ["correlator", "--config", "init.yaml"]

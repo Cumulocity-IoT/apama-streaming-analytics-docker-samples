@@ -1,4 +1,4 @@
-# Copyright (c) 2017-2018, 2022 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.
+# Copyright (c) 2017-2018, 2022, 2024 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not use this 
 # file except in compliance with the License. You may obtain a copy of the License at
@@ -10,9 +10,9 @@
 
 # Create an image from the base Apama image, with the MemoryStore application in it ready to deploy
 ARG APAMA_VERSION=10.15
-ARG APAMA_IMAGE=softwareag/apama-correlator-suite:${APAMA_VERSION}
+ARG APAMA_IMAGE=public.ecr.aws/apama/apama-correlator-suite:${APAMA_VERSION}
 FROM ${APAMA_IMAGE}
-COPY --chown=sagadmin:sagadmin init.yaml MemoryStoreCounter.mon ${APAMA_WORK}/MemoryStore/
+COPY --chown=apama:apama init.yaml MemoryStoreCounter.mon ${APAMA_WORK}/MemoryStore/
 # ensure our volume will have the correct permissions once mounted
 RUN mkdir ${APAMA_WORK}/MemoryStoreData 
 WORKDIR ${APAMA_WORK}/MemoryStoreData

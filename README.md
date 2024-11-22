@@ -2,6 +2,7 @@
 
 ## License
 Copyright (c) 2017-2023 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.  
+Copyright (c) 2024 Cumulocity GmbH. The name Cumulocity GmbH and all Cumulocity GmbH product names are either trademarks or registered trademarks of Cumulocity GmbH and/or its subsidiaries and/or its affiliates and/or their licensors. Other company and product names mentioned herein may be trademarks of their respective owners. 
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
 file except in compliance with the License. You may obtain a copy of the License at
@@ -16,9 +17,9 @@ See the License for the specific language governing permissions and limitations 
 This package contains configuration and samples to help you containerize and
 run Apama components and applications on the Docker platform.
 
-See the Supported Platforms document for information about recommended Docker
+See the Supported Platforms page for information about recommended Docker
 versions and support. This is available from the following web page:
-https://documentation.softwareag.com/apama/index.htm 
+https://cumulocity.com/apama/docs
 
 Docker and the Docker logo are trademarks or registered trademarks of Docker,
 Inc. in the United States and/or other countries. Docker, Inc. and other
@@ -30,13 +31,13 @@ Software AG produces several different variations of the Apama product as Docker
 
 | Image                                                                                               | Use                                                                                                                         |
 |-----------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|
-| [softwareag/apama-correlator](https://hub.docker.com/r/softwareag/apama-correlator)                 | Image for the correlator including support for Java and Python. Doesn't contain connectivity to other Software AG products.	|
-| [softwareag/apama-correlator-minimal](https://hub.docker.com/r/softwareag/apama-correlator-minimal) | Smallest image for the correlator, aimed at pure-Apama use cases. Doesn't contain Java or Python support, or connectivity to other Software AG products. |
-| [softwareag/apama-correlator-suite](https://hub.docker.com/r/softwareag/apama-correlator-suite)     | Image for the correlator containing support for Java, Python, and connectivity to the rest of the Software AG product suite and JMS. |
-| [softwareag/apama-cumulocity-jre](https://hub.docker.com/r/softwareag/apama-cumulocity-jre)         | Base image for custom Cumulocity IoT microservices, containing the correlator and connectivity to Cumulocity IoT. |
-| [softwareag/apama-builder](https://hub.docker.com/r/softwareag/apama-builder)                       | Project build and test tools for deploying and testing projects to be used with the "apama-correlator" and "apama-minimal" images in a multi-stage Docker build. |
-| [softwareag/apama-builder-suite](https://hub.docker.com/r/softwareag/apama-builder-suite)           | Project build and test tools (including Apache Ant) for deploying and testing projects, to be used with the "apama-correlator-suite" image in a multi-stage Docker build. |
-| [softwareag/apama-cumulocity-builder](https://hub.docker.com/r/softwareag/apama-cumulocity-builder) | Project build and test tools for deploying and testing projects to be used with the "apama-cumulocity-jre" image in a multi-stage Docker build. |
+| [public.ecr.aws/apama/apama-correlator](https://gallery.ecr.aws/apama/apama-correlator)                 | Image for the correlator including support for Java and Python. Doesn't contain connectivity to other Software AG products.	|
+| [public.ecr.aws/apama/apama-correlator-minimal](https://gallery.ecr.aws/apama/apama-correlator-minimal) | Smallest image for the correlator, aimed at pure-Apama use cases. Doesn't contain Java or Python support, or connectivity to other Software AG products. |
+| [public.ecr.aws/apama/apama-correlator-suite](https://gallery.ecr.aws/apama/apama-correlator-suite)     | Image for the correlator containing support for Java, Python, and connectivity to the rest of the Software AG product suite and JMS. |
+| [public.ecr.aws/apama/apama-cumulocity-jre](https://gallery.ecr.aws/apama/apama-cumulocity-jre)         | Base image for custom Cumulocity IoT microservices, containing the correlator and connectivity to Cumulocity IoT. |
+| [public.ecr.aws/apama/apama-builder](https://gallery.ecr.aws/apama/apama-builder)                       | Project build and test tools for deploying and testing projects to be used with the "apama-correlator" and "apama-minimal" images in a multi-stage Docker build. |
+| [public.ecr.aws/apama/apama-builder-suite](https://gallery.ecr.aws/apama/apama-builder-suite)           | Project build and test tools (including Apache Ant) for deploying and testing projects, to be used with the "apama-correlator-suite" image in a multi-stage Docker build. |
+| [public.ecr.aws/apama/apama-cumulocity-builder](https://gallery.ecr.aws/apama/apama-cumulocity-builder) | Project build and test tools for deploying and testing projects to be used with the "apama-cumulocity-jre" image in a multi-stage Docker build. |
 
 ## Running a Docker image
 You can turn an image into a running container with the 'docker run'
@@ -63,7 +64,7 @@ samples.
 Ultimately, turning an image into a running container will look
 something like this:
 
-> docker run -d -p 15903:15903 --name apama_in_docker softwareag/apama-correlator:10.15
+> docker run -d -p 15903:15903 --name apama_in_docker public.ecr.aws/apama/apama-correlator:10.15
 
 You can then look for your running container:
 
@@ -71,7 +72,7 @@ You can then look for your running container:
 
 |CONTAINER ID      |IMAGE           |COMMAND             |CREATED             |STATUS       |PORTS      |NAMES|
 |---               |---             |---                 |---                 |---          |---        |---          |
-|41d25137fbd0      |softwareag/apama-correlator:10.15    |"correlator -j"     |2 seconds ago       |Up Less than a second |0.0.0.0:15903->15903/tcp   |apama_in_docker  |
+|41d25137fbd0      |public.ecr.aws/apama/apama-correlator:10.15    |"correlator -j"     |2 seconds ago       |Up Less than a second |0.0.0.0:15903->15903/tcp   |apama_in_docker  |
 
 
 ## Interacting with the container
@@ -105,7 +106,7 @@ docker network create my-network
 Now, start up the correlator, either using the option above or the following simple option without a port exposed.
 
 ```
-docker run -d --net my-network --name correlator_container softwareag/apama-correlator:10.15
+docker run -d --net my-network --name correlator_container public.ecr.aws/apama/apama-correlator:10.15
 ```
 
 An optional stage which will prove that the network is working as expected is to fire up a busybox container and ping the apama container by name:
@@ -122,18 +123,18 @@ PING correlator_container (192.168.48.2): 56 data bytes
 Then the sample file can be passed to the Apama instance by using a local volume. Update <YourPath> to the local path where this repo resides. For example:
 
 ```
-docker run --rm -t -i -v /<YourPath>/apama-streaming-analytics-docker-samples/applications/Simple/HelloWorld.mon:/apama_work/HelloWorld.mon --net my-network softwareag/apama-correlator:10.15 engine_inject /apama_work/HelloWorld.mon -n correlator_container
+docker run --rm -t -i -v /<YourPath>/apama-streaming-analytics-docker-samples/applications/Simple/HelloWorld.mon:/apama_work/HelloWorld.mon --net my-network public.ecr.aws/apama/apama-correlator:10.15 engine_inject /apama_work/HelloWorld.mon -n correlator_container
 ```
 Finally, the status of the Correlator can be checked as well:
 
 ```
-docker run --rm -t -i --net my-network softwareag/apama-correlator:10.15 engine_inspect -n correlator_container
+docker run --rm -t -i --net my-network public.ecr.aws/apama/apama-correlator:10.15 engine_inspect -n correlator_container
 ```
 
 Or if you wish to watch it:
 
 ```
-docker run --rm -t -i --net my-network softwareag/apama-correlator:10.15 engine_watch -n correlator_container
+docker run --rm -t -i --net my-network public.ecr.aws/apama/apama-correlator:10.15 engine_watch -n correlator_container
 ```
 
 ## Log files
@@ -180,4 +181,4 @@ Each sample application also then has an individual README:
 ______________________
 These tools are provided as-is and without warranty or support. They do not constitute part of the Software AG product suite. Users are free to use, fork and modify them, subject to the license agreement. While Software AG welcomes contributions, we cannot guarantee to include every contribution in the main project.
 
-Contact us at [TECHcommunity](mailto:technologycommunity@softwareag.com?subject=Github/SoftwareAG) if you have any questions.
+Contact us at [Apama community](https://apamacommunity.com) if you have any questions.

@@ -13,13 +13,13 @@
 # from an already-existing Apama image and a Universal Messaging installation
 
 ARG APAMA_VERSION=10.15
-ARG APAMA_IMAGE=softwareag/apama-correlator-suite:${APAMA_VERSION}
+ARG APAMA_IMAGE=public.ecr.aws/apama/apama-correlator-suite:${APAMA_VERSION}
 FROM ${APAMA_IMAGE}
 
 MAINTAINER SoftwareAG
 
 # Copy the UM libraries required for Apama's native integration with UM.
-COPY --chown=sagadmin:sagadmin ./cplus/lib/x86_64/ /um_libs/
+COPY --chown=apama:apama ./cplus/lib/x86_64/ /um_libs/
 
 # Append /um_libs to LD_LIBRARY_PATH so that UM shared libraries can be
 # dynamically loaded by Apama Correlator at runtime

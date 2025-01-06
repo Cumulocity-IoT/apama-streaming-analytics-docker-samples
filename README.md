@@ -1,7 +1,7 @@
 # Apama samples for Docker and Kubernetes
 
 ## License
-Copyright (c) 2017-2023 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.  
+Copyright (c) 2017-2023 Cumulocity GmbH, Duesseldorf, Germany and/or its affiliates and/or their licensors.  
 Copyright (c) 2024 Cumulocity GmbH. The name Cumulocity GmbH and all Cumulocity GmbH product names are either trademarks or registered trademarks of Cumulocity GmbH and/or its subsidiaries and/or its affiliates and/or their licensors. Other company and product names mentioned herein may be trademarks of their respective owners. 
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
@@ -27,13 +27,13 @@ parties may also have trademark rights in other terms used herein.
 
 ## Image list
 
-Software AG produces several different variations of the Apama product as Docker images, depending on your use case. Please consult this table for the various images and their uses:
+Cumulocity GmbH produces several different variations of the Apama product as Docker images, depending on your use case. Please consult this table for the various images and their uses:
 
 | Image                                                                                               | Use                                                                                                                         |
 |-----------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|
-| [public.ecr.aws/apama/apama-correlator](https://gallery.ecr.aws/apama/apama-correlator)                 | Image for the correlator including support for Java and Python. Doesn't contain connectivity to other Software AG products.	|
-| [public.ecr.aws/apama/apama-correlator-minimal](https://gallery.ecr.aws/apama/apama-correlator-minimal) | Smallest image for the correlator, aimed at pure-Apama use cases. Doesn't contain Java or Python support, or connectivity to other Software AG products. |
-| [public.ecr.aws/apama/apama-correlator-suite](https://gallery.ecr.aws/apama/apama-correlator-suite)     | Image for the correlator containing support for Java, Python, and connectivity to the rest of the Software AG product suite and JMS. |
+| [public.ecr.aws/apama/apama-correlator](https://gallery.ecr.aws/apama/apama-correlator)                 | Image for the correlator including support for Java and Python. Doesn't contain connectivity to other Cumulocity GmbH products.	|
+| [public.ecr.aws/apama/apama-correlator-minimal](https://gallery.ecr.aws/apama/apama-correlator-minimal) | Smallest image for the correlator, aimed at pure-Apama use cases. Doesn't contain Java or Python support, or connectivity to other Cumulocity GmbH products. |
+| [public.ecr.aws/apama/apama-correlator-suite](https://gallery.ecr.aws/apama/apama-correlator-suite)     | Image for the correlator containing support for Java, Python, and connectivity to the rest of the Cumulocity GmbH product suite and JMS. |
 | [public.ecr.aws/apama/apama-cumulocity-jre](https://gallery.ecr.aws/apama/apama-cumulocity-jre)         | Base image for custom Cumulocity IoT microservices, containing the correlator and connectivity to Cumulocity IoT. |
 | [public.ecr.aws/apama/apama-builder](https://gallery.ecr.aws/apama/apama-builder)                       | Project build and test tools for deploying and testing projects to be used with the "apama-correlator" and "apama-minimal" images in a multi-stage Docker build. |
 | [public.ecr.aws/apama/apama-builder-suite](https://gallery.ecr.aws/apama/apama-builder-suite)           | Project build and test tools (including Apache Ant) for deploying and testing projects, to be used with the "apama-correlator-suite" image in a multi-stage Docker build. |
@@ -156,7 +156,7 @@ file when starting the correlator process to allow the correlator to initialize
 itself. To generate the 'initialization.yaml' file, the
 'engine_deploy' tool is execute on a Designer project or directory. See the 
 documentation for details, but an example using the 'Weather' sample can be run
-from the Apama Command prompt of your Software AG installation:
+from the Apama Command prompt of your Apama installation:
 
 > engine_deploy ./apama-samples/studio/demos/Weather --outputDeployDir ./apama-samples/docker/applications/Weather
 
@@ -179,6 +179,6 @@ Each sample application also then has an individual README:
 |[Weather](applications/Weather/README.md)|
 
 ______________________
-These tools are provided as-is and without warranty or support. They do not constitute part of the Software AG product suite. Users are free to use, fork and modify them, subject to the license agreement. While Software AG welcomes contributions, we cannot guarantee to include every contribution in the main project.
+These tools are provided as-is and without warranty or support. They do not constitute part of the Cumulocity GmbH product suite. Users are free to use, fork and modify them, subject to the license agreement. While Cumulocity GmbH welcomes contributions, we cannot guarantee to include every contribution in the main project.
 
 Contact us at [Apama community](https://apamacommunity.com) if you have any questions.

@@ -1,6 +1,6 @@
 License
 =======
-Copyright (c) 2017-2022 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors. 
+Copyright (c) 2017-2022 Cumulocity GmbH, Duesseldorf, Germany and/or its affiliates and/or their licensors. 
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
 file except in compliance with the License. You may obtain a copy of the License at
@@ -37,7 +37,7 @@ If you are using the docker packaging kit from an existing install you will
 need to create an Apama image which contains the required UM client libraries
 for Apama/UM integration. Copy 'Dockerfile.apama_um_enabled' to the root
 directory of your Universal Messaging installation (i.e.
-'/opt/SoftwareAG/UniversalMessaging').
+'/opt/cumulocity/UniversalMessaging').
 
     > docker build -f Dockerfile.apama_um_enabled -t apama_um_enabled .
 

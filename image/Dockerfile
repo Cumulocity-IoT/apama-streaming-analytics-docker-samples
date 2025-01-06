@@ -1,4 +1,4 @@
-# Copyright (c) 2017-2024 Software AG, Darmstadt, Germany and/or its licensors
+# Copyright (c) 2017-2024 Cumulocity GmbH, Duesseldorf, Germany and/or its affiliates and/or their licensors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not use this 
 # file except in compliance with the License. You may obtain a copy of the License at
@@ -10,7 +10,7 @@
 #
 # This Dockerfile creates an image that can run Apama components, and is built
 # from an existing Apama installation. The build should be run from the root
-# of your Software AG installation. e.g. '/opt/cumulocity/'
+# of your installation. e.g. '/opt/cumulocity/'
 
 # Pull Red Hat UBI 9 base image from the Docker Hub - this is the latest supported
 # operating system for this version of Apama.

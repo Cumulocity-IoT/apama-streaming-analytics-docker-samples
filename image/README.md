@@ -1,5 +1,5 @@
 ## License
-Copyright (c) 2017-2022, 2024 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.  
+Copyright (c) 2017-2022, 2024 Cumulocity GmbH, Duesseldorf, Germany and/or its affiliates and/or their licensors.  
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
 file except in compliance with the License. You may obtain a copy of the License at
@@ -20,7 +20,7 @@ Apama installation into a Docker image, which can then be used to run Apama
 executables within containers e.g. the correlator, IAF, dashboard server,
 engine_* tools etc.
 
-The Docker build instruction should be run from the root of your Software AG
+The Docker build instruction should be run from the root of your 
 installation, for example '/opt/cumulocity/'. From that directory, Docker can 
 be asked to build the image using instructions from the Dockerfile:
 

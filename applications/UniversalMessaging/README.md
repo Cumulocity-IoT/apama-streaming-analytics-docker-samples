@@ -36,8 +36,7 @@ script has been sourced.
 If you are using the docker packaging kit from an existing install you will
 need to create an Apama image which contains the required UM client libraries
 for Apama/UM integration. Copy 'Dockerfile.apama_um_enabled' to the root
-directory of your Universal Messaging installation (i.e.
-'/opt/cumulocity/UniversalMessaging').
+directory of your Universal Messaging installation.
 
     > docker build -f Dockerfile.apama_um_enabled -t apama_um_enabled .
 

@@ -22,7 +22,7 @@ application or via Kubernetes can be found in the README in the parent
 directory. If you are running via Kubernetes this sample creates the following
 resources which can be accessed via logs and must be deleted via delete:
 
-	* pod simple-sample
+    pod simple-sample
 
 After bringing this sample up, you should notice the log from the correlator
 container telling you "Hello world!".

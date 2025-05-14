@@ -9,7 +9,7 @@
 # See the License for the specific language governing permissions and limitations under the License.
 
 # Create an image from the base Apama image, with an EPL application in it ready to deploy
-ARG APAMA_VERSION=10.15
+ARG APAMA_VERSION=latest
 ARG APAMA_IMAGE=public.ecr.aws/apama/apama-correlator-minimal:${APAMA_VERSION}
 FROM ${APAMA_IMAGE}
 COPY --chown=apama:apama init.yaml HelloWorld.mon ${APAMA_WORK}/Simple/

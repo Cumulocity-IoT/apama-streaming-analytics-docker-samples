@@ -23,9 +23,7 @@ configs or Kubernetes config maps to manage non-secret runtime configuration.
 Running with Docker
 ==============
 
-This sample can't be run with docker-compose, due to limitations with secrets. There are two types of secrets,
-'file' or 'external' secrets. File secrets can only be used locally and not with a remote docker host. External
-secrets are not compatible with docker-compose. Therefore the sample should be run using the docker service
+There are two types of secrets, 'file' or 'external' secrets. The sample should be run using the docker service
 command.
 
 First, create the secret

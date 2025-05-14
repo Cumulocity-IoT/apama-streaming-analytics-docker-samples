@@ -42,50 +42,18 @@ a newer version of Apama. After bringing them up again, the correlator will
 still have access to the MemoryStore data that it wrote in a previous
 iteration, as this data is owned by the volume.
 
-Detailed instructions on running the sample either as a Compose-based
-application or via Kubernetes can be found in the README in the parent
-directory. If you are running via Kubernetes this sample creates the following
+Detailed instructions on running the sample via Kubernetes can be found in the README in the parent
+directory. This sample creates the following
 resources which can be accessed via logs and must be deleted via delete:
 
 * deployment memstore-sample
 * pv memstore-data
 * pvc memstore-data-claim
 
-Inspecting and restarting with docker-compose
----------------------------------------------
-
-After bringing this application up for the first time, inspect the log of the
-correlator container and note that it has read a value from out of the
-MemoryStore, and then written another back:
-
-    Counter [1] Counter table contains value: 0
-    Counter [1] Incremented counter
-
-Now to simulate an upgrade. Bring down the application and remove all the
-containers:
-
-    > docker-compose stop
-    > docker-compose rm correlator
-
-At this point you would be able to change the container description in
-'docker-compose.yml' to use a different Apama image. Now bring the application
-back up using Compose:
-
-    > docker-compose up
-
-Compose will recreate the 'correlator' container, launching it as before. This
-time if you inspect the correlator logs, you will see that the state of the
-MemoryStore file on the volume is persistent:
-
-    Counter [1] Counter table contains value: 1
-    Counter [1] Incremented counter
-
-If you repeat this recipe, you will see this value keep going up.
-
 Inspecting and restarting with kubernetes
 -----------------------------------------
 
-This samples uses the kubernetes deployment feature, which means to get
+This sample uses the kubernetes deployment feature, which means to get
 the logs from a pod you must first find the generated name of the pod with:
 
     > kubectl get pods
@@ -102,7 +70,9 @@ Get the logs with:
 
     > kubectl logs memstore-sample-84fbf699bb-2pzl9
 
-As with the docker-compose sample you'll see:
+After bringing this application up for the first time, inspect the log of the
+correlator container and note that it has read a value from out of the
+MemoryStore, and then written another back:
 
     Counter [1] Counter table contains value: 0
     Counter [1] Incremented counter
@@ -126,12 +96,3 @@ If you repeat this recipe, you will see this value keep going up. To finally rem
 the deployment completely, delete the deployment rather than the pod:
 
     > kubectl delete deployment memstore-sample
-
-Correlator Persistence
-----------------------
-
-As a further exercise, you might want to try adapting this example for
-correlator persistence, using a volume for the recovery datastore
-instead of just the MemoryStore. Be aware that correlator persistence only
-functions in a licensed correlator.
-

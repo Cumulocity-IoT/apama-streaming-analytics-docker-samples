@@ -47,7 +47,7 @@ samples.
 Ultimately, turning an image into a running container will look
 something like this:
 
-> docker run -d -p 15903:15903 --name apama_in_docker public.ecr.aws/apama/apama-correlator:27
+> docker run -d -p 15903:15903 --name apama_in_docker public.ecr.aws/apama/apama-correlator:26
 
 You can then look for your running container:
 
@@ -55,7 +55,7 @@ You can then look for your running container:
 
 |CONTAINER ID      |IMAGE           |COMMAND             |CREATED             |STATUS       |PORTS      |NAMES|
 |---               |---             |---                 |---                 |---          |---        |---          |
-|41d25137fbd0      |public.ecr.aws/apama/apama-correlator:27    |"correlator -j"     |2 seconds ago       |Up Less than a second |0.0.0.0:15903->15903/tcp   |apama_in_docker  |
+|41d25137fbd0      |public.ecr.aws/apama/apama-correlator:26    |"correlator -j"     |2 seconds ago       |Up Less than a second |0.0.0.0:15903->15903/tcp   |apama_in_docker  |
 
 
 ## Interacting with the container
@@ -89,7 +89,7 @@ docker network create my-network
 Now, start up the correlator, either using the option above or the following simple option without a port exposed.
 
 ```
-docker run -d --net my-network --name correlator_container public.ecr.aws/apama/apama-correlator:27
+docker run -d --net my-network --name correlator_container public.ecr.aws/apama/apama-correlator:26
 ```
 
 An optional stage which will prove that the network is working as expected is to fire up a busybox container and ping the apama container by name:
@@ -106,18 +106,18 @@ PING correlator_container (192.168.48.2): 56 data bytes
 Then the sample file can be passed to the Apama instance by using a local volume. Update <YourPath> to the local path where this repo resides. For example:
 
 ```
-docker run --rm -t -i -v /<YourPath>/apama-streaming-analytics-docker-samples/applications/Simple/HelloWorld.mon:/apama_work/HelloWorld.mon --net my-network public.ecr.aws/apama/apama-correlator:27 engine_inject /apama_work/HelloWorld.mon -n correlator_container
+docker run --rm -t -i -v /<YourPath>/apama-streaming-analytics-docker-samples/applications/Simple/HelloWorld.mon:/apama_work/HelloWorld.mon --net my-network public.ecr.aws/apama/apama-correlator:26 engine_inject /apama_work/HelloWorld.mon -n correlator_container
 ```
 Finally, the status of the Correlator can be checked as well:
 
 ```
-docker run --rm -t -i --net my-network public.ecr.aws/apama/apama-correlator:27 engine_inspect -n correlator_container
+docker run --rm -t -i --net my-network public.ecr.aws/apama/apama-correlator:26 engine_inspect -n correlator_container
 ```
 
 Or if you wish to watch it:
 
 ```
-docker run --rm -t -i --net my-network public.ecr.aws/apama/apama-correlator:27 engine_watch -n correlator_container
+docker run --rm -t -i --net my-network public.ecr.aws/apama/apama-correlator:26 engine_watch -n correlator_container
 ```
 
 ## Log files

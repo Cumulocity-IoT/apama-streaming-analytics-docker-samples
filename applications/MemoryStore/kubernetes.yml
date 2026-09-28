@@ -48,8 +48,6 @@ spec:
       labels:
         app: memstore
     spec:
-      nodeSelector:
-        kubernetes.io/arch: amd64
       containers:
         - name: memstore-sample
           image: memstore-image
